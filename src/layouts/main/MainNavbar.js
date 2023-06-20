@@ -88,8 +88,7 @@ export default function MainNavbar() {
 
           <Button
             variant='contained'
-            target='_blank'
-            href='https://material-ui.com/store/items/minimal-dashboard/'
+            href='/auth/login'
           >
            Login
           </Button>

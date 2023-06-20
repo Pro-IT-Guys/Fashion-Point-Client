@@ -31,7 +31,7 @@ export default function LandingPage() {
       >
         <ContentStyle>
           <Banner />
-          {/* <Products /> */}
+          <Products />
         </ContentStyle>
       </RootStyle>
     </MainLayout>

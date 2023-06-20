@@ -10,15 +10,6 @@ import {
   styled,
 } from "@mui/material";
 import React from "react";
-import img from "../../../assets/banner/banner1.jpg";
-import { Image } from "next/image";
-import {
-  FILTER_COLOR_OPTIONS,
-  FILTER_GENDER_OPTIONS,
-} from "../shop/ShopFilterSidebar";
-import { CheckBox } from "@mui/icons-material";
-import { Form, FormikProvider } from "formik";
-import ColorManyPicker from "../common/ColorManyPicker";
 
 const Banner = () => {
   const RootStyle = styled("div")(({ theme }) => ({
