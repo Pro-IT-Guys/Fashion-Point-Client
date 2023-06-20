@@ -4,16 +4,7 @@ import MainLayout from "src/layouts/main";
 import { styled } from "@mui/material/styles";
 // components
 import Page from "src/components/Page";
-import {
-  LandingHero,
-  LandingMinimal,
-  LandingDarkMode,
-  LandingThemeColor,
-  LandingPricingPlans,
-  LandingAdvertisement,
-  LandingCleanInterfaces,
-  LandingHugePackElements,
-} from "src/components/_external-pages/landing";
+
 import Banner from "src/components/Home/Banner/Banner";
 import Products from "src/components/Home/Products/Products";
 
@@ -40,7 +31,7 @@ export default function LandingPage() {
       >
         <ContentStyle>
           <Banner />
-          <Products />
+          {/* <Products /> */}
         </ContentStyle>
       </RootStyle>
     </MainLayout>
