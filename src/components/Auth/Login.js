@@ -1,14 +1,23 @@
 import styled from "@emotion/styled";
-import { Checkbox, Container, FormControlLabel, Grid, Icon, IconButton, InputAdornment, Stack, TextField } from "@mui/material";
+import {
+  Checkbox,
+  Container,
+  FormControlLabel,
+  Grid,
+  Icon,
+  IconButton,
+  InputAdornment,
+  Stack,
+  TextField,
+} from "@mui/material";
 import React, { useState } from "react";
-import eyeFill from '@iconify/icons-eva/eye-fill';
-import closeFill from '@iconify/icons-eva/close-fill';
-import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import eyeFill from "@iconify/icons-eva/eye-fill";
+import closeFill from "@iconify/icons-eva/close-fill";
+import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
 import LoadingButton from "src/theme/overrides/LoadingButton";
 
-
 const Login = () => {
-    const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const RootStyle = styled("div")(({ theme }) => ({
     paddingTop: theme.spacing(15),
     [theme.breakpoints.up("md")]: {
@@ -19,7 +28,6 @@ const Login = () => {
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
-
 
   return (
     <RootStyle>
@@ -83,6 +91,33 @@ const Login = () => {
             </LoadingButton>
           </form> */}
           <h1>Login Page</h1>
+
+          <Stack spacing={3} sx={{shadow:'1px', marginTop:'5em'}}>
+
+            <TextField
+              fullWidth
+              autoComplete="username"
+              type="email"
+              label="Email address"
+            />
+
+            <TextField
+              fullWidth
+              autoComplete="current-password"
+              type={showPassword ? "text" : "password"}
+              label="Password"
+              
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleShowPassword} edge="end">
+                      <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Stack>
         </Grid>
       </Container>
     </RootStyle>
