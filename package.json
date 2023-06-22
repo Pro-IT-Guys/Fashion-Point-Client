@@ -1,5 +1,5 @@
 {
-  "name": "@minimal/minimal-kit-react",
+  "name": "e-commerce-uae",
   "author": "minimals.cc",
   "version": "2.6.0",
   "private": true,
@@ -27,6 +27,7 @@
     "framer-motion": "^4.1.17",
     "lodash": "^4.17.21",
     "next": "^11.1.2",
+    "notistack": "^3.0.1",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
     "react": "17.0.2",

@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
 import {
+  Box,
+  Button,
+  Card,
   Checkbox,
   Container,
   FormControlLabel,
@@ -7,121 +10,106 @@ import {
   Icon,
   IconButton,
   InputAdornment,
+  Link,
   Stack,
   TextField,
+  Tooltip,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import eyeFill from "@iconify/icons-eva/eye-fill";
 import closeFill from "@iconify/icons-eva/close-fill";
 import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
-import LoadingButton from "src/theme/overrides/LoadingButton";
+import { MHidden } from "../@material-extend";
+import { capitalCase } from "change-case";
+import LoginForm from "./LoginForm";
+import Page from "../Page";
 
-const Login = () => {
+
+const RootStyle = styled(Page)(({ theme }) => ({
+  [theme.breakpoints.up('md')]: {
+    display: 'flex'
+  }
+}));
+
+const SectionStyle = styled(Card)(({ theme }) => ({
+  width: '100%',
+  maxWidth: 464,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  margin: theme.spacing(2, 0, 2, 2)
+}));
+
+const ContentStyle = styled('div')(({ theme }) => ({
+  maxWidth: 480,
+  margin: 'auto',
+  display: 'flex',
+  minHeight: '100vh',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  padding: theme.spacing(12, 0)
+}));
+
+export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const RootStyle = styled("div")(({ theme }) => ({
-    paddingTop: theme.spacing(15),
-    [theme.breakpoints.up("md")]: {
-      paddingBottom: theme.spacing(15),
-    },
-  }));
 
-  const handleShowPassword = () => {
-    setShowPassword((show) => !show);
-  };
 
   return (
-    <RootStyle>
-      <Container maxWidth="lg">
-        <Grid container spacing={5} justifyContent="center">
-          {/* <form autoComplete="off" noValidate >
-            <Stack spacing={3}>
-              <TextField
-                fullWidth
-                autoComplete="username"
-                type="email"
-                label="Email address"
-              />
+    <RootStyle title="Login | Minimal-UI">
+     
 
-              <TextField
-                fullWidth
-                autoComplete="current-password"
-                type={showPassword ? "text" : "password"}
-                label="Password"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton onClick={handleShowPassword} edge="end">
-                        <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Stack>
+      <MHidden width="mdDown">
+        <SectionStyle>
+          <Typography variant="h3" sx={{ px: 5, mt: 0, mb: 5 }}>
+            Hi, Welcome Back
+          </Typography>
+          {/* <img src="/static/illustrations/illustration_login.png" alt="login" /> */}
+          <img src="https://uploads-ssl.webflow.com/60658b46b03f0cf83ac1485d/62ac4187101a6a559b5da7ce_1393438_Social%20Login%20Feature%20Page%20Hero%20Image_v1_061622.png" alt="login" />
+        </SectionStyle>
+      </MHidden>
 
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="space-between"
-              sx={{ my: 2 }}
-            >
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked
-                  />
-                }
-                label="Remember me"
-              />
+      <Container maxWidth="sm">
+        <ContentStyle>
+          <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>
+            <Box sx={{ flexGrow: 1 }}>
+              <Typography variant="h4" gutterBottom>
+                Sign in to E-Commerce
+              </Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                Enter your details below.
+              </Typography>
+            </Box>
 
-              <Link
-              >
-                Forgot password?
-              </Link>
-            </Stack>
-
-            <LoadingButton
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-              loading={isSubmitting}
-            >
-              Login
-            </LoadingButton>
-          </form> */}
-          <h1>Login Page</h1>
-
-          <Stack spacing={3} sx={{shadow:'1px', marginTop:'5em'}}>
-
-            <TextField
-              fullWidth
-              autoComplete="username"
-              type="email"
-              label="Email address"
-            />
-
-            <TextField
-              fullWidth
-              autoComplete="current-password"
-              type={showPassword ? "text" : "password"}
-              label="Password"
-              
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={handleShowPassword} edge="end">
-                      <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
           </Stack>
-        </Grid>
+
+
+          <LoginForm />
+
+          {/* <Button
+            fullWidth
+            size="large"
+            type="submit"
+            variant="contained"
+            // onClick={handleLoginAuth0}
+          >
+            Login
+          </Button> */}
+
+          <MHidden width="smUp">
+            <Typography variant="body2" align="center" sx={{ mt: 3 }}>
+              Don’t have an account?&nbsp;
+              <Link
+                variant="subtitle2"
+              >
+                Get started
+              </Link>
+            </Typography>
+          </MHidden>
+        </ContentStyle>
       </Container>
     </RootStyle>
   );
 };
 
-export default Login;
+

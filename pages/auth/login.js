@@ -17,7 +17,7 @@ const login = () => {
   }));
 
   return (
-    <MainLayout>
+    // <MainLayout>
       <RootStyle
         title="The starting point for your next project | Minimal-UI"
         id="move_top"
@@ -26,7 +26,7 @@ const login = () => {
           <Login/>
         </ContentStyle>
       </RootStyle>
-    </MainLayout>
+    // </MainLayout>
   );
 };
 
