@@ -53,7 +53,7 @@ export default function LoginForm() {
         }
       } catch (error) {
         // console.error(error);
-        resetForm();
+        // resetForm();
         if (isMountedRef.current) {
           setSubmitting(false);
           setErrors({ afterSubmit: error.message });
@@ -70,7 +70,7 @@ export default function LoginForm() {
   };
 
   return (
-    <FormikProvider value={formik}>
+    <FormikProvider >
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
           {errors.afterSubmit && (

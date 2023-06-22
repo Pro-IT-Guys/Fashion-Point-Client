@@ -25,8 +25,8 @@ export default function MainLayout({ children }) {
       <MainNavbar />
       <div>{children}</div>
 
-      <MainFooter />
-      {/* {!isHome ? (
+      {/* <MainFooter /> */}
+      {!isHome ? (
         <MainFooter />
       ) : (
         <Box
@@ -49,7 +49,7 @@ export default function MainLayout({ children }) {
             </Typography>
           </Container>
         </Box>
-      )} */}
+      )}
     </>
   );
 }
