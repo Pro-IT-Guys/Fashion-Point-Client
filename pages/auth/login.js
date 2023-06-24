@@ -26,8 +26,8 @@ export default function login() {
         id="move_top"
       >
         <ContentStyle>
-          {/* <Login/> */}
-          <LoginForm/>
+          <Login/>
+          {/* <LoginForm/> */}
         </ContentStyle>
       </RootStyle>
     // </MainLayout>

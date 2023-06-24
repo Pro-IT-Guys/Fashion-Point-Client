@@ -86,26 +86,6 @@ export default function Login() {
 
           <LoginForm />
 
-          {/* <Button
-            fullWidth
-            size="large"
-            type="submit"
-            variant="contained"
-            // onClick={handleLoginAuth0}
-          >
-            Login
-          </Button> */}
-
-          <MHidden width="smUp">
-            <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              Don’t have an account?&nbsp;
-              <Link
-                variant="subtitle2"
-              >
-                Get started
-              </Link>
-            </Typography>
-          </MHidden>
         </ContentStyle>
       </Container>
     </RootStyle>

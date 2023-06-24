@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
+export default function SignUpForm() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
@@ -115,12 +115,12 @@ export default function LoginForm() {
 
               <div>
                 <p className="text-sm text-center pt-3 pb-4">
-                  Don't have an account?{" "}
+                  Already have an account?{" "}
                   <span
                     className="text-primary hover:underline cursor-pointer font-bold"
-                    onClick={() => router.push("/auth/signup")}
+                    onClick={() => router.push("/auth/login")}
                   >
-                    Sign up
+                 Login Now
                   </span>
                 </p>
               </div>

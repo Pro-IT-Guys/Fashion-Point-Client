@@ -23,7 +23,7 @@ import RtlLayout from 'src/components/RtlLayout';
 import ProgressBar from 'src/components/ProgressBar';
 import LoadingScreen from 'src/components/LoadingScreen';
 import ThemePrimaryColor from 'src/components/ThemePrimaryColor';
-
+import '../styles/global.css'
 // ----------------------------------------------------------------------
 
 const clientSideEmotionCache = createEmotionCache();
