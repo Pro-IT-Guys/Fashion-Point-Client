@@ -70,7 +70,7 @@ const Products = () => {
 
   return (
     <div className="bg-[#f7f7ff9c]">
-      <Container maxWidth="lg" className="pb-20">
+      <Container maxWidth="lg" className="pb-20" spacing={5}>
         <Grid container spacing={5}>
           <div className="flex w-full mb-5">
             <div className="w-[20%]">

@@ -32,7 +32,7 @@ export default function ProductCard({ product }) {
       <div className="bg-white ">
         <div className="h-64 w-full overflow-hidden">
           <Image
-            src={`/images/product/${frontImage} `}
+            src={`http://localhost:8000/images/product/${frontImage} `}
             alt="Picture of the borka"
             height={700}
             width={500}

@@ -1,12 +1,16 @@
 import styled from "@emotion/styled";
-import { Grid } from "@mui/material";
-import React from "react";
+import { Card,Container, Grid } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import Banner from "src/components/Home/Banner/Banner";
 import Page from "src/components/Page";
+import ProductDetailsCarousel from "src/components/Products/ProductDetailsCarousel";
 import MainLayout from "src/layouts/main";
-import Container from "src/theme/overrides/Container";
+import { useRouter } from "next/router";
 
-const ProductDetails = () => {
+export default function ProductDetails() {
+  const [productDetails, setProductDetails] = useState({});
+  const router = useRouter();
+  const params = router.query.id;
   const RootStyle = styled(Page)({
     height: "100%",
   });
@@ -17,20 +21,32 @@ const ProductDetails = () => {
     backgroundColor: theme.palette.background.default,
   }));
 
+  useEffect(() => {
+    fetch(`http://localhost:8000/api/v1/product/path/${params}`)
+      .then((res) => res.json())
+      .then((data) => setProductDetails(data.data));
+  }, [params]);
+
   return (
     <MainLayout>
-      <RootStyle
-        title="The starting point for your next project | Minimal-UI"
-        id="move_top"
-      >
-        <ContentStyle>
-
-          <Banner/>
-   
-        </ContentStyle>
-      </RootStyle>
+      <Container maxWidth='lg'>
+          <Card className="mt-24 mb-20 pb-10">
+            <Grid container>
+              <Grid item xs={12} md={6} lg={7}>
+                <ProductDetailsCarousel  product={productDetails}  />
+              </Grid>
+              <Grid item xs={12} md={6} lg={5}>
+              <h1>Product details</h1>
+              </Grid>
+            </Grid>
+          </Card>
+          {/* <div className="">
+            <div>
+              <ProductDetailsCarousel product={productDetails} />
+            </div>
+          </div> */}
+       </Container>
     </MainLayout>
   );
 };
 
-export default ProductDetails;
