@@ -74,7 +74,7 @@ export default function MainNavbar() {
             <Logo />
           </NextLink>
           <Label color='info' sx={{ ml: 1 }}>
-            Next Js v2.6.0
+       E-commerce UAE
           </Label>
           <Box sx={{ flexGrow: 1 }} />
 
