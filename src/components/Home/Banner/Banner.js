@@ -27,7 +27,7 @@ const Banner = () => {
     <div className="bg-[#f7f7ff9c]">
       <RootStyle>
         <Container maxWidth="lg">
-          <Grid container spacing={5} justifyContent="center">
+          <Grid container  justifyContent="center">
             <Image
               src={img2}
               className="img-fluid w-full"

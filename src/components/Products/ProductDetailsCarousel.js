@@ -202,13 +202,13 @@ export default function ProductDetailsCarousel({product}) {
         </Slider>
       </Box>
 
-      <LightboxModal
+      {/* <LightboxModal
         images={imagesLightbox}
         photoIndex={selectedImage}
         setPhotoIndex={setSelectedImage}
         isOpen={openLightbox}
         onClose={() => setOpenLightbox(false)}
-      />
+      /> */}
     </RootStyle>
   );
 }

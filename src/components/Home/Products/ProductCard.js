@@ -23,32 +23,33 @@ ProductCard.propTypes = {
 };
 
 export default function ProductCard({ product }) {
-  const { name, price, frontImage, backImage, path } = product || {};
+  const { name, sellingPrice, frontImage, backImage, path } = product || {};
   const router = useRouter();
 
   console.log(frontImage);
   return (
-    <div className="shadow hover:shadow-md cursor-pointer rounded overflow-hidden">
-      <div className="bg-white ">
+    <div className="shadow hover:shadow-md rounded overflow-hidden">
+      <div className="bg-white h-full">
         <div className="h-64 w-full overflow-hidden">
           <Image
-            src={`http://localhost:8000/images/product/${frontImage} `}
+            // src={`http://localhost:8000/images/product/${frontImage} `}
+            src={frontImage}
             alt="Picture of the borka"
             height={700}
             width={500}
             className="object-cover max-h-full w-full"
           />
         </div>
-        <div className="pl-2 bg-white py-2">
+        <div className="px-2 bg-white py-2">
           <h1
             onClick={() => router.push(`/product/${path}`)}
-            className="font-semibold mt-2 text-sm"
+            className="font-semibold mt-2 min-h-20 text-xs cursor-pointer hover:text-[#4d50ff]"
           >
             {" "}
-            {name}
+            {name.slice(0, 80) + (name.length > 80 ? "..." : "")}
           </h1>
-          <p className="text-error  mt-2 mb-0">৳ 548</p>
-          <strike className="text-[#7a7a7a] text-xs">৳ 1,150</strike>
+          <p className="text-error  mt-2 mb-0">৳ {sellingPrice}</p>
+          <strike className="text-[#7a7a7a] text-xs">৳ {sellingPrice}</strike>
         </div>
       </div>
     </div>

@@ -70,8 +70,8 @@ const Products = () => {
 
   return (
     <div className="bg-[#f7f7ff9c]">
-      <Container maxWidth="lg" className="pb-20" spacing={5}>
-        <Grid container spacing={5}>
+      <Container maxWidth="lg" className="pb-20">
+        <Grid container>
           <div className="flex w-full mb-5">
             <div className="w-[20%]">
               <h2 className="font-semibold text-xl pb-2 ">Filter Product</h2>
@@ -115,8 +115,8 @@ const Products = () => {
             </div>
           </div>
           <div className=" flex w-full mt-3 gap-5">
-            <div className="w-[18%]">
-              <div className="pt-5 space-y-5 shadow py-5 pl-5 pr-3 bg-white">
+            <div className="w-[20%]">
+              <div className="pt-5 space-y-5 shadow py-5 pl-5 pr-3 bg-white ">
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
                     Gender
@@ -213,13 +213,11 @@ const Products = () => {
                 </div>
               </div>
             </div>
-            <div className=" w-[82%]">
-              <div>
-                <div className="grid grid-cols-4 gap-5">
-                  {products?.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
-                </div>
+            <div className=" w-[80%]">
+              <div className="grid grid-cols-4 gap-5">
+                {products?.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
               </div>
             </div>
           </div>
