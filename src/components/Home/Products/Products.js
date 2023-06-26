@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 import ColorManyPicker from "../common/ColorManyPicker";
 import ShopProductSort from "../shop/ShopProductSort";
 import ProductCard from "./ProductCard";
+import Image from "next/image";
 
 const Products = () => {
   const [openFilter, setOpenFilter] = useState(false);
@@ -210,6 +211,35 @@ const Products = () => {
                       />
                     ))}
                   </RadioGroup>
+                </div>
+              </div>
+              <div className=" mt-4 shadow">
+                <div className="bg-[#f2f2f2] border py-2 px-3 rounded-t">
+                  <h1 className="font-semibold text-xl">Best Selling</h1>
+                </div>
+                <div className="p-2 space-y-3">
+                  {products?.slice(0, 10)?.map((product) => (
+                    <>
+                      <div className="flex gap-2 items-center">
+                        <div className="w-[30%]">
+                          <div className="w-full overflow-hidden">
+                            <Image
+                              src={product?.frontImage}
+                              width={180}
+                              height={180}
+                              className="h-full w-full object-cover rounded"
+                            />
+                          </div>
+                        </div>
+                        <div className="w-[70%]">
+                          <h1 className="text-xs font-semibold hover:text-secondary cursor-pointer">
+                            {product?.name?.slice(0, 40)}
+                          </h1>
+                          <p className="text-xs text-secondary font-semibold mt-1">৳ {product?.sellingPrice}</p>
+                        </div>
+                      </div>
+                    </>
+                  ))}
                 </div>
               </div>
             </div>
