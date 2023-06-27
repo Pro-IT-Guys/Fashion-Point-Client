@@ -44,7 +44,8 @@
     "simplebar": "^5.3.5",
     "simplebar-react": "^2.3.5",
     "stylis": "^4.0.10",
-    "stylis-plugin-rtl": "^2.0.2"
+    "stylis-plugin-rtl": "^2.0.2",
+    "swiper": "^9.4.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",

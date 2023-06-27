@@ -16,6 +16,7 @@ import ColorManyPicker from "../common/ColorManyPicker";
 import ShopProductSort from "../shop/ShopProductSort";
 import ProductCard from "./ProductCard";
 import Image from "next/image";
+import PopularProducts from "./PopularProducts";
 
 const Products = () => {
   const [openFilter, setOpenFilter] = useState(false);
@@ -218,7 +219,7 @@ const Products = () => {
                   <h1 className="font-semibold text-xl">Best Selling</h1>
                 </div>
                 <div className="p-2 space-y-3">
-                  {products?.slice(0, 10)?.map((product) => (
+                  {products?.slice(0, 20)?.map((product) => (
                     <>
                       <div className="flex gap-2 items-center">
                         <div className="w-[30%]">
@@ -235,7 +236,9 @@ const Products = () => {
                           <h1 className="text-xs font-semibold hover:text-secondary cursor-pointer">
                             {product?.name?.slice(0, 40)}
                           </h1>
-                          <p className="text-xs text-secondary font-semibold mt-1">৳ {product?.sellingPrice}</p>
+                          <p className="text-xs text-secondary font-semibold mt-1">
+                            ৳ {product?.sellingPrice}
+                          </p>
                         </div>
                       </div>
                     </>
@@ -248,6 +251,13 @@ const Products = () => {
                 {products?.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
+              </div>
+
+              <div>
+                <h1 className="font-bold text-xl mt-7">Popular Products</h1>
+                <PopularProducts products={products} />
+                <h1 className="font-bold text-xl mt-7">Latest Collection</h1>
+                <PopularProducts products={products} />
               </div>
             </div>
           </div>

@@ -41,7 +41,6 @@ export default function MyApp(props) {
               content='initial-scale=1, width=device-width'
             />
           </Head>
-
           <ThemeConfig>
             <ThemePrimaryColor>
               <RtlLayout>

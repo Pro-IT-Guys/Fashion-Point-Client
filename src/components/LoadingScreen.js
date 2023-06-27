@@ -6,6 +6,8 @@ import { alpha, styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 //
 import Logo from './Logo';
+import logoImg from '../assets/logo/Main Website Logo.jpg'
+import Image from 'next/image'
 
 // ----------------------------------------------------------------------
 
@@ -55,7 +57,13 @@ export default function LoadingScreen({ ...other }) {
             repeat: Infinity,
           }}
         >
-          <Logo sx={{ width: 64, height: 64 }} />
+          {/* <Logo sx={{ width: 64, height: 64 }} /> */}
+          <Image
+            src={logoImg}
+            alt="logo"
+            width={64}
+            height={30}
+          />
         </motion.div>
 
         <Box
