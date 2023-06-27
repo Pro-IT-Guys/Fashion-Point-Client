@@ -28,7 +28,6 @@ const Products = () => {
       .then((data) => setProducts(data.data));
   }, []);
 
-  console.log(products);
 
   const RootStyle = styled("div")(({ theme }) => ({
     paddingTop: theme.spacing(15),

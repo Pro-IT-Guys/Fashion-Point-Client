@@ -47,11 +47,18 @@ export default function ProductDetails() {
 
   return (
     <MainLayout>
-      <div  className="bg-[#f7f7ff9c]  pt-5">
+      <div className="bg-[#f7f7ff9c] pb-20  pt-5">
         <Container maxWidth="lg">
-          <Card className="mt-20 mb-20 pb-10">
+          <Card className="mt-20  pb-10">
             <Grid container>
-              <Grid item xs={12} md={6} lg={7} p={3} className="overflow-hidden">
+              <Grid
+                item
+                xs={12}
+                md={6}
+                lg={7}
+                p={3}
+                className="overflow-hidden"
+              >
                 <ProductDetailsCarousel product={productDetails} />
               </Grid>
               <Grid item xs={12} md={6} lg={5} p={5}>
@@ -150,6 +157,7 @@ export default function ProductDetails() {
                     Add to Cart
                   </Button>
                   <Button
+                    onClick={() => router.push(`/checkout`)}
                     fullWidth
                     size="large"
                     type="submit"
