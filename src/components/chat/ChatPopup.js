@@ -3,10 +3,11 @@ import MenuPopover from '../MenuPopover'
 import { styled } from '@mui/material/styles'
 import InputEmoji from 'react-input-emoji'
 import MessageItem from './MessageItem'
-import { userId } from 'constant/constant'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { CustomIcons } from 'public/static/mui-icons'
 import { ButtonAnimate } from '../animate'
+import { sendMessage } from 'apis/chat.api'
+import { ContextData } from 'context/dataProviderContext'
 
 const InfoStyle = styled(Typography)(({ theme }) => ({
   display: 'flex',
@@ -32,11 +33,21 @@ export default function ChatPopup({
   message,
   chat,
 }) {
+  const { currentlyLoggedIn } = useContext(ContextData)
   const [inputMeassage, setInputMessage] = useState('')
-  const sender = chat?.members?.find(member => member?._id === userId)
+  const sender = chat?.members?.find(
+    member => member?._id === currentlyLoggedIn?._id
+  )
 
   const handleInputMessage = text => {
     setInputMessage(text)
+  }
+
+  const handleSendMessage = async () => {
+    const chatId = chat?._id
+    const senderId = currentlyLoggedIn?._id
+    await sendMessage({ chatId, senderId, text: inputMeassage })
+    setInputMessage('')
   }
 
   return (
@@ -76,14 +87,19 @@ export default function ChatPopup({
         }}
       >
         {message?.map((item, index) => (
-          <MessageItem key={index} message={item} chat={chat} />
+          <MessageItem
+            key={index}
+            message={item}
+            chat={chat}
+            user={currentlyLoggedIn}
+          />
         ))}
       </Box>
 
       <Box sx={{ paddingBottom: 1.5, display: 'flex', px: 2.8 }}>
         <InputEmoji value={inputMeassage} onChange={handleInputMessage} />
         <ButtonAnimate mediumClick={true}>
-          <Button>
+          <Button onClick={handleSendMessage}>
             <CustomIcons.SendIcon />
           </Button>
         </ButtonAnimate>

@@ -14,7 +14,7 @@ import {
   Box,
 } from '@mui/material'
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Banner from 'src/components/Home/Banner/Banner'
 import Page from 'src/components/Page'
 import ProductDetailsCarousel from 'src/components/Products/ProductDetailsCarousel'
@@ -32,6 +32,7 @@ import {
   getMessageOfChatId,
 } from 'apis/chat.api'
 import { adminId } from 'constant/constant'
+import { ContextData } from 'context/dataProviderContext'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -45,20 +46,12 @@ export default function ProductDetails() {
   const anchorRef = useRef(null)
   const [chatData, setChatData] = useState(null)
   const [message, setMessage] = useState([])
+  const { currentlyLoggedIn } = useContext(ContextData)
 
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
   const router = useRouter()
   const params = router.query.id
-  const RootStyle = styled(Page)({
-    height: '100%',
-  })
-
-  const ContentStyle = styled('div')(({ theme }) => ({
-    overflow: 'hidden',
-    position: 'relative',
-    backgroundColor: theme.palette.background.default,
-  }))
 
   // Create chat with admin / get chat if already exist
   const handleChatClick = async () => {
@@ -66,13 +59,13 @@ export default function ProductDetails() {
     let data
 
     data = await createChat({
-      senderId: '649bf518b7b20cef451e2249',
+      senderId: currentlyLoggedIn?._id,
       receiverId: adminId,
     })
 
     if (!data) {
       data = await getChatOfSenderAndReceiver({
-        senderId: '649bf518b7b20cef451e2249',
+        senderId: currentlyLoggedIn?._id,
         receiverId: adminId,
       })
     }

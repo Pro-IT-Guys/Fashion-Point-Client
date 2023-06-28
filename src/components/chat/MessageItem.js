@@ -3,7 +3,6 @@ import { formatDistanceToNowStrict } from 'date-fns'
 // material
 import { styled } from '@mui/material/styles'
 import { Avatar, Box, Typography } from '@mui/material'
-import { userId } from 'constant/constant'
 
 // ----------------------------------------------------------------------
 
@@ -47,12 +46,11 @@ MessageItem.propTypes = {
   chat: PropTypes.object.isRequired,
 }
 
-export default function MessageItem({ message, chat }) {
-  const sender = chat?.members?.find(member => member?._id === userId)
-  const receiver = chat?.members?.find(member => member?._id !== userId)
+export default function MessageItem({ message, chat, user }) {
+  const receiver = chat?.members?.find(member => member?._id !== user?._id)
 
   const senderDetails =
-    message.senderId === userId
+    message.senderId === user?._id
       ? { type: 'me' }
       : {
           avatar: receiver?.avatar,
@@ -61,9 +59,6 @@ export default function MessageItem({ message, chat }) {
 
   const isMe = senderDetails.type === 'me'
   const isImage = false
-  const firstName = sender?.name?.firstName
-
-  console.log(senderDetails)
 
   return (
     <RootStyle>

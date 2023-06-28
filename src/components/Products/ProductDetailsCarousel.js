@@ -106,8 +106,6 @@ export default function ProductDetailsCarousel({product}) {
     setSelectedImage(selectedImage);
   };
 
-  console.log(imagesLightbox);
-
   const settings1 = {
     dots: false,
     arrows: false,
