@@ -24,7 +24,7 @@ import ProgressBar from 'src/components/ProgressBar'
 import LoadingScreen from 'src/components/LoadingScreen'
 import ThemePrimaryColor from 'src/components/ThemePrimaryColor'
 import '../styles/global.css'
-import { Toaster } from "react-hot-toast";
+
 // ----------------------------------------------------------------------
 
 const clientSideEmotionCache = createEmotionCache()
@@ -57,7 +57,7 @@ export default function MyApp(props) {
           </CacheProvider>
         </CollapseDrawerProvider>
       </SettingsProvider>
-      <Toaster />
+   
     </>
   )
 }
