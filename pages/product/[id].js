@@ -45,7 +45,6 @@ export default function ProductDetails() {
   const [openChat, setOpenChat] = useState(false)
   const anchorRef = useRef(null)
   const [chatData, setChatData] = useState(null)
-  const [message, setMessage] = useState([])
   const { currentlyLoggedIn } = useContext(ContextData)
 
   const [productDetails, setProductDetails] = useState({})
@@ -55,6 +54,8 @@ export default function ProductDetails() {
 
   // Create chat with admin / get chat if already exist
   const handleChatClick = async () => {
+    if (currentlyLoggedIn?.role === 'admin') return
+
     setOpenChat(true)
     let data
 
@@ -69,9 +70,7 @@ export default function ProductDetails() {
         receiverId: adminId,
       })
     }
-    setChatData(data.data)
-    const messagesOfChat = await getMessageOfChatId(data.data._id)
-    setMessage(messagesOfChat.data)
+    setChatData(data?.data)
   }
 
   useEffect(() => {
@@ -213,22 +212,25 @@ export default function ProductDetails() {
         </div>
       </MainLayout>
 
-      <ChatButton
-        ref={anchorRef}
-        onClick={handleChatClick}
-        color="primary"
-        aria-label="Chat with Us"
-      >
-        <ChatBubbleIcon />
-      </ChatButton>
+      {currentlyLoggedIn?.role !== 'admin' && (
+        <>
+          <ChatButton
+            ref={anchorRef}
+            onClick={handleChatClick}
+            color="primary"
+            aria-label="Chat with Us"
+          >
+            <ChatBubbleIcon />
+          </ChatButton>
 
-      <ChatPopup
-        chat={chatData}
-        message={message}
-        openChat={openChat}
-        setOpenChat={setOpenChat}
-        anchorRef={anchorRef.current}
-      />
+          <ChatPopup
+            chat={chatData}
+            openChat={openChat}
+            setOpenChat={setOpenChat}
+            anchorRef={anchorRef.current}
+          />
+        </>
+      )}
     </>
   )
 }

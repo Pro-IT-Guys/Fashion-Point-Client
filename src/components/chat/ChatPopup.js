@@ -3,41 +3,71 @@ import MenuPopover from '../MenuPopover'
 import { styled } from '@mui/material/styles'
 import InputEmoji from 'react-input-emoji'
 import MessageItem from './MessageItem'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { CustomIcons } from 'public/static/mui-icons'
 import { ButtonAnimate } from '../animate'
-import { sendMessage } from 'apis/chat.api'
+import { getMessageOfChatId, sendMessage } from 'apis/chat.api'
 import { ContextData } from 'context/dataProviderContext'
+import { io } from 'socket.io-client'
 
-const InfoStyle = styled(Typography)(({ theme }) => ({
-  display: 'flex',
-  marginBottom: theme.spacing(0.75),
-  color: theme.palette.text.secondary,
-}))
-
-const MessageImgStyle = styled('img')(({ theme }) => ({
-  width: '100%',
-  cursor: 'pointer',
-  objectFit: 'cover',
-  borderRadius: theme.shape.borderRadius,
-  [theme.breakpoints.up('md')]: {
-    height: 200,
-    minWidth: 296,
-  },
-}))
-
-export default function ChatPopup({
-  openChat,
-  setOpenChat,
-  anchorRef,
-  message,
-  chat,
-}) {
+export default function ChatPopup({ openChat, setOpenChat, anchorRef, chat }) {
+  const socket = useRef()
   const { currentlyLoggedIn } = useContext(ContextData)
+
+  const [onlineUsers, setOnlineUsers] = useState([])
+  const [message, setMessage] = useState([])
+  const [sentMessage, setSentMessage] = useState(null)
+  const [receiveMessage, setReceiveMessage] = useState(null)
   const [inputMeassage, setInputMessage] = useState('')
+
   const sender = chat?.members?.find(
     member => member?._id === currentlyLoggedIn?._id
   )
+
+  useEffect(() => {
+    const retriveMessage = async () => {
+      if (chat?._id) {
+        const messages = await getMessageOfChatId(chat?._id)
+        setMessage(messages.data)
+      }
+    }
+    retriveMessage()
+  }, [chat])
+
+  // Send message to the receiver in socket server
+  useEffect(() => {
+    if (sentMessage) {
+      socket.current.emit('send-message', sentMessage)
+    }
+  }, [sentMessage])
+
+  // Get all the online users from socket server and initialize socket
+  useEffect(() => {
+    socket.current = io('http://localhost:8080')
+    if (currentlyLoggedIn) {
+      socket.current.emit('new-user-add', currentlyLoggedIn?._id)
+      socket.current.on('get-active-users', users => {
+        setOnlineUsers(users)
+      })
+    }
+  }, [currentlyLoggedIn])
+
+  // Receive message from the sender in socket server
+  useEffect(() => {
+    socket.current.on('receive-message', message => {
+      console.log(message, 'from socket client')
+      setReceiveMessage(message)
+    })
+  }, [])
+
+  console.log(receiveMessage, '====================================')
+
+  // Update the message state with the received message from socket server
+  useEffect(() => {
+    if (receiveMessage && receiveMessage?.chatId === chat?._id) {
+      setMessage([...message, receiveMessage])
+    }
+  }, [receiveMessage])
 
   const handleInputMessage = text => {
     setInputMessage(text)
@@ -46,7 +76,14 @@ export default function ChatPopup({
   const handleSendMessage = async () => {
     const chatId = chat?._id
     const senderId = currentlyLoggedIn?._id
-    await sendMessage({ chatId, senderId, text: inputMeassage })
+    const newMessage = await sendMessage({
+      chatId,
+      senderId,
+      text: inputMeassage,
+    })
+    setMessage([...message, newMessage.data])
+    const receiverId = chat?.members?.find(member => member?._id !== senderId)
+    setSentMessage({ ...message, receiverId })
     setInputMessage('')
   }
 
