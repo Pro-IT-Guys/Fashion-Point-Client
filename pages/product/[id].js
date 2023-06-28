@@ -60,7 +60,7 @@ export default function ProductDetails() {
     backgroundColor: theme.palette.background.default,
   }))
 
-  // Create chat with admin
+  // Create chat with admin / get chat if already exist
   const handleChatClick = async () => {
     setOpenChat(true)
     let data
@@ -76,12 +76,10 @@ export default function ProductDetails() {
         receiverId: adminId,
       })
     }
-    setChatData(data)
+    setChatData(data.data)
     const messagesOfChat = await getMessageOfChatId(data.data._id)
     setMessage(messagesOfChat.data)
   }
-
-  console.log(message)
 
   useEffect(() => {
     fetch(`http://localhost:8000/api/v1/product/path/${params}`)
@@ -232,6 +230,8 @@ export default function ProductDetails() {
       </ChatButton>
 
       <ChatPopup
+        chat={chatData}
+        message={message}
         openChat={openChat}
         setOpenChat={setOpenChat}
         anchorRef={anchorRef.current}
