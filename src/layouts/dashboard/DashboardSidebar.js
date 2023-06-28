@@ -23,6 +23,8 @@ import NavSection from '../../components/NavSection';
 //
 import { MHidden } from '../../components/@material-extend';
 import sidebarConfig from './SidebarConfig';
+import logoImg from '../../assets/logo/Main Website Logo.jpg'
+import Image from 'next/image'
 
 // ----------------------------------------------------------------------
 
@@ -144,7 +146,13 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         >
           <NextLink href='/'>
             <Box sx={{ display: 'inline-flex' }}>
-              <Logo />
+            <Image
+              src={logoImg}
+              alt="Picture of the logo"
+              width={100}
+              height={40}
+              className="cursor-pointer"
+            />
             </Box>
           </NextLink>
 

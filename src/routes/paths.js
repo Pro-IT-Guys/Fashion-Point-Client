@@ -11,14 +11,21 @@ const ROOTS_DASHBOARD = "/dashboard";
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   general: {
-    pageOne: path(ROOTS_DASHBOARD, "/one"),
+    pageOne: path(ROOTS_DASHBOARD, "/ecommerce"),
     pageTwo: path(ROOTS_DASHBOARD, "/two"),
     pageThree: path(ROOTS_DASHBOARD, "/three"),
   },
-  app: {
-    root: path(ROOTS_DASHBOARD, "/app"),
-    pageFour: path(ROOTS_DASHBOARD, "/app/four"),
-    pageFive: path(ROOTS_DASHBOARD, "/app/five"),
-    pageSix: path(ROOTS_DASHBOARD, "/app/six"),
+  user: {
+    root: path(ROOTS_DASHBOARD, "/app/user"),
+    pageUser: path(ROOTS_DASHBOARD, "/app/user/all-users"),
+  },
+  product: {
+    root: path(ROOTS_DASHBOARD, "/app/product"),
+    pageAllProduct: path(ROOTS_DASHBOARD, "/app/product/all-products"),
+    createProduct: path(ROOTS_DASHBOARD, "/app/product/create-product"),
+  },
+  category: {
+    root: path(ROOTS_DASHBOARD, "/app/category"),
+    addCategory: path(ROOTS_DASHBOARD, "/app/category/add-category"),
   },
 };

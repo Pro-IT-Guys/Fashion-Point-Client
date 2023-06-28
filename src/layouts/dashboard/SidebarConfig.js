@@ -17,6 +17,7 @@ const ICONS = {
   ecommerce: getIcon("ic_ecommerce"),
   analytics: getIcon("ic_analytics"),
   dashboard: getIcon("ic_dashboard"),
+  product: getIcon("ic_product"),
 };
 
 const sidebarConfig = [
@@ -26,20 +27,10 @@ const sidebarConfig = [
     subheader: "general",
     items: [
       {
-        title: "One",
+        title: "E-Commerce",
         path: PATH_DASHBOARD.general.pageOne,
         icon: ICONS.dashboard,
-      },
-      {
-        title: "Two",
-        path: PATH_DASHBOARD.general.pageTwo,
-        icon: ICONS.ecommerce,
-      },
-      {
-        title: "Three",
-        path: PATH_DASHBOARD.general.pageThree,
-        icon: ICONS.analytics,
-      },
+      }
     ],
   },
 
@@ -49,15 +40,31 @@ const sidebarConfig = [
     subheader: "management",
     items: [
       {
-        title: "user",
-        path: PATH_DASHBOARD.app.root,
+        title: "customer",
+        path: PATH_DASHBOARD.user.root,
         icon: ICONS.user,
         children: [
-          { title: "Four", path: PATH_DASHBOARD.app.pageFour },
-          { title: "Five", path: PATH_DASHBOARD.app.pageFive },
-          { title: "Six", path: PATH_DASHBOARD.app.pageSix },
+          { title: "All Users", path: PATH_DASHBOARD.user.pageUser },
         ],
       },
+      {
+        title: "product",
+        path: PATH_DASHBOARD.product.root,
+        icon: ICONS.ecommerce,
+        children: [
+          { title: "All Products", path: PATH_DASHBOARD.product.pageAllProduct },
+          { title: "Create Products", path: PATH_DASHBOARD.product.createProduct },
+        ],
+      },
+      {
+        title: "category",
+        path: PATH_DASHBOARD.category.root,
+        icon: ICONS.ecommerce,
+        children: [
+          { title: "Add Category", path: PATH_DASHBOARD.category.addCategory },
+        ],
+      },
+    
     ],
   },
 ];

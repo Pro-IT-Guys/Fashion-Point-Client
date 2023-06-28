@@ -8,15 +8,15 @@ import Page from 'src/components/Page';
 
 // ----------------------------------------------------------------------
 
-export default function PageFive() {
+export default function CreateProduct() {
   const { themeStretch } = useSettings();
 
   return (
     <DashboardLayout>
-      <Page title='Page Five | Minimal-UI'>
+      <Page title='Page Four | Minimal-UI'>
         <Container maxWidth={themeStretch ? false : 'xl'}>
           <Typography variant='h3' component='h1' paragraph>
-            Page Five
+        Create Product Page
           </Typography>
           <Typography gutterBottom>
             Curabitur turpis. Vestibulum facilisis, purus nec pulvinar iaculis,

@@ -217,7 +217,7 @@ const Products = () => {
                 <div className="bg-[#f2f2f2] border py-2 px-3 rounded-t">
                   <h1 className="font-semibold text-xl">Best Selling</h1>
                 </div>
-                <div className="p-2 space-y-3">
+                <div className="p-2 space-y-3 bg-white rounded overflow-hidden">
                   {products?.slice(0, 20)?.map((product) => (
                     <>
                       <div className="flex gap-2 items-center">
