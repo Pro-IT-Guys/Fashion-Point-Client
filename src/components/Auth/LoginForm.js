@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import axios from "axios";
+import FetchUrls from "src/utils/FetchUrls";
+import { toast } from "react-hot-toast";
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -15,10 +16,32 @@ export default function LoginForm() {
     formState: { errors },
     reset,
   } = useForm();
+
+
   const onSubmit = (data) => {
-    console.log(data);
-    reset();
-  };
+    const {email, password } = data
+
+    const body = {
+      email, 
+      password
+    }
+
+    axios
+      .post(FetchUrls('auth/login'), body)
+      .then(res => {
+        if (res.status === 200) {
+          // navigate(from, { replace: true })
+          toast.success('Login Successfully!')
+          localStorage.setItem('token', (res.headers.authorization.split(' ')[1]))
+        } else {
+          toast.error('Something Went Wrong!')
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        toast.error('Something Went Wrong!')
+      })
+  }
 
   return (
     <div className="flex justify-center">
@@ -27,11 +50,11 @@ export default function LoginForm() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
               <div className="flex flex-col items-start">
-                <label htmlFor="email" className="ml-5">
+                <label htmlFor="email" className="ml-3 mb-1">
                   Email
                 </label>
                 <input
-                  className="py-3 px-5 text-gray-500 rounded-full w-full  border-[1px]"
+                  className="py-3 px-3 text-gray-500 rounded w-full  border-[1px]"
                   type="email"
                   id="email"
                   {...register("email", {
@@ -47,24 +70,24 @@ export default function LoginForm() {
                 />
                 <label className="label">
                   {errors.email?.type === "required" && (
-                    <span className="pl-5 text-sm mt-1 text-red-500">
+                    <span className="pl-3 text-sm mt-1 text-red-500">
                       {errors.email.message}
                     </span>
                   )}
                   {errors.email?.type === "pattern" && (
-                    <span className="pl-5 text-sm mt-1 text-red-500">
+                    <span className="pl-3 text-sm mt-1 text-red-500">
                       {errors.email.message}
                     </span>
                   )}
                 </label>
               </div>
               <div className="flex flex-col items-start">
-                <label htmlFor="password" className="ml-5">
+                <label htmlFor="password" className="ml-3 mb-1">
                   Password
                 </label>
                 <input
                   type="password"
-                  className="py-3 px-5 rounded-full w-full  border-[1px]"
+                  className="py-3 px-3 rounded w-full  border-[1px]"
                   id="password"
                   {...register("password", {
                     required: {

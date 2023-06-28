@@ -26,7 +26,6 @@ export default function ProductCard({ product }) {
   const { name, sellingPrice, frontImage, backImage, path } = product || {};
   const router = useRouter();
 
-  console.log(frontImage);
   return (
     <div className="shadow hover:shadow-md rounded overflow-hidden  h-full">
       <div className="bg-white h-full">

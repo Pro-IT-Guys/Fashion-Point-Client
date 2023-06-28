@@ -43,7 +43,7 @@ export default function SignUpModal({ open, onClose }) {
   };
   return (
     <DialogAnimate maxWidth="sm" open={open} onClose={onClose} >
-      <DialogTitle className=" bg-[#f1fff4] text-center">Signup Now</DialogTitle>
+      {/* <DialogTitle className="text-center">Signup Now</DialogTitle> */}
       <SignUpForm/>
     </DialogAnimate>
   );
