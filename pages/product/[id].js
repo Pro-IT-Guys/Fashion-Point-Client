@@ -63,20 +63,21 @@ export default function ProductDetails() {
   // Create chat with admin
   const handleChatClick = async () => {
     setOpenChat(true)
-    const data = await createChat({
+    let data
+
+    data = await createChat({
       senderId: '649bf518b7b20cef451e2249',
       receiverId: adminId,
     })
 
     if (!data) {
-      const data = await getChatOfSenderAndReceiver({
+      data = await getChatOfSenderAndReceiver({
         senderId: '649bf518b7b20cef451e2249',
         receiverId: adminId,
       })
     }
     setChatData(data)
-
-    const messagesOfChat = await getMessageOfChatId(data._id)
+    const messagesOfChat = await getMessageOfChatId(data.data._id)
     setMessage(messagesOfChat.data)
   }
 

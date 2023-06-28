@@ -20,8 +20,9 @@ export const getMessageOfChatId = async chatId => {
   }
 }
 
-export const getChatOfSenderAndReceiver = async (senderId, receiverId) => {
+export const getChatOfSenderAndReceiver = async data => {
   try {
+    const { senderId, receiverId } = data
     const res = await axios.get(
       `http://localhost:8000/api/v1/chat/${senderId}/${receiverId}`
     )
