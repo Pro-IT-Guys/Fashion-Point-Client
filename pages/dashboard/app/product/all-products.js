@@ -32,6 +32,7 @@ import {
 import Scrollbar from "src/components/Scrollbar";
 import Label from "src/components/Label";
 import DashboardLayout from "src/layouts/dashboard";
+import Image from "next/image";
 
 // ----------------------------------------------------------------------
 
@@ -88,10 +89,12 @@ export default function ProductList() {
   const [productList, setProductList] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/product")
+    fetch(
+      `http://localhost:8000/api/v1/product?searchTerm=${filterName}&page=${page}&limit=${rowsPerPage}`
+    )
       .then((res) => res.json())
       .then((data) => setProductList(data.data));
-  }, []);
+  }, [page, rowsPerPage, filterName]);
 
   const handleDeleteUser = (userId) => {
     console.log("Delete user");
@@ -115,7 +118,9 @@ export default function ProductList() {
     setPage(0);
   };
 
-  console.log(productList);
+  const handleFilterByName = (event) => {
+    setFilterName(event.target.value);
+  };
 
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - productList.length) : 0;
@@ -134,8 +139,8 @@ export default function ProductList() {
           <Card className="mt-5">
             <UserListToolbar
               numSelected={selected.length}
-              // filterName={filterName}
-              // onFilterName={handleFilterByName}
+              filterName={filterName}
+              onFilterName={handleFilterByName}
             />
 
             <Scrollbar>
@@ -172,13 +177,26 @@ export default function ProductList() {
                           selected={isItemSelected}
                           aria-checked={isItemSelected}
                         >
-                          <TableCell align="left" component="th" scope="row" padding="none">
+                          <TableCell
+                            align="left"
+                            component="th"
+                            scope="row"
+                            padding="none"
+                          >
                             <Stack
                               direction="row"
                               alignItems="center"
                               spacing={2}
                             >
-                              <Avatar alt={frontImage} src={frontImage} />
+                              <div className="w-16 h-16 overflow-hidden my-2">
+                                <Image
+                                  alt={frontImage}
+                                  src={frontImage}
+                                  height={80}
+                                  width={80}
+                                  className="h-full w-full object-cover rounded-full "
+                                />
+                              </div>
                               <h1
                                 variant="subtitle2"
                                 className="text-xs font-semibold"
@@ -188,9 +206,15 @@ export default function ProductList() {
                             </Stack>
                           </TableCell>
                           <TableCell align="left">{quantity}</TableCell>
-                          <TableCell align="left" >
-                            <h1 className="text-xs"> Buying Price: {buyingPrice}</h1>
-                            <h1 className="text-xs"> Selling Price: {sellingPrice}</h1>
+                          <TableCell align="left">
+                            <h1 className="text-xs">
+                              {" "}
+                              Buying Price: {buyingPrice}
+                            </h1>
+                            <h1 className="text-xs">
+                              {" "}
+                              Selling Price: {sellingPrice}
+                            </h1>
                           </TableCell>
                           <TableCell align="left">
                             {isVerified ? "Yes" : "No"}

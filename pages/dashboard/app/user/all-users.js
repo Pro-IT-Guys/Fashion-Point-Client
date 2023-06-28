@@ -88,10 +88,10 @@ export default function UserList() {
   const [userList, setUserList] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/users")
+    fetch(`http://localhost:8000/api/v1/users?searchTerm=${filterName}&page=${page}&limit=${rowsPerPage}`)
       .then((res) => res.json())
       .then((data) => setUserList(data.data));
-  }, []);
+  }, [ filterName, page, rowsPerPage]);
 
   const handleDeleteUser = (userId) => {
     console.log('Delete user');
@@ -106,23 +106,10 @@ export default function UserList() {
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
+  const handleFilterByName = (event) => {
+    setFilterName(event.target.value);
   };
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -151,8 +138,8 @@ export default function UserList() {
           <Card className="mt-5">
             <UserListToolbar
               numSelected={selected.length}
-              // filterName={filterName}
-              // onFilterName={handleFilterByName}
+              filterName={filterName}
+              onFilterName={handleFilterByName}
             />
 
             <Scrollbar>
