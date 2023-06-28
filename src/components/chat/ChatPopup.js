@@ -1,7 +1,53 @@
-import { Box, Button, Card, Divider, Typography } from '@mui/material'
+import { Avatar, Box, Button, Card, Divider, Typography } from '@mui/material'
 import MenuPopover from '../MenuPopover'
+import { styled } from '@mui/material/styles'
+import MessageItem from './MessageItem'
+
+const InfoStyle = styled(Typography)(({ theme }) => ({
+  display: 'flex',
+  marginBottom: theme.spacing(0.75),
+  color: theme.palette.text.secondary,
+}))
+
+const MessageImgStyle = styled('img')(({ theme }) => ({
+  width: '100%',
+  cursor: 'pointer',
+  objectFit: 'cover',
+  borderRadius: theme.shape.borderRadius,
+  [theme.breakpoints.up('md')]: {
+    height: 200,
+    minWidth: 296,
+  },
+}))
 
 export default function ChatPopup({ openChat, setOpenChat, anchorRef }) {
+  const demoMessage = {
+    senderId: '8864c717-587d-472a-929a-8e5f298024da-0',
+    contentType: 'text',
+    content: 'Hello',
+    createdAt: '2021-09-30T07:50:00.000Z',
+    conversationId: '8864c717-587d-472a-929a-8e5f298024da',
+    id: '8864c717-587d-472a-929a-8e5f298024da-0',
+  }
+
+  const demoConversation = {
+    id: '8864c717-587d-472a-929a-8e5f298024da',
+    participants: [
+      {
+        id: '8864c717-587d-472a-929a-8e5f298024da-0',
+        name: 'Admin',
+        avatar: '/static/mock-images/avatars/avatar_default.jpg',
+      },
+      {
+        id: '8864c717-587d-472a-929a-8e5f298024da-1',
+        name: 'User',
+        avatar: '/static/mock-images/avatars/avatar_1.jpg',
+      },
+    ],
+    createdAt: '2021-09-30T07:50:00.000Z',
+    messages: [demoMessage],
+  }
+
   return (
     <MenuPopover
       open={openChat}
@@ -30,9 +76,9 @@ export default function ChatPopup({ openChat, setOpenChat, anchorRef }) {
         </Typography>
       </Box>
 
-        <Box>
-              {/* Chat box */}
-      </Box>
+      <Divider />
+
+      <MessageItem message={demoMessage} conversation={demoConversation} />
 
       <Divider sx={{ my: 1 }} />
 

@@ -26,6 +26,8 @@ import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart'
 import ChatPopup from 'src/components/chat/ChatPopup'
 import { MIconButton } from 'src/components/@material-extend'
 import MenuPopover from 'src/components/MenuPopover'
+import { createChat } from 'apis/chat.api'
+import { adminId } from 'constant/constant'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -37,6 +39,7 @@ const ChatButton = styled(Fab)(({ theme }) => ({
 export default function ProductDetails() {
   const [openChat, setOpenChat] = useState(false)
   const anchorRef = useRef(null)
+  const [chatData, setChatData] = useState(null)
 
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
@@ -51,6 +54,16 @@ export default function ProductDetails() {
     position: 'relative',
     backgroundColor: theme.palette.background.default,
   }))
+
+  // Create chat with admin
+  const handleChatClick = async () => {
+    setOpenChat(true)
+    const data = await createChat({
+      senderId: '649bf518b7b20cef451e2249',
+      receiverId: adminId,
+    })
+    setChatData(data)
+  }
 
   useEffect(() => {
     fetch(`http://localhost:8000/api/v1/product/path/${params}`)
@@ -191,10 +204,10 @@ export default function ProductDetails() {
           </Container>
         </div>
       </MainLayout>
-      
+
       <ChatButton
         ref={anchorRef}
-        onClick={() => setOpenChat(!openChat)}
+        onClick={handleChatClick}
         color="primary"
         aria-label="Chat with Us"
       >
