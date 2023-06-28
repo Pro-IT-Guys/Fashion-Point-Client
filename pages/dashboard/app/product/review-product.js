@@ -1,22 +1,22 @@
-import { Container, Typography } from '@mui/material';
+import { Container, Typography } from "@mui/material";
 // layouts
-import DashboardLayout from 'src/layouts/dashboard';
+import DashboardLayout from "src/layouts/dashboard";
 // hooks
-import useSettings from 'src/hooks/useSettings';
+import useSettings from "src/hooks/useSettings";
 // components
-import Page from 'src/components/Page';
+import Page from "src/components/Page";
 
 // ----------------------------------------------------------------------
 
-export default function PageTwo() {
+export default function AllProducts() {
   const { themeStretch } = useSettings();
 
   return (
     <DashboardLayout>
-      <Page title='Page Two | Minimal-UI'>
-        <Container maxWidth={themeStretch ? false : 'xl'}>
-          <Typography variant='h3' component='h1' paragraph>
-            Page Two
+      <Page title="Page Four | Minimal-UI">
+        <Container maxWidth={themeStretch ? false : "xl"}>
+          <Typography variant="h3" component="h1" paragraph>
+            Review Product Page
           </Typography>
           <Typography gutterBottom>
             Curabitur turpis. Vestibulum facilisis, purus nec pulvinar iaculis,

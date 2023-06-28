@@ -12,8 +12,6 @@ export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   general: {
     pageOne: path(ROOTS_DASHBOARD, "/ecommerce"),
-    pageTwo: path(ROOTS_DASHBOARD, "/two"),
-    pageThree: path(ROOTS_DASHBOARD, "/three"),
   },
   user: {
     root: path(ROOTS_DASHBOARD, "/app/user"),
@@ -23,9 +21,21 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, "/app/product"),
     pageAllProduct: path(ROOTS_DASHBOARD, "/app/product/all-products"),
     createProduct: path(ROOTS_DASHBOARD, "/app/product/create-product"),
+    review: path(ROOTS_DASHBOARD, "/app/product/review-product"),
   },
   category: {
     root: path(ROOTS_DASHBOARD, "/app/category"),
     addCategory: path(ROOTS_DASHBOARD, "/app/category/add-category"),
+    addBrand: path(ROOTS_DASHBOARD, "/app/category/add-brand"),
+  },
+  order: {
+    root: path(ROOTS_DASHBOARD, "/app/orders"),
+    // getOrders: path(ROOTS_DASHBOARD, "/app/category/all-orders"),
+  },
+  settings: {
+    root: path(ROOTS_DASHBOARD, "/app/settings/my-shop"),
+  },
+  banner: {
+    root: path(ROOTS_DASHBOARD, "/app/settings/banner"),
   },
 };

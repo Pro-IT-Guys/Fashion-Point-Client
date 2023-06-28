@@ -17,7 +17,6 @@ const ICONS = {
   ecommerce: getIcon("ic_ecommerce"),
   analytics: getIcon("ic_analytics"),
   dashboard: getIcon("ic_dashboard"),
-  product: getIcon("ic_product"),
 };
 
 const sidebarConfig = [
@@ -54,17 +53,33 @@ const sidebarConfig = [
         children: [
           { title: "All Products", path: PATH_DASHBOARD.product.pageAllProduct },
           { title: "Create Products", path: PATH_DASHBOARD.product.createProduct },
+          { title: "Review & Ratings", path: PATH_DASHBOARD.product.review },
         ],
       },
       {
         title: "category",
         path: PATH_DASHBOARD.category.root,
-        icon: ICONS.ecommerce,
+        icon: ICONS.dashboard,
         children: [
           { title: "Add Category", path: PATH_DASHBOARD.category.addCategory },
+          { title: "Add Brand", path: PATH_DASHBOARD.category.addBrand },
         ],
       },
-    
+      {
+        title: "orders",
+        path: PATH_DASHBOARD.order.root,
+        icon: ICONS.user,
+      },
+      {
+        title: "My Shop",
+        path: PATH_DASHBOARD.settings.root,
+        icon: ICONS.analytics,
+      },
+      {
+        title: "Banner Setting",
+        path: PATH_DASHBOARD.banner.root,
+        icon: ICONS.dashboard,
+      },
     ],
   },
 ];
