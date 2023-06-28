@@ -16,6 +16,10 @@ import MenuMobile from "./MenuMobile";
 import navConfig from "./MenuConfig";
 import logo from "../../assets/logo/Main Website Logo.jpg";
 import Image from "next/image";
+import LoginFormModal from "src/components/AuthModal/LoginModal";
+import { useState } from "react";
+import { HiOutlineUser } from "react-icons/hi";
+import SignUpModal from "src/components/AuthModal/SignUpModal";
 
 // ----------------------------------------------------------------------
 
@@ -49,9 +53,24 @@ const ToolbarShadowStyle = styled("div")(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function MainNavbar() {
+  const [open, setOpen] = useState(false);
+  const [signupOpen, setSignupOpen] = useState(false);
   const isOffset = useOffSetTop(100);
   const { pathname } = useRouter();
   const isHome = pathname === "/";
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleSignUpOpen = () => {
+    setSignupOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setSignupOpen(false);
+  };
 
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: "transparent" }}>
@@ -95,9 +114,22 @@ export default function MainNavbar() {
             />
           </MHidden>
 
-          <Button variant="contained" href="/auth/login">
+          {/* <Button variant="contained" onClick={handleClickOpen}>
             Login
-          </Button>
+          </Button> */}
+          <div className="flex gap-2 items-center">
+            <div>
+              <HiOutlineUser className="text-black text-xl" />
+            </div>
+            <div className="text-black text-xs uppercase">
+              <h1 onClick={handleClickOpen} className="cursor-pointer">
+                Login
+              </h1>
+              <h1 onClick={handleSignUpOpen} className="cursor-pointer">
+                Signup
+              </h1>
+            </div>
+          </div>
 
           <MHidden width="mdUp">
             <MenuMobile
@@ -106,6 +138,15 @@ export default function MainNavbar() {
               navConfig={navConfig}
             />
           </MHidden>
+
+          <LoginFormModal
+            open={open}
+            onClose={handleClose}
+          />
+          <SignUpModal
+            open={signupOpen}
+            onClose={handleClose}
+          />
         </Container>
       </ToolbarStyle>
 

@@ -22,7 +22,7 @@ export default function LoginForm() {
 
   return (
     <div className="flex justify-center">
-      <div className="w-full bg-[#f1fff4] p-5">
+      <div className="w-full bg-[#f1fff4] p-10">
         <div className=" rounded-lg w-full">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
@@ -107,13 +107,13 @@ export default function LoginForm() {
               <div className="relative mt-2">
                 <button
                   type="submit"
-                  className="font-bold  py-3 rounded-full bg-yellow-400 w-full"
+                  className="font-bold  py-3 rounded-full bg-primary text-white w-full"
                 >
                   Login
                 </button>
               </div>
 
-              <div>
+              {/* <div>
                 <p className="text-sm text-center pt-3 pb-4">
                   Don't have an account?{" "}
                   <span
@@ -123,7 +123,7 @@ export default function LoginForm() {
                     Sign up
                   </span>
                 </p>
-              </div>
+              </div> */}
 
             </div>
           </form>
