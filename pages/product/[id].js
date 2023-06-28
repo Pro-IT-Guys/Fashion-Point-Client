@@ -26,7 +26,11 @@ import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart'
 import ChatPopup from 'src/components/chat/ChatPopup'
 import { MIconButton } from 'src/components/@material-extend'
 import MenuPopover from 'src/components/MenuPopover'
-import { createChat } from 'apis/chat.api'
+import {
+  createChat,
+  getChatOfSenderAndReceiver,
+  getMessageOfChatId,
+} from 'apis/chat.api'
 import { adminId } from 'constant/constant'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
@@ -40,6 +44,7 @@ export default function ProductDetails() {
   const [openChat, setOpenChat] = useState(false)
   const anchorRef = useRef(null)
   const [chatData, setChatData] = useState(null)
+  const [message, setMessage] = useState([])
 
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
@@ -55,14 +60,25 @@ export default function ProductDetails() {
     backgroundColor: theme.palette.background.default,
   }))
 
-  // Create chat with admin
+  // Create chat with admin / get chat if already exist
   const handleChatClick = async () => {
     setOpenChat(true)
-    const data = await createChat({
+    let data
+
+    data = await createChat({
       senderId: '649bf518b7b20cef451e2249',
       receiverId: adminId,
     })
-    setChatData(data)
+
+    if (!data) {
+      data = await getChatOfSenderAndReceiver({
+        senderId: '649bf518b7b20cef451e2249',
+        receiverId: adminId,
+      })
+    }
+    setChatData(data.data)
+    const messagesOfChat = await getMessageOfChatId(data.data._id)
+    setMessage(messagesOfChat.data)
   }
 
   useEffect(() => {
@@ -71,7 +87,6 @@ export default function ProductDetails() {
       .then(data => setProductDetails(data.data))
   }, [params])
 
-  console.log(productDetails)
   const { name, sellingPrice, quantity, rating, description, images } =
     productDetails || {}
 
@@ -215,6 +230,8 @@ export default function ProductDetails() {
       </ChatButton>
 
       <ChatPopup
+        chat={chatData}
+        message={message}
         openChat={openChat}
         setOpenChat={setOpenChat}
         anchorRef={anchorRef.current}
