@@ -8,3 +8,25 @@ export const createChat = async data => {
     console.log(error)
   }
 }
+
+export const getMessageOfChatId = async chatId => {
+  try {
+    const res = await axios.get(
+      `http://localhost:8000/api/v1/message/${chatId}`
+    )
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getChatOfSenderAndReceiver = async (senderId, receiverId) => {
+  try {
+    const res = await axios.get(
+      `http://localhost:8000/api/v1/chat/${senderId}/${receiverId}`
+    )
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+}

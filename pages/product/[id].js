@@ -26,7 +26,11 @@ import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart'
 import ChatPopup from 'src/components/chat/ChatPopup'
 import { MIconButton } from 'src/components/@material-extend'
 import MenuPopover from 'src/components/MenuPopover'
-import { createChat } from 'apis/chat.api'
+import {
+  createChat,
+  getChatOfSenderAndReceiver,
+  getMessageOfChatId,
+} from 'apis/chat.api'
 import { adminId } from 'constant/constant'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
@@ -40,6 +44,7 @@ export default function ProductDetails() {
   const [openChat, setOpenChat] = useState(false)
   const anchorRef = useRef(null)
   const [chatData, setChatData] = useState(null)
+  const [message, setMessage] = useState([])
 
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
@@ -62,8 +67,20 @@ export default function ProductDetails() {
       senderId: '649bf518b7b20cef451e2249',
       receiverId: adminId,
     })
+
+    if (!data) {
+      const data = await getChatOfSenderAndReceiver({
+        senderId: '649bf518b7b20cef451e2249',
+        receiverId: adminId,
+      })
+    }
     setChatData(data)
+
+    const messagesOfChat = await getMessageOfChatId(data._id)
+    setMessage(messagesOfChat.data)
   }
+
+  console.log(message)
 
   useEffect(() => {
     fetch(`http://localhost:8000/api/v1/product/path/${params}`)
@@ -71,7 +88,6 @@ export default function ProductDetails() {
       .then(data => setProductDetails(data.data))
   }, [params])
 
-  console.log(productDetails)
   const { name, sellingPrice, quantity, rating, description, images } =
     productDetails || {}
 
