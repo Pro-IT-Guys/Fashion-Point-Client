@@ -5,11 +5,13 @@ import {
   Container,
   Divider,
   Grid,
+  Fab,
   Icon,
   Rating,
   Stack,
   Typography,
 } from "@mui/material";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import React, { useEffect, useState } from "react";
 import Banner from "src/components/Home/Banner/Banner";
 import Page from "src/components/Page";
@@ -19,6 +21,12 @@ import { useRouter } from "next/router";
 import Label from "src/components/Label";
 import { useField } from "formik";
 import roundAddShoppingCart from "@iconify/icons-ic/round-add-shopping-cart";
+
+const ChatButton = styled(Fab)(({ theme }) => ({
+  position: "fixed",
+  bottom: theme.spacing(2),
+  right: theme.spacing(2),
+}));
 
 export default function ProductDetails() {
   const [productDetails, setProductDetails] = useState({});
@@ -167,6 +175,10 @@ export default function ProductDetails() {
                   </Button>
                 </Stack>
               </Grid>
+
+              <ChatButton color="primary" aria-label="Chat with Us">
+              <ChatBubbleIcon />
+              </ChatButton>
             </Grid>
           </Card>
         </Container>
