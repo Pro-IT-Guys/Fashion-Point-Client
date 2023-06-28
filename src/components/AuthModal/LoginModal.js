@@ -43,7 +43,7 @@ export default function LoginFormModal({ open, onClose }) {
   return (
     <DialogAnimate maxWidth="sm" open={open} onClose={onClose} >
       <DialogTitle className=" bg-[#f1fff4] text-center">Login Now</DialogTitle>
-      <LoginForm/>
+      <LoginForm   onClose={onClose}/>
     </DialogAnimate>
   );
 }

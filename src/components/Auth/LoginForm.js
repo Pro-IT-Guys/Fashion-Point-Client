@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm() {
+export default function LoginForm({ onClose}) {
   const router = useRouter();
   const {
     register,
@@ -31,6 +31,7 @@ export default function LoginForm() {
       .then(res => {
         if (res.status === 200) {
           // navigate(from, { replace: true })
+          onClose()
           toast.success('Login Successfully!')
           localStorage.setItem('token', (res.headers.authorization.split(' ')[1]))
         } else {
