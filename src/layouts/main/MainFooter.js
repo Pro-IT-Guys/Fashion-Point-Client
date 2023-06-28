@@ -57,6 +57,7 @@ const LINKS = [
 const RootStyle = styled('div')(({ theme }) => ({
   position: 'relative',
   backgroundColor: theme.palette.background.default,
+  zIndex: 9,
 }));
 
 // ----------------------------------------------------------------------
