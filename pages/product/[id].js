@@ -101,6 +101,7 @@ export default function ProductDetails() {
     if (currentlyLoggedIn) {
       socket.current = io('http://localhost:8080')
       socket.current.emit('join', currentlyLoggedIn._id)
+
       socket.current.on('activeUsers', users => {
         setOnlineUsers(users)
       })
@@ -116,7 +117,7 @@ export default function ProductDetails() {
       })
       setSendMessageBase(false)
     }
-  }, [socket.current])
+  }, [])
 
   // Create chat with admin / get chat if already exist
   const handleChatClick = async () => {

@@ -3,7 +3,7 @@ import MenuPopover from '../MenuPopover'
 import { styled } from '@mui/material/styles'
 import InputEmoji from 'react-input-emoji'
 import MessageItem from './MessageItem'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { CustomIcons } from 'public/static/mui-icons'
 import { ButtonAnimate } from '../animate'
 import { getMessageOfChatId, sendMessage } from 'apis/chat.api'
@@ -19,12 +19,20 @@ export default function ChatPopup({
   message,
   setSendMessageBase,
 }) {
+  const boxRef = useRef(null)
   const { currentlyLoggedIn } = useContext(ContextData)
   const [inputMeassage, setInputMessage] = useState('')
 
   const sender = chat?.members?.find(
     member => member?._id === currentlyLoggedIn?._id
   )
+
+  // Scroll to the last message when the message list updates
+  useEffect(() => {
+    if (boxRef.current) {
+      boxRef.current.scrollTop = boxRef.current.scrollHeight
+    }
+  }, [message])
 
   // Main functions==========>
   const handleInputMessage = text => {
@@ -40,19 +48,17 @@ export default function ChatPopup({
       senderId,
       text: inputMeassage,
     })
-    
+
     setMessage([...message, newMessage.data])
-    const receiverId = chat?.members?.find(member => member?._id !== senderId)
+    const receiverId = chat?.members?.find(
+      member => member._id !== senderId
+    )?._id
     socket.emit('sendMessage', {
       senderId,
       receiverId,
       createdAt: newMessage.data.createdAt,
       text: inputMeassage,
     })
-    // socket.on('getMessage', data => {
-    //   console.log(data, 'from socket')
-    //   setMessage([...message, data])
-    // })
 
     setSendMessageBase(true)
     setInputMessage('')
@@ -89,6 +95,7 @@ export default function ChatPopup({
       <Divider />
 
       <Box
+        ref={boxRef}
         sx={{
           maxHeight: '250px',
           overflowY: 'auto',
