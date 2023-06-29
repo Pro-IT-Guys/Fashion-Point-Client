@@ -12,12 +12,11 @@ import { io } from 'socket.io-client'
 
 export default function ChatPopup({ openChat, setOpenChat, anchorRef, chat }) {
   const socket = useRef()
+  // socket.current = io('http://localhost:8080')
   const { currentlyLoggedIn } = useContext(ContextData)
 
   const [onlineUsers, setOnlineUsers] = useState([])
   const [message, setMessage] = useState([])
-  const [sentMessage, setSentMessage] = useState(null)
-  const [receiveMessage, setReceiveMessage] = useState(null)
   const [inputMeassage, setInputMessage] = useState('')
 
   const sender = chat?.members?.find(
@@ -34,48 +33,39 @@ export default function ChatPopup({ openChat, setOpenChat, anchorRef, chat }) {
     retriveMessage()
   }, [chat])
 
-  // Send message to the receiver in socket server
+  // Initialize socket..Make useEffect if only the currentlyLoggedIn exist
   useEffect(() => {
-    if (sentMessage) {
-      socket.current.emit('send-message', sentMessage)
-    }
-  }, [sentMessage])
-
-  // Get all the online users from socket server and initialize socket
-  useEffect(() => {
-    socket.current = io('http://localhost:8080')
     if (currentlyLoggedIn) {
-      socket.current.emit('new-user-add', currentlyLoggedIn?._id)
-      socket.current.on('get-active-users', users => {
+      socket.current = io('http://localhost:8080')
+      socket.current.emit('join', currentlyLoggedIn._id)
+      socket.current.on('activeUsers', users => {
         setOnlineUsers(users)
       })
     }
   }, [currentlyLoggedIn])
 
-  // Receive message from the sender in socket server
-  useEffect(() => {
-    socket.current.on('receive-message', message => {
-      console.log(message, 'from socket client')
-      setReceiveMessage(message)
-    })
-  }, [])
 
-  console.log(receiveMessage, '====================================')
 
-  // Update the message state with the received message from socket server
-  useEffect(() => {
-    if (receiveMessage && receiveMessage?.chatId === chat?._id) {
-      setMessage([...message, receiveMessage])
-    }
-  }, [receiveMessage])
+
+
+
+
+
+
+
+
+
+
 
   const handleInputMessage = text => {
     setInputMessage(text)
   }
 
+
   const handleSendMessage = async () => {
     const chatId = chat?._id
     const senderId = currentlyLoggedIn?._id
+
     const newMessage = await sendMessage({
       chatId,
       senderId,
@@ -83,7 +73,6 @@ export default function ChatPopup({ openChat, setOpenChat, anchorRef, chat }) {
     })
     setMessage([...message, newMessage.data])
     const receiverId = chat?.members?.find(member => member?._id !== senderId)
-    setSentMessage({ ...message, receiverId })
     setInputMessage('')
   }
 
