@@ -116,7 +116,7 @@ export default function ProductDetails() {
       })
       setSendMessageBase(false)
     }
-  }, []) 
+  }, [socket.current])
 
   // Create chat with admin / get chat if already exist
   const handleChatClick = async () => {
