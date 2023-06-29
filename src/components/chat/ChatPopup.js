@@ -3,48 +3,28 @@ import MenuPopover from '../MenuPopover'
 import { styled } from '@mui/material/styles'
 import InputEmoji from 'react-input-emoji'
 import MessageItem from './MessageItem'
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useState } from 'react'
 import { CustomIcons } from 'public/static/mui-icons'
 import { ButtonAnimate } from '../animate'
 import { getMessageOfChatId, sendMessage } from 'apis/chat.api'
 import { ContextData } from 'context/dataProviderContext'
-import { io } from 'socket.io-client'
 
-export default function ChatPopup({ openChat, setOpenChat, anchorRef, chat }) {
-  const socket = useRef()
-  // socket.current = io('http://localhost:8080')
+export default function ChatPopup({
+  socket,
+  openChat,
+  setOpenChat,
+  anchorRef,
+  chat,
+  setMessage,
+  message,
+  setSendMessageBase,
+}) {
   const { currentlyLoggedIn } = useContext(ContextData)
-
-  const [onlineUsers, setOnlineUsers] = useState([])
-  const [message, setMessage] = useState([])
   const [inputMeassage, setInputMessage] = useState('')
 
   const sender = chat?.members?.find(
     member => member?._id === currentlyLoggedIn?._id
   )
-
-  useEffect(() => {
-    const retriveMessage = async () => {
-      if (chat?._id) {
-        const messages = await getMessageOfChatId(chat?._id)
-        setMessage(messages.data)
-      }
-    }
-    retriveMessage()
-  }, [chat])
-
-  // Initialize socket..Make useEffect if only the currentlyLoggedIn exist
-  useEffect(() => {
-    if (currentlyLoggedIn) {
-      socket.current = io('http://localhost:8080')
-      socket.current.emit('join', currentlyLoggedIn._id)
-      socket.current.on('activeUsers', users => {
-        setOnlineUsers(users)
-      })
-    }
-  }, [currentlyLoggedIn])
-
-  
 
   // Main functions==========>
   const handleInputMessage = text => {
@@ -60,8 +40,21 @@ export default function ChatPopup({ openChat, setOpenChat, anchorRef, chat }) {
       senderId,
       text: inputMeassage,
     })
+    
     setMessage([...message, newMessage.data])
     const receiverId = chat?.members?.find(member => member?._id !== senderId)
+    socket.emit('sendMessage', {
+      senderId,
+      receiverId,
+      createdAt: newMessage.data.createdAt,
+      text: inputMeassage,
+    })
+    // socket.on('getMessage', data => {
+    //   console.log(data, 'from socket')
+    //   setMessage([...message, data])
+    // })
+
+    setSendMessageBase(true)
     setInputMessage('')
   }
 
