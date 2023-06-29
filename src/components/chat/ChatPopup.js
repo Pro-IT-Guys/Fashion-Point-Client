@@ -44,23 +44,12 @@ export default function ChatPopup({ openChat, setOpenChat, anchorRef, chat }) {
     }
   }, [currentlyLoggedIn])
 
+  
 
-
-
-
-
-
-
-
-
-
-
-
-
+  // Main functions==========>
   const handleInputMessage = text => {
     setInputMessage(text)
   }
-
 
   const handleSendMessage = async () => {
     const chatId = chat?._id
