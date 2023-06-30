@@ -3,23 +3,25 @@ import React, { useEffect, useState } from 'react'
 import { Image } from 'next/image'
 import imgs from '../../assets/banner/banner1.jpg'
 
-const ChatUserItem = user => {
+const ChatUserItem = ({user, setSelectedChatId, setChat}) => {
   const [userMessage, setUserMessage] = useState([])
-    const {name, image, chatId} = user?.user
+
+  const { name, image, chatId } = user
 
   useEffect(() => {
     const getUserMessage = async () => {
-      const res = await getMessageOfChatId(user?.user?.chatId)
+      const res = await getMessageOfChatId(user?.chatId)
       setUserMessage(res?.data)
     }
     getUserMessage()
   }, [user])
 
-  console.log(userMessage)
-
   return (
-    <div className='hover:bg-[#f0f0f086] cursor-pointer duration-200'>
-      <div className='flex items-center gap-2 border p-1 rounded'>
+    <div
+      onClick={() => {setSelectedChatId(user?.chatId), setChat(user)}}
+      className="hover:bg-[#f0f0f086] cursor-pointer duration-200 "
+    >
+      <div className="flex items-center gap-2 shadow p-1 rounded">
         <div>
           <img
             src={
@@ -31,8 +33,12 @@ const ChatUserItem = user => {
           ></img>
         </div>
         <div>
-            <h1 className='text-sm font-semibold'>{name?.firstName } {name?.lastName}</h1>
-            <p className='text-xs '>{userMessage[userMessage?.length -1]?.text}</p>
+          <h1 className="text-sm font-semibold">
+            {name?.firstName} {name?.lastName}
+          </h1>
+          <p className="text-xs ">
+            {userMessage[userMessage?.length - 1]?.text}
+          </p>
         </div>
       </div>
     </div>
