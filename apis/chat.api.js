@@ -10,6 +10,15 @@ export const createChat = async data => {
   }
 }
 
+export const getChats = async data => {
+  try {
+    const res = await axios.get(`${BASE_URL}/chat`, data)
+    return res?.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const getMessageOfChatId = async chatId => {
   try {
     const res = await axios.get(`${BASE_URL}/message/${chatId}`)
