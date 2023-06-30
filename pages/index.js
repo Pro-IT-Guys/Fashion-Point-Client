@@ -30,11 +30,10 @@ export default function LandingPage() {
         id="move_top"
       >
         <ContentStyle>
- 
           <Banner />
           <Products />
         </ContentStyle>
-        <Toaster />
+        {/* <Toaster /> */}
       </RootStyle>
     </MainLayout>
   )

@@ -9,7 +9,7 @@ export const loggedInUser = async token => {
   }
   try {
     const res = await axios.get(`${AUTH_URL}/me`, config)
-    return res.data
+    return res?.data
   } catch (error) {
     console.log(error)
   }

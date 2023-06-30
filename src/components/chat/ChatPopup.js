@@ -49,14 +49,14 @@ export default function ChatPopup({
       text: inputMeassage,
     })
 
-    setMessage([...message, newMessage.data])
+    setMessage([...message, newMessage?.data])
     const receiverId = chat?.members?.find(
       member => member._id !== senderId
     )?._id
     socket.emit('sendMessage', {
       senderId,
       receiverId,
-      createdAt: newMessage.data.createdAt,
+      createdAt: newMessage?.data?.createdAt,
       text: inputMeassage,
     })
 

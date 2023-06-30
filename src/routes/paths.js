@@ -38,4 +38,7 @@ export const PATH_DASHBOARD = {
   banner: {
     root: path(ROOTS_DASHBOARD, "/app/settings/banner"),
   },
+  ticket: {
+    root: path(ROOTS_DASHBOARD, "/app/tickets/chat"),
+  },
 };

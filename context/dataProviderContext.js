@@ -15,7 +15,7 @@ export const ContextProvider = ({ children }) => {
 
       if (token) {
         const user = await loggedInUser(token)
-        setcurrentlyLoggedIn(user.data)
+        setcurrentlyLoggedIn(user?.data)
       }
     }
     retriveUser()

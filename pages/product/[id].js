@@ -90,7 +90,7 @@ export default function ProductDetails() {
     const retriveMessage = async () => {
       if (chat?._id) {
         const messages = await getMessageOfChatId(chat?._id)
-        setMessage(messages.data)
+        setMessage(messages?.data)
       }
     }
     retriveMessage()
@@ -129,7 +129,7 @@ export default function ProductDetails() {
   useEffect(() => {
     fetch(`http://localhost:8000/api/v1/product/path/${params}`)
       .then(res => res.json())
-      .then(data => setProductDetails(data.data))
+      .then(data => setProductDetails(data?.data))
   }, [params])
 
   const { name, sellingPrice, quantity, rating, description, images } =

@@ -80,6 +80,11 @@ const sidebarConfig = [
         path: PATH_DASHBOARD.banner.root,
         icon: ICONS.dashboard,
       },
+      {
+        title: "tickets",
+        path: PATH_DASHBOARD.ticket.root,
+        icon: ICONS.user,
+      },
     ],
   },
 ];

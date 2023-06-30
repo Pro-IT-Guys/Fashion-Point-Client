@@ -93,7 +93,7 @@ export default function ProductList() {
       `http://localhost:8000/api/v1/product?searchTerm=${filterName}&page=${page}&limit=${rowsPerPage}`
     )
       .then((res) => res.json())
-      .then((data) => setProductList(data.data));
+      .then((data) => setProductList(data?.data));
   }, [page, rowsPerPage, filterName]);
 
   const handleDeleteUser = (userId) => {
