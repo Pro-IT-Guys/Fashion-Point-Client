@@ -1,5 +1,5 @@
 import React from 'react'
-import ChatSideBar from 'src/components/dashboard/chatSideBar'
+import ChatSideBar from 'src/components/dashboard/ChatSideBar'
 import DashboardLayout from 'src/layouts/dashboard'
 
 const Chat = () => {

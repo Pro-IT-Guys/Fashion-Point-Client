@@ -1,25 +1,41 @@
-import { getChats } from 'apis/chat.api';
-import React, { useEffect, useState } from 'react';
+import { getChats } from 'apis/chat.api'
+import React, { useEffect, useState } from 'react'
+import ChatUserItem from './chatUserItem'
 
 const ChatSideBar = () => {
+  const [chats, setChats] = useState([])
 
-    const [chats, setChats] = useState([]);
-
-useEffect(() => {
+  useEffect(() => {
     const getChatAll = async () => {
-        const res = await getChats();
-        setChats(res?.data);
+      const res = await getChats()
+      setChats(res?.data)
     }
-    getChatAll();
-}, []);
+    getChatAll()
+  }, [])
 
-console.log(chats);
+  // console.log(chats);
 
-    return (
-        <div>
-            
-        </div>
-    );
-};
+  let chatUser = []
+  // get all chats user without admin
+  const userChat = chats?.map(chat => {
+    chat?.members?.map(member => {
+      // console.log(member);
+      if (member?.role !== 'admin') {
+        member.chatId = chat?._id
+        chatUser.push(member)
+      }
+    })
+  })
 
-export default ChatSideBar;
+  return (
+    <div className='mt-5'>
+      <div className="h-[70vh] w-[20%] border rounded bg-white shadow p-2 overflow-y-scroll">
+        {chatUser?.map(user => (
+          <ChatUserItem user={user} key={user?._id} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default ChatSideBar
