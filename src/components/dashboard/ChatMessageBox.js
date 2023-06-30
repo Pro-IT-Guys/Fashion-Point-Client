@@ -8,7 +8,12 @@ import MessageItem from '../chat/MessageItem'
 import ChatMessageBoxItem from './ChatMessageBoxItem'
 import { sendMessage } from 'apis/chat.api'
 
-const ChatMessageBox = ({ selectedChatMessage, setSelectedChatMessage, chat }) => {
+const ChatMessageBox = ({
+  selectedChatMessage,
+  setSelectedChatMessage,
+  chat,
+  socket,
+}) => {
   const boxRef = useRef(null)
   const { currentlyLoggedIn } = useContext(ContextData)
   const [inputMeassage, setInputMessage] = useState('')
@@ -40,9 +45,8 @@ const ChatMessageBox = ({ selectedChatMessage, setSelectedChatMessage, chat }) =
     })
 
     setSelectedChatMessage([...selectedChatMessage, newMessage?.data])
-    const receiverId = chat?.members?.find(
-      member => member._id !== senderId
-    )?._id
+    const receiverId = chat?._id
+
     socket.emit('sendMessage', {
       senderId,
       receiverId,

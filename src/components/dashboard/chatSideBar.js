@@ -1,11 +1,17 @@
 import { getChats, getMessageOfChatId } from 'apis/chat.api'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import ChatUserItem from './chatUserItem'
 import ChatMessageBox from './ChatMessageBox'
 import { io } from 'socket.io-client'
+import { ContextData } from 'context/dataProviderContext'
+import { getUserById } from 'apis/user.api'
 
 const ChatSideBar = () => {
-  const { socket } = useRef()
+  const socket = useRef()
+  const { currentlyLoggedIn } = useContext(ContextData)
+  const [onlineUsers, setOnlineUsers] = useState([])
+
+  // =======================Socket part ends============================>
   const [chats, setChats] = useState([])
   const [selectedChatId, setSelectedChatId] = useState('')
   const [selectedChatMessage, setSelectedChatMessage] = useState([])
@@ -18,6 +24,28 @@ const ChatSideBar = () => {
     }
     getChatAll()
   }, [])
+
+  // Socket pat start============================>
+  useEffect(() => {
+    socket.current = io('http://localhost:8080')
+    socket.current.emit('join', currentlyLoggedIn?._id)
+    socket.current.on('activeUsers', users => {
+      setOnlineUsers(users)
+    })
+  }, [currentlyLoggedIn])
+
+  // Get message from the user
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on('getMessage', data => {
+        console.log(data, 'from socket')
+        setSelectedChatMessage(prev => [...prev, data])
+      })
+    }
+  }, [socket.current])
+
+  // Socket part end============================>
+
 
   let chatUser = []
   // get all chats user without admin
@@ -61,6 +89,7 @@ const ChatSideBar = () => {
           setSelectedChatMessage={setSelectedChatMessage}
           selectedChatId={selectedChatId}
           chat={chat}
+          socket={socket.current}
         />
       </div>
     </div>

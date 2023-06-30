@@ -62,7 +62,6 @@ export default function ChatMessageBoxItem({ message, chat, user }) {
   const isMe = senderDetails.type === 'me'
   const isImage = false
 
-  console.log(receiver);
   return (
     <RootStyle>
       <Box
