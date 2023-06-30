@@ -29,6 +29,7 @@ export default function LoginForm({ onClose}) {
     axios
       .post(FetchUrls('auth/login'), body)
       .then(res => {
+        console.log(res);
         if (res.status === 200) {
           // navigate(from, { replace: true })
           onClose()
