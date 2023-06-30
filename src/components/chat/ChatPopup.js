@@ -1,51 +1,67 @@
 import { Avatar, Box, Button, Card, Divider, Typography } from '@mui/material'
 import MenuPopover from '../MenuPopover'
 import { styled } from '@mui/material/styles'
+import InputEmoji from 'react-input-emoji'
 import MessageItem from './MessageItem'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { CustomIcons } from 'public/static/mui-icons'
+import { ButtonAnimate } from '../animate'
+import { getMessageOfChatId, sendMessage } from 'apis/chat.api'
+import { ContextData } from 'context/dataProviderContext'
 
-const InfoStyle = styled(Typography)(({ theme }) => ({
-  display: 'flex',
-  marginBottom: theme.spacing(0.75),
-  color: theme.palette.text.secondary,
-}))
+export default function ChatPopup({
+  socket,
+  openChat,
+  setOpenChat,
+  anchorRef,
+  chat,
+  setMessage,
+  message,
+  setSendMessageBase,
+}) {
+  const boxRef = useRef(null)
+  const { currentlyLoggedIn } = useContext(ContextData)
+  const [inputMeassage, setInputMessage] = useState('')
 
-const MessageImgStyle = styled('img')(({ theme }) => ({
-  width: '100%',
-  cursor: 'pointer',
-  objectFit: 'cover',
-  borderRadius: theme.shape.borderRadius,
-  [theme.breakpoints.up('md')]: {
-    height: 200,
-    minWidth: 296,
-  },
-}))
+  const sender = chat?.members?.find(
+    member => member?._id === currentlyLoggedIn?._id
+  )
 
-export default function ChatPopup({ openChat, setOpenChat, anchorRef }) {
-  const demoMessage = {
-    senderId: '8864c717-587d-472a-929a-8e5f298024da-0',
-    contentType: 'text',
-    content: 'Hello',
-    createdAt: '2021-09-30T07:50:00.000Z',
-    conversationId: '8864c717-587d-472a-929a-8e5f298024da',
-    id: '8864c717-587d-472a-929a-8e5f298024da-0',
+  // Scroll to the last message when the message list updates
+  useEffect(() => {
+    if (boxRef.current) {
+      boxRef.current.scrollTop = boxRef.current.scrollHeight
+    }
+  }, [message])
+
+  // Main functions==========>
+  const handleInputMessage = text => {
+    setInputMessage(text)
   }
 
-  const demoConversation = {
-    id: '8864c717-587d-472a-929a-8e5f298024da',
-    participants: [
-      {
-        id: '8864c717-587d-472a-929a-8e5f298024da-0',
-        name: 'Admin',
-        avatar: '/static/mock-images/avatars/avatar_default.jpg',
-      },
-      {
-        id: '8864c717-587d-472a-929a-8e5f298024da-1',
-        name: 'User',
-        avatar: '/static/mock-images/avatars/avatar_1.jpg',
-      },
-    ],
-    createdAt: '2021-09-30T07:50:00.000Z',
-    messages: [demoMessage],
+  const handleSendMessage = async () => {
+    const chatId = chat?._id
+    const senderId = currentlyLoggedIn?._id
+
+    const newMessage = await sendMessage({
+      chatId,
+      senderId,
+      text: inputMeassage,
+    })
+
+    setMessage([...message, newMessage.data])
+    const receiverId = chat?.members?.find(
+      member => member._id !== senderId
+    )?._id
+    socket.emit('sendMessage', {
+      senderId,
+      receiverId,
+      createdAt: newMessage.data.createdAt,
+      text: inputMeassage,
+    })
+
+    setSendMessageBase(true)
+    setInputMessage('')
   }
 
   return (
@@ -69,23 +85,39 @@ export default function ChatPopup({ openChat, setOpenChat, anchorRef }) {
     >
       <Box sx={{ my: 1.5, px: 2.5 }}>
         <Typography variant="subtitle1" noWrap>
-          displayName
+          {sender?.name?.firstName} {sender?.name?.lastName}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-          email
+          {sender?.email}
         </Typography>
       </Box>
 
       <Divider />
 
-      <MessageItem message={demoMessage} conversation={demoConversation} />
+      <Box
+        ref={boxRef}
+        sx={{
+          maxHeight: '250px',
+          overflowY: 'auto',
+        }}
+      >
+        {message?.map((item, index) => (
+          <MessageItem
+            key={index}
+            message={item}
+            chat={chat}
+            user={currentlyLoggedIn}
+          />
+        ))}
+      </Box>
 
-      <Divider sx={{ my: 1 }} />
-
-      <Box sx={{ p: 2, pt: 1.5 }}>
-        <Button fullWidth color="inherit" variant="outlined">
-          Leave Chat
-        </Button>
+      <Box sx={{ paddingBottom: 1.5, display: 'flex', px: 2.8 }}>
+        <InputEmoji value={inputMeassage} onChange={handleInputMessage} />
+        <ButtonAnimate mediumClick={true}>
+          <Button onClick={handleSendMessage}>
+            <CustomIcons.SendIcon />
+          </Button>
+        </ButtonAnimate>
       </Box>
     </MenuPopover>
   )

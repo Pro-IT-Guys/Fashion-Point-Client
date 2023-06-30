@@ -24,6 +24,7 @@ import ProgressBar from 'src/components/ProgressBar'
 import LoadingScreen from 'src/components/LoadingScreen'
 import ThemePrimaryColor from 'src/components/ThemePrimaryColor'
 import '../styles/global.css'
+import { ContextProvider } from 'context/dataProviderContext'
 
 // ----------------------------------------------------------------------
 
@@ -34,30 +35,31 @@ export default function MyApp(props) {
 
   return (
     <>
-      <SettingsProvider>
-        <CollapseDrawerProvider>
-          <CacheProvider value={emotionCache}>
-            <Head>
-              <meta
-                name="viewport"
-                content="initial-scale=1, width=device-width"
-              />
-            </Head>
-            <ThemeConfig>
-              <ThemePrimaryColor>
-                <RtlLayout>
-                  <NoSsr>{/* <Settings /> */}</NoSsr>
-                  <GlobalStyles />
-                  <ProgressBar />
-                  <LoadingScreen />
-                  <Component {...pageProps} />
-                </RtlLayout>
-              </ThemePrimaryColor>
-            </ThemeConfig>
-          </CacheProvider>
-        </CollapseDrawerProvider>
-      </SettingsProvider>
-   
+      <ContextProvider>
+        <SettingsProvider>
+          <CollapseDrawerProvider>
+            <CacheProvider value={emotionCache}>
+              <Head>
+                <meta
+                  name="viewport"
+                  content="initial-scale=1, width=device-width"
+                />
+              </Head>
+              <ThemeConfig>
+                <ThemePrimaryColor>
+                  <RtlLayout>
+                    <NoSsr>{/* <Settings /> */}</NoSsr>
+                    <GlobalStyles />
+                    <ProgressBar />
+                    <LoadingScreen />
+                    <Component {...pageProps} />
+                  </RtlLayout>
+                </ThemePrimaryColor>
+              </ThemeConfig>
+            </CacheProvider>
+          </CollapseDrawerProvider>
+        </SettingsProvider>
+      </ContextProvider>
     </>
   )
 }

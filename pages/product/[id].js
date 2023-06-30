@@ -14,7 +14,7 @@ import {
   Box,
 } from '@mui/material'
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import Banner from 'src/components/Home/Banner/Banner'
 import Page from 'src/components/Page'
 import ProductDetailsCarousel from 'src/components/Products/ProductDetailsCarousel'
@@ -26,8 +26,14 @@ import roundAddShoppingCart from '@iconify/icons-ic/round-add-shopping-cart'
 import ChatPopup from 'src/components/chat/ChatPopup'
 import { MIconButton } from 'src/components/@material-extend'
 import MenuPopover from 'src/components/MenuPopover'
-import { createChat } from 'apis/chat.api'
+import {
+  createChat,
+  getChatOfSenderAndReceiver,
+  getMessageOfChatId,
+} from 'apis/chat.api'
 import { adminId } from 'constant/constant'
+import { ContextData } from 'context/dataProviderContext'
+import { io } from 'socket.io-client'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -37,32 +43,87 @@ const ChatButton = styled(Fab)(({ theme }) => ({
 }))
 
 export default function ProductDetails() {
+  const socket = useRef()
+  const [message, setMessage] = useState([])
+  const [chat, setChat] = useState(null)
+  const [onlineUsers, setOnlineUsers] = useState([])
+
+  // Base states
+  const /* The code `socket.on('getMessage', data => { ... })` is setting up a listener for the
+  'getMessage' event on the socket object. When the 'getMessage' event is emitted from the
+  server, the callback function will be executed. */
+    [sendMessageBase, setSendMessageBase] = useState(false)
+
   const [openChat, setOpenChat] = useState(false)
   const anchorRef = useRef(null)
-  const [chatData, setChatData] = useState(null)
+  const { currentlyLoggedIn } = useContext(ContextData)
 
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
   const router = useRouter()
   const params = router.query.id
-  const RootStyle = styled(Page)({
-    height: '100%',
-  })
 
-  const ContentStyle = styled('div')(({ theme }) => ({
-    overflow: 'hidden',
-    position: 'relative',
-    backgroundColor: theme.palette.background.default,
-  }))
+  // Create chat with admin / get chat if already exist
+  useEffect(() => {
+    const retriveChat = async () => {
+      if (currentlyLoggedIn?.role === 'admin') return
+      let data
 
-  // Create chat with admin
+      data = await createChat({
+        senderId: currentlyLoggedIn?._id,
+        receiverId: adminId,
+      })
+
+      if (!data) {
+        data = await getChatOfSenderAndReceiver({
+          senderId: currentlyLoggedIn?._id,
+          receiverId: adminId,
+        })
+      }
+      setChat(data?.data)
+    }
+    retriveChat()
+  }, [currentlyLoggedIn])
+
+  // Get chat of sender and receiver
+  useEffect(() => {
+    const retriveMessage = async () => {
+      if (chat?._id) {
+        const messages = await getMessageOfChatId(chat?._id)
+        setMessage(messages.data)
+      }
+    }
+    retriveMessage()
+  }, [chat])
+
+  // Initialize socket..Make useEffect if only the currentlyLoggedIn exist
+  useEffect(() => {
+    if (currentlyLoggedIn) {
+      socket.current = io('http://localhost:8080')
+      socket.current.emit('join', currentlyLoggedIn._id)
+
+      socket.current.on('activeUsers', users => {
+        setOnlineUsers(users)
+      })
+    }
+  }, [currentlyLoggedIn])
+
+  // Receive message from socket server and set message
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on('getMessage', data => {
+        console.log(data, 'from socket')
+        setMessage(prev => [...prev, data])
+      })
+      setSendMessageBase(false)
+    }
+  }, [])
+
+  // Create chat with admin / get chat if already exist
   const handleChatClick = async () => {
+    if (currentlyLoggedIn?.role === 'admin') return
+
     setOpenChat(true)
-    const data = await createChat({
-      senderId: '649bf518b7b20cef451e2249',
-      receiverId: adminId,
-    })
-    setChatData(data)
   }
 
   useEffect(() => {
@@ -71,7 +132,6 @@ export default function ProductDetails() {
       .then(data => setProductDetails(data.data))
   }, [params])
 
-  console.log(productDetails)
   const { name, sellingPrice, quantity, rating, description, images } =
     productDetails || {}
 
@@ -205,20 +265,29 @@ export default function ProductDetails() {
         </div>
       </MainLayout>
 
-      <ChatButton
-        ref={anchorRef}
-        onClick={handleChatClick}
-        color="primary"
-        aria-label="Chat with Us"
-      >
-        <ChatBubbleIcon />
-      </ChatButton>
+      {currentlyLoggedIn?.role !== 'admin' && (
+        <>
+          <ChatButton
+            ref={anchorRef}
+            onClick={handleChatClick}
+            color="primary"
+            aria-label="Chat with Us"
+          >
+            <ChatBubbleIcon />
+          </ChatButton>
 
-      <ChatPopup
-        openChat={openChat}
-        setOpenChat={setOpenChat}
-        anchorRef={anchorRef.current}
-      />
+          <ChatPopup
+            socket={socket.current}
+            chat={chat}
+            openChat={openChat}
+            setOpenChat={setOpenChat}
+            anchorRef={anchorRef.current}
+            message={message}
+            setMessage={setMessage}
+            setSendMessageBase={setSendMessageBase}
+          />
+        </>
+      )}
     </>
   )
 }

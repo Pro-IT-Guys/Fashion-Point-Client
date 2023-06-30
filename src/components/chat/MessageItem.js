@@ -9,6 +9,9 @@ import { Avatar, Box, Typography } from '@mui/material'
 const RootStyle = styled('div')(({ theme }) => ({
   display: 'flex',
   marginBottom: theme.spacing(3),
+  paddingLeft: '10px',
+  paddingRight: '10px',
+  paddingTop: '10px',
 }))
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -40,24 +43,22 @@ const MessageImgStyle = styled('img')(({ theme }) => ({
 
 MessageItem.propTypes = {
   message: PropTypes.object.isRequired,
-  conversation: PropTypes.object.isRequired,
+  chat: PropTypes.object.isRequired,
 }
 
-export default function MessageItem({
-  message,
-  conversation,
-}) {
-  const sender = conversation.participants.find(
-    participant => participant.id === message.senderId
-  )
+export default function MessageItem({ message, chat, user }) {
+  const receiver = chat?.members?.find(member => member?._id !== user?._id)
+
   const senderDetails =
-    message.senderId === '8864c717-587d-472a-929a-8e5f298024da-0'
+    message.senderId === user?._id
       ? { type: 'me' }
-      : { avatar: sender?.avatar, name: sender?.name }
+      : {
+          avatar: receiver?.avatar,
+          name: `${receiver?.name?.firstName} ${receiver?.name?.lastName}`,
+        }
 
   const isMe = senderDetails.type === 'me'
-  const isImage = message.contentType === 'image'
-  const firstName = senderDetails.name && senderDetails.name.split(' ')[0]
+  const isImage = false
 
   return (
     <RootStyle>
@@ -82,7 +83,7 @@ export default function MessageItem({
             variant="caption"
             sx={{ ...(isMe && { justifyContent: 'flex-end' }) }}
           >
-            {!isMe && `${firstName},`}&nbsp;
+            {!isMe && `${receiver?.name?.firstName},`}&nbsp;
             {formatDistanceToNowStrict(new Date(message.createdAt), {
               addSuffix: true,
             })}
@@ -95,12 +96,9 @@ export default function MessageItem({
             }}
           >
             {isImage ? (
-              <MessageImgStyle
-                alt="attachment"
-                src={message.body}
-              />
+              <MessageImgStyle alt="attachment" src={message.body} />
             ) : (
-              <Typography variant="body2">{message.body}</Typography>
+              <Typography variant="body2">{message.text}</Typography>
             )}
           </ContentStyle>
         </div>
