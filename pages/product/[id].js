@@ -108,17 +108,6 @@ export default function ProductDetails() {
     }
   }, [currentlyLoggedIn])
 
-  // Receive message from socket server and set message
-  useEffect(() => {
-    if (socket.current) {
-      socket.current.on('getMessage', data => {
-        console.log(data, 'from socket')
-        setMessage(prev => [...prev, data])
-      })
-      setSendMessageBase(false)
-    }
-  }, [])
-
   // Create chat with admin / get chat if already exist
   const handleChatClick = async () => {
     if (currentlyLoggedIn?.role === 'admin') return

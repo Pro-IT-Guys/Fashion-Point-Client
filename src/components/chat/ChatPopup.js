@@ -34,6 +34,16 @@ export default function ChatPopup({
     }
   }, [message])
 
+  // Receive message from socket server and set message
+  useEffect(() => {
+    if (socket) {
+      socket.on('getMessage', data => {
+        setMessage(prev => [...prev, data])
+      })
+      setSendMessageBase(false)
+    }
+  }, [socket])
+
   // Main functions==========>
   const handleInputMessage = text => {
     setInputMessage(text)
