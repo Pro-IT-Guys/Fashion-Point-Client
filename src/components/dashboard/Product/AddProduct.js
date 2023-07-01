@@ -12,7 +12,7 @@ import {
   TextareaAutosize,
   Typography,
 } from '@mui/material'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {
   BRAND_OPTION,
@@ -38,6 +38,7 @@ export default function AddProductForm() {
   const [description, setDescription] = useState('')
   const [imagesArray, setImagesArray] = useState([])
   const [values, setFieldValue] = useState({ images: [] })
+
   const {
     register,
     handleSubmit,
@@ -54,14 +55,6 @@ export default function AddProductForm() {
     acceptedFiles => {
       setImagesArray([...imagesArray, ...acceptedFiles])
       setFieldValue('images', [...values?.images, ...acceptedFiles])
-      // setFieldValue(
-      //   'images',
-      //   acceptedFiles?.map((file) =>
-      //     Object.assign(file, {
-      //       preview: URL.createObjectURL(file)
-      //     })
-      //   )
-      // );
     },
     [setFieldValue]
   )
@@ -76,9 +69,8 @@ export default function AddProductForm() {
   }
 
   const onSubmit = data => {
-    // const data = new FormData()
-    // data.append('name', data.name)
-    // data.append('category', data.category)
+    // console.log(data?.frontImage[0]);
+
     const productData = {
       name: data.name,
       path: data?.name?.replace(/\s+/g, '-').toLowerCase(),
@@ -99,40 +91,41 @@ export default function AddProductForm() {
       style: data.style,
       fabric: data.fabric,
     }
-    // const formData = new FormData()
-    // formData.append('name', data.name)
-    // formData.append('path', data?.name?.replace(/\s+/g, '-').toLowerCase())
-    // formData.append('frontImage', data.frontImage)
-    // formData.append('backImage', data.backImage)
-    // formData.append('restImage', imagesArray)
-    // formData.append('buyingPrice', data.buyingPrice)
-    // formData.append('sellingPrice', data.sellingPrice)
-    // formData.append('description', description)
-    // formData.append('metaDescription', data.metaDescription)
-    // formData.append('quantity', data.quantity)
-    // formData.append('category', data.category)
-    // formData.append('color', colorValue)
-    // formData.append('size', sizeValue)
-    // formData.append('tag', tagValue)
-    // formData.append('brand', data.brand)
-    // formData.append('type', typeValue)
-    // formData.append('style', data.style)
-    // formData.append('fabric', data.fabric)
+    const formData = new FormData()
+    // const boundary = formData.getBoundary();
+    formData.append('name', data.name)
+    formData.append('path', data?.name?.replace(/\s+/g, '-').toLowerCase())
+    formData.append('frontImage', data.frontImage[0])
+    formData.append('backImage', data.backImage[0])
+    formData.append('restImage', imagesArray)
+    formData.append('buyingPrice', data.buyingPrice)
+    formData.append('sellingPrice', data.sellingPrice)
+    formData.append('description', description)
+    formData.append('metaDescription', data.metaDescription)
+    formData.append('quantity', data.quantity)
+    formData.append('category', data.category)
+    formData.append('color', colorValue)
+    formData.append('size', sizeValue)
+    formData.append('tag', tagValue)
+    formData.append('brand', data.brand)
+    formData.append('type', typeValue)
+    formData.append('style', data.style)
+    formData.append('fabric', data.fabric)
 
-console.log(productData);
+    console.log(formData, 'productFormData')
 
     fetch(`${BASE_URL}/product`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(productData),
+
+      body: formData,
     })
       .then(res => res.json())
       .then(data => {
         console.log(data)
       })
   }
+
+  console.log(imagesArray, 'imagesArray');
 
   return (
     <div className="flex justify-center bg-white rounded-xl shadow mt-5">
@@ -538,7 +531,7 @@ console.log(productData);
                 {imagesArray?.map((image, index) => (
                   <div key={index} className="flex items-center">
                     <span className="ml-2 mt-5 text-sm text-gray-500">
-                      {++index}. {image.name}
+                      {++index}. {image?.name}
                     </span>
                   </div>
                 ))}
