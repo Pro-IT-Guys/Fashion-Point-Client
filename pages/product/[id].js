@@ -35,7 +35,7 @@ import { adminId } from 'constant/constant'
 import { ContextData } from 'context/dataProviderContext'
 import { io } from 'socket.io-client'
 import { getStorage } from 'apis/loadStorage'
-import { addToCart, getCartByUserId, updateCart } from 'apis/cart.api'
+import { addToCart, updateCart } from 'apis/cart.api'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -58,7 +58,7 @@ export default function ProductDetails() {
 
   const [openChat, setOpenChat] = useState(false)
   const anchorRef = useRef(null)
-  const { currentlyLoggedIn } = useContext(ContextData)
+  const { currentlyLoggedIn, usersCart } = useContext(ContextData)
 
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
@@ -138,14 +138,12 @@ export default function ProductDetails() {
       quantity: productQuantity,
     }
 
-    // check if the user already have a cart
-    const cart = await getCartByUserId({ token, userId })
-    if (cart?.statusCode === 200) {
-      const res = await updateCart({ ...data, cartId: cart?.data?._id })
-      if(res?.statusCode === 200) alert('Product added to cart')
+    if (usersCart) {
+      const res = await updateCart({ ...data, cartId: usersCart?._id })
+      if (res?.statusCode === 200) alert('Product added to cart')
     } else {
-      const res = await addToCart(data)  
-      if(res?.statusCode === 200) alert('Product added to cart')
+      const res = await addToCart(data)
+      if (res?.statusCode === 200) alert('Product added to cart')
     }
   }
 

@@ -1,11 +1,14 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Button from '@mui/material/Button'
 import { Badge, Box, Drawer, Typography } from '@mui/material'
 import Scrollbar from '../Scrollbar'
 import { CustomIcons } from 'public/static/mui-icons'
+import { ContextData } from 'context/dataProviderContext'
 
 export default function CartDrawer() {
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const { usersCart } = useContext(ContextData)
+  console.log('usersCart', usersCart)
   const products = [
     {
       id: 1,
@@ -88,9 +91,9 @@ export default function CartDrawer() {
           </Typography>
 
           <Box sx={{ marginTop: 2 }}>
-            {products.map(product => (
+            {usersCart?.product.map((product, index) => (
               <div
-                key={product.id}
+                key={index}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -98,18 +101,32 @@ export default function CartDrawer() {
                 }}
               >
                 <img
-                  src={product.image}
-                  alt={product.name}
+                  src={product.productId.frontImage}
+                  alt={product.productId.metaDescription}
                   style={{ width: '50px', height: '50px', marginRight: '10px' }}
                 />
                 <div>
-                  <h4>{product.name}</h4>
-                  <p>Price: ${product.price}</p>
-                  <div>
+                  <Typography sx={{ fontSize: 13 }}>
+                    {product.productId.name.length > 20
+                      ? product.productId.name.slice(0, 20) + '...'
+                      : product.productId.name}
+                  </Typography>
+                  <Typography sx={{ fontSize: 13 }}>
+                    Price: ${product.productId.sellingPrice}
+                  </Typography>
+                  <div className='mt-2'>
                     <Button
                       variant="outlined"
                       size="small"
                       onClick={() => handleDecreaseQuantity(product.id)}
+                      style={{
+                        fontSize: '10px',
+                        padding: '0px',
+                        paddingRight: '10px',
+                        paddingLeft: '10px',
+                        minWidth: 0,
+                        minHeight: 0,
+                      }}
                     >
                       <CustomIcons.RemoveIcon />
                     </Button>
@@ -118,6 +135,14 @@ export default function CartDrawer() {
                       variant="outlined"
                       size="small"
                       onClick={() => handleIncreaseQuantity(product.id)}
+                      style={{
+                        fontSize: '10px',
+                        padding: '0px',
+                        paddingRight: '10px',
+                        paddingLeft: '10px',
+                        minWidth: 0,
+                        minHeight: 0,
+                      }}
                     >
                       <CustomIcons.AddIcon />
                     </Button>
