@@ -4,16 +4,19 @@ import { Badge, Box, Drawer, Typography } from '@mui/material'
 import Scrollbar from '../Scrollbar'
 import { CustomIcons } from 'public/static/mui-icons'
 import { ContextData } from 'context/dataProviderContext'
-import { getStorage, setStorage } from 'apis/loadStorage'
+import { getCart, getStorage, setStorage } from 'apis/loadStorage'
 
 export default function CartDrawer() {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [cart, setCart] = useState(null)
+  const [cartId, setCartId] = useState(null)
 
   useEffect(() => {
-    const retriveCart = () => {
-      const cartData = getStorage('cart')
+    const retriveCart = async () => {
+      const cartData = await getCart()
+      const cartId = await getStorage('cartId')
       setCart(cartData)
+      setCartId(cartId)
     }
     retriveCart()
   }, [])
@@ -27,33 +30,33 @@ export default function CartDrawer() {
   }
 
   const handleIncreaseQuantity = productId => {
-    const updatedCart = [...cart] 
+    const updatedCart = [...cart]
     const productIndex = updatedCart.findIndex(item => item._id === productId)
 
     if (productIndex !== -1) {
-      updatedCart[productIndex].quantity += 1 
+      updatedCart[productIndex].quantity += 1
       setStorage('cart', updatedCart)
 
-      setCart(updatedCart) 
+      setCart(updatedCart)
     }
   }
 
   const handleDecreaseQuantity = productId => {
-    const updatedCart = [...cart] 
+    const updatedCart = [...cart]
     const productIndex = updatedCart.findIndex(item => item._id === productId)
 
     if (productIndex !== -1) {
       if (updatedCart[productIndex].quantity > 1) {
-        updatedCart[productIndex].quantity -= 1 
+        updatedCart[productIndex].quantity -= 1
         setStorage('cart', updatedCart)
 
-        setCart(updatedCart) 
+        setCart(updatedCart)
       }
     }
   }
 
-  const handleViewCart = () => {
-    console.log('View Cart')
+  const handleViewCart = id => {
+    console.log('View Cart', id)
   }
 
   const handleCheckout = () => {
@@ -174,7 +177,7 @@ export default function CartDrawer() {
               padding: '10px',
             }}
           >
-            <Button variant="contained" onClick={handleViewCart}>
+            <Button variant="contained" onClick={() => handleViewCart(cartId)}>
               View Cart
             </Button>
             <Button variant="contained" onClick={handleCheckout}>

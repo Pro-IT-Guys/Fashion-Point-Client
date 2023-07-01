@@ -18,11 +18,11 @@ export const ContextProvider = ({ children }) => {
       if (token) {
         const user = await loggedInUser(token)
         setcurrentlyLoggedIn(user?.data)
-
         // Get the users cart
         const cart = await getCartByUserId({ token, userId: user?.data?._id })
         if (cart?.statusCode === 200) {
           setUsersCart(cart?.data)
+          setStorage('cartId', cart?.data._id)
           setStorage('cart', cart?.data.product)
         }
       }

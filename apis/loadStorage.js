@@ -1,13 +1,21 @@
 export const getStorage = key => {
-  try {
-    const serializedState = localStorage.getItem(key)
-    if (serializedState === null) {
-      return undefined
+  if (typeof window !== 'undefined') {
+    const storedData = window.localStorage.getItem(key)
+    if (storedData) {
+      return storedData
     }
-    return JSON.parse(serializedState)
-  } catch (err) {
-    return undefined
   }
+  return null
+}
+
+export const getCart = () => {
+  if (typeof window !== 'undefined') {
+    const storedCart = window.localStorage.getItem('cart')
+    if (storedCart) {
+      return JSON.parse(storedCart)
+    }
+  }
+  return null
 }
 
 export const setStorage = (key, value) => {
