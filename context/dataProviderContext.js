@@ -1,6 +1,6 @@
 import { loggedInUser } from 'apis/auth.api'
 import { getCartByUserId } from 'apis/cart.api'
-import { getStorage } from 'apis/loadStorage'
+import { getStorage, setStorage } from 'apis/loadStorage'
 import React, { createContext, useEffect, useState } from 'react'
 
 export const ContextData = createContext()
@@ -23,6 +23,7 @@ export const ContextProvider = ({ children }) => {
         const cart = await getCartByUserId({ token, userId: user?.data?._id })
         if (cart?.statusCode === 200) {
           setUsersCart(cart?.data)
+          setStorage('cart', cart?.data.product)
         }
       }
     }
