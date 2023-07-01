@@ -34,6 +34,8 @@ import {
 import { adminId } from 'constant/constant'
 import { ContextData } from 'context/dataProviderContext'
 import { io } from 'socket.io-client'
+import { getStorage } from 'apis/loadStorage'
+import { addToCart, getCartByUserId, updateCart } from 'apis/cart.api'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -123,6 +125,29 @@ export default function ProductDetails() {
 
   const { name, sellingPrice, quantity, rating, description, images } =
     productDetails || {}
+
+  // Cart Logics===============>
+  const handleAddToCart = async () => {
+    const userId = currentlyLoggedIn?._id
+    const token = getStorage('token')
+    const productId = productDetails._id
+    const data = {
+      token,
+      userId,
+      productId,
+      quantity: productQuantity,
+    }
+
+    // check if the user already have a cart
+    const cart = await getCartByUserId({ token, userId })
+    if (cart?.statusCode === 200) {
+      const res = await updateCart({ ...data, cartId: cart?.data?._id })
+      if(res?.statusCode === 200) alert('Product added to cart')
+    } else {
+      const res = await addToCart(data)  
+      if(res?.statusCode === 200) alert('Product added to cart')
+    }
+  }
 
   return (
     <>
@@ -232,7 +257,7 @@ export default function ProductDetails() {
                       color="warning"
                       variant="contained"
                       startIcon={<Icon icon={roundAddShoppingCart} />}
-                      // onClick={handleAddCart}
+                      onClick={handleAddToCart}
                       sx={{ whiteSpace: 'nowrap' }}
                     >
                       Add to Cart
