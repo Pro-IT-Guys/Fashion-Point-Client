@@ -12,7 +12,7 @@ import {
   TextareaAutosize,
   Typography,
 } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import {
   BRAND_OPTION,
@@ -25,6 +25,10 @@ import {
   SIZE_OPTION,
 } from '../../../../constant/product'
 import { QuillEditor } from 'src/components/editor'
+import { UploadMultiFile } from 'src/components/upload'
+import { createProduct } from 'apis/product.api'
+import { async } from 'react-input-emoji'
+import { BASE_URL } from 'apis/url'
 
 export default function AddProductForm() {
   const [typeValue, setTypeValue] = useState([])
@@ -32,6 +36,8 @@ export default function AddProductForm() {
   const [colorValue, setColorValue] = useState([])
   const [sizeValue, setSizeValue] = useState([])
   const [description, setDescription] = useState('')
+  const [imagesArray, setImagesArray] = useState([])
+  const [values, setFieldValue] = useState({ images: [] })
   const {
     register,
     handleSubmit,
@@ -39,18 +45,102 @@ export default function AddProductForm() {
     reset,
   } = useForm()
 
-  const onSubmit = data => {
-    console.log(data, typeValue)
+  const handleAdd = files => {
+    setImagesArray([...imagesArray, ...files])
+    setFieldValue('images', [...values?.images, ...files])
   }
 
-  console.log(description)
+  const handleDrop = useCallback(
+    acceptedFiles => {
+      setImagesArray([...imagesArray, ...acceptedFiles])
+      setFieldValue('images', [...values?.images, ...acceptedFiles])
+      // setFieldValue(
+      //   'images',
+      //   acceptedFiles?.map((file) =>
+      //     Object.assign(file, {
+      //       preview: URL.createObjectURL(file)
+      //     })
+      //   )
+      // );
+    },
+    [setFieldValue]
+  )
+
+  const handleRemoveAll = () => {
+    setFieldValue('images', [])
+  }
+
+  const handleRemove = file => {
+    const filteredItems = values?.images?.filter(_file => _file !== file)
+    setFieldValue('images', filteredItems)
+  }
+
+  const onSubmit = data => {
+    // const data = new FormData()
+    // data.append('name', data.name)
+    // data.append('category', data.category)
+    const productData = {
+      name: data.name,
+      path: data?.name?.replace(/\s+/g, '-').toLowerCase(),
+      frontImage: data.frontImage[0],
+      backImage: data.backImage[0],
+      restImage: imagesArray,
+      buyingPrice: data.buyingPrice,
+      sellingPrice: data.sellingPrice,
+      description: description,
+      metaDescription: data.metaDescription,
+      quantity: data.quantity,
+      category: data.category,
+      color: colorValue,
+      size: sizeValue,
+      tag: tagValue,
+      brand: data.brand,
+      type: typeValue,
+      style: data.style,
+      fabric: data.fabric,
+    }
+    // const formData = new FormData()
+    // formData.append('name', data.name)
+    // formData.append('path', data?.name?.replace(/\s+/g, '-').toLowerCase())
+    // formData.append('frontImage', data.frontImage)
+    // formData.append('backImage', data.backImage)
+    // formData.append('restImage', imagesArray)
+    // formData.append('buyingPrice', data.buyingPrice)
+    // formData.append('sellingPrice', data.sellingPrice)
+    // formData.append('description', description)
+    // formData.append('metaDescription', data.metaDescription)
+    // formData.append('quantity', data.quantity)
+    // formData.append('category', data.category)
+    // formData.append('color', colorValue)
+    // formData.append('size', sizeValue)
+    // formData.append('tag', tagValue)
+    // formData.append('brand', data.brand)
+    // formData.append('type', typeValue)
+    // formData.append('style', data.style)
+    // formData.append('fabric', data.fabric)
+
+console.log(productData);
+
+    fetch(`${BASE_URL}/product`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(productData),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+      })
+  }
+
   return (
     <div className="flex justify-center bg-white rounded-xl shadow mt-5">
       <div className="w-full  sm:p-10 px-3 py-5">
         <div className=" rounded-lg w-full">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-5">
+              <div className="grid grid-cols-2 sm:gap-5 gap-3">
                 <div className="flex flex-col items-start">
                   <TextField
                     fullWidth
@@ -390,6 +480,68 @@ export default function AddProductForm() {
                     </span>
                   )}
                 </label>
+              </div>
+
+              <div className="grid grid-cols-2 sm:gap-5 gap-3">
+                <div>
+                  <h1 className="ml-1 text-sm mb-1">Front Image</h1>
+                  <input
+                    type="file"
+                    // accept="image/*"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+                    {...register('frontImage', {
+                      required: {
+                        value: true,
+                        message: 'Image is required',
+                      },
+                    })}
+                  />
+                  {errors.frontImage && (
+                    <span className="pl-2 text-xs mt-1 text-red-500">
+                      {errors.frontImage.message}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <h1 className="ml-1 text-sm mb-1">Back Image</h1>
+                  <input
+                    type="file"
+                    // accept="image/*"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+                    {...register('backImage', {
+                      required: {
+                        value: true,
+                        message: 'Image is required',
+                      },
+                    })}
+                  />
+                  {errors.backImage && (
+                    <span className="pl-2 text-xs mt-1 text-red-500">
+                      {errors.backImage.message}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <h1 className="ml-1 text-sm mb-1 mt-5">All Images</h1>
+                <UploadMultiFile
+                  showPreview
+                  maxSize={3145728}
+                  accept="image/*"
+                  files={imagesArray}
+                  onDrop={handleDrop}
+                  onRemove={handleRemove}
+                  onRemoveAll={handleRemoveAll}
+                />
+
+                {imagesArray?.map((image, index) => (
+                  <div key={index} className="flex items-center">
+                    <span className="ml-2 mt-5 text-sm text-gray-500">
+                      {++index}. {image.name}
+                    </span>
+                  </div>
+                ))}
               </div>
 
               <div className="relative mt-2">
