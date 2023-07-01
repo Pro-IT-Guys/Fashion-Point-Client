@@ -9,6 +9,7 @@ import {
   Select,
   Stack,
   TextField,
+  TextareaAutosize,
   Typography,
 } from '@mui/material'
 import React, { useState } from 'react'
@@ -23,12 +24,14 @@ import {
   COLOR_OPTION,
   SIZE_OPTION,
 } from '../../../../constant/product'
+import { QuillEditor } from 'src/components/editor'
 
 export default function AddProductForm() {
   const [typeValue, setTypeValue] = useState([])
   const [tagValue, setTagValue] = useState([])
   const [colorValue, setColorValue] = useState([])
   const [sizeValue, setSizeValue] = useState([])
+  const [description, setDescription] = useState('')
   const {
     register,
     handleSubmit,
@@ -40,6 +43,7 @@ export default function AddProductForm() {
     console.log(data, typeValue)
   }
 
+  console.log(description)
   return (
     <div className="flex justify-center bg-white rounded-xl shadow mt-5">
       <div className="w-full  sm:p-10 px-3 py-5">
@@ -354,6 +358,38 @@ export default function AddProductForm() {
                     )}
                   </label>
                 </div>
+              </div>
+
+              <div>
+                <h1 className="ml-1 text-sm mb-1">Description</h1>
+                <QuillEditor
+                  simple
+                  id="product-description"
+                  value={description}
+                  onChange={val => setDescription(val)}
+                />
+              </div>
+
+              <div>
+                <h1 className="ml-1 text-sm mb-1">Meta Description</h1>
+                <textarea
+                  height={100}
+                  className="w-full h-40 p-2 border border-gray-300 rounded-md focus:outline-none"
+                  placeholder="Meta Description"
+                  {...register('metaDescription', {
+                    required: {
+                      value: true,
+                      message: 'Meta Description is Required',
+                    },
+                  })}
+                ></textarea>
+                <label className="label">
+                  {errors.metaDescription?.type === 'required' && (
+                    <span className="pl-2 text-xs mt-1 text-red-500">
+                      {errors.metaDescription.message}
+                    </span>
+                  )}
+                </label>
               </div>
 
               <div className="relative mt-2">
