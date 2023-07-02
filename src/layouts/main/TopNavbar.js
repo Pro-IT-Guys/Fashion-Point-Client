@@ -50,7 +50,15 @@ export default function TopNavbar() {
                   value={toCurrency}
                   onChange={e => setToCurrency(e.target.value)}
                   label="Currency"
-                  sx={{ fontSize: '0.75rem', color: '#fff', border: 'none' }}
+                  className="hover:border-none"
+                  sx={{
+                    fontSize: '0.75rem',
+                    color: '#fff',
+                    border: 'none',
+                    '&:hover': {
+                      border: 'none',
+                    },
+                  }}
                 >
                   <MenuItem value="USD">$ USD</MenuItem>
                   <MenuItem value="AED"> د.إ AED</MenuItem>

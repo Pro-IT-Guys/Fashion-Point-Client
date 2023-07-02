@@ -2,7 +2,7 @@ export function convertCurrency(from, to, amount) {
   const rateAEDtoUSD = 0.27
 
   if (from === to) {
-    return `د.إ ${amount.toString()}`
+    return `${amount.toString()} AED`
   }
 
   if (from === 'AED' && to === 'USD') {
@@ -12,7 +12,7 @@ export function convertCurrency(from, to, amount) {
 
   if (from === 'USD' && to === 'AED') {
     const result = amount / rateAEDtoUSD
-    return `د.إ ${result.toFixed(2).toString()}`
+    return `${result.toFixed(2).toString()} AED`
   }
   throw new Error('Unsupported currency conversion.')
 }

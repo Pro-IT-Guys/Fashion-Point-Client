@@ -36,6 +36,7 @@ import { ContextData } from 'context/dataProviderContext'
 import { io } from 'socket.io-client'
 import { getStorage } from 'apis/loadStorage'
 import { addToCart, updateCart } from 'apis/cart.api'
+import { convertCurrency } from 'helpers/currencyHandler'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -58,7 +59,8 @@ export default function ProductDetails() {
 
   const [openChat, setOpenChat] = useState(false)
   const anchorRef = useRef(null)
-  const { currentlyLoggedIn, usersCart } = useContext(ContextData)
+  const { currentlyLoggedIn, usersCart, fromCurrency, toCurrency } =
+    useContext(ContextData)
 
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
@@ -191,11 +193,11 @@ export default function ProductDetails() {
                     Brand: {productDetails?.brand?.name}
                   </p>
                   <p className="text-xl font-semibold mt-3 text-secondary">
-                    ৳ {sellingPrice}
+                    {convertCurrency(fromCurrency, toCurrency, sellingPrice)}
                   </p>
-                  <strike className="text-[#7a7a7a] text-xs">
+                  {/* <strike className="text-[#7a7a7a] text-xs">
                     ৳ {sellingPrice}
-                  </strike>
+                  </strike> */}
 
                   <div className="mt-4">
                     <div className="flex items-center gap-5">

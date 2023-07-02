@@ -55,7 +55,7 @@ export default function ProductCard({ product }) {
           <p className="text-error  mt-2 mb-0">
             {convertCurrency(fromCurrency, toCurrency, sellingPrice)}
           </p>
-          <strike className="text-[#7a7a7a] text-xs">৳ {sellingPrice}</strike>
+          {/* <strike className="text-[#7a7a7a] text-xs">৳ {sellingPrice}</strike> */}
         </div>
       </div>
     </div>
