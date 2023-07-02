@@ -53,3 +53,22 @@ export const updateCart = async data => {
     console.log(error)
   }
 }
+
+export const bulkUpdateCart = async data => {
+  const { token, cartId, product } = data
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  try {
+    const res = await axios.patch(
+      `${CART_URL}/bulk/${cartId}`,
+      { product },
+      config
+    )
+    return res?.data
+  } catch (error) {
+    console.log(error)
+  }
+}

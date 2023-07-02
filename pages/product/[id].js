@@ -145,6 +145,7 @@ export default function ProductDetails() {
       const res = await addToCart(data)
       if (res?.statusCode === 200) alert('Product added to cart')
     }
+    window.location.reload()
   }
 
   return (

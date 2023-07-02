@@ -3,12 +3,12 @@ import Button from '@mui/material/Button'
 import { Badge, Box, Drawer, Typography } from '@mui/material'
 import Scrollbar from '../Scrollbar'
 import { CustomIcons } from 'public/static/mui-icons'
-import { getCart, getStorage, setStorage } from 'apis/loadStorage'
 import { ContextData } from 'context/dataProviderContext'
+import { bulkUpdateCart } from 'apis/cart.api'
 
 export default function CartDrawer() {
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const { usersCart, cartSimplified, setCartSimplified } =
+  const { usersCart, cartSimplified, setCartSimplified, token } =
     useContext(ContextData)
 
   const handleDrawerOpen = () => {
@@ -43,8 +43,16 @@ export default function CartDrawer() {
     }
   }
 
-  const handleViewCart = id => {
-    console.log('View Cart', id)
+  const handleViewCart = async id => {
+    // First update the updated cart in the database
+    // Then redirect to the cart page
+    const dataToUpdate = {
+      token,
+      cartId: usersCart?._id,
+      product: cartSimplified,
+    }
+    const updateCart = await bulkUpdateCart(dataToUpdate)
+    console.log(updateCart)
   }
 
   const handleCheckout = () => {
