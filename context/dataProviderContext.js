@@ -15,7 +15,6 @@ export const ContextProvider = ({ children }) => {
   const [usersCart, setUsersCart] = useState(null)
   const [cartSimplified, setCartSimplified] = useState(null) // Simplified cart for the drawer
 
-  console.log(fromCurrency, toCurrency, 'fromCurrency')
   useEffect(() => {
     const retriveUser = async () => {
       const location = await getCurrentLocation()
@@ -45,8 +44,6 @@ export const ContextProvider = ({ children }) => {
     retriveUser()
   }, [])
 
-  console.log(location, 'location')
-
   const contextValues = {
     token,
     currentlyLoggedIn,
@@ -57,6 +54,7 @@ export const ContextProvider = ({ children }) => {
     location,
     fromCurrency,
     toCurrency,
+    setToCurrency,
   }
 
   return (

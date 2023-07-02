@@ -1,24 +1,15 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { FaFacebookF } from 'react-icons/fa'
 import { IoLogoYoutube } from 'react-icons/io'
 import { BsTwitter } from 'react-icons/bs'
 import { MdEmail } from 'react-icons/md'
 import { BsTelephoneOutboundFill } from 'react-icons/bs'
-import Button from '@mui/material/Button'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
-import ClickAwayListener from '@mui/material/ClickAwayListener'
-import Grow from '@mui/material/Grow'
-import Paper from '@mui/material/Paper'
-import Popper from '@mui/material/Popper'
 import MenuItem from '@mui/material/MenuItem'
-import MenuList from '@mui/material/MenuList'
-import { Container, Menu, Select } from '@mui/material'
-
-const options = ['$ USD', 'د.إ AED']
+import { Container, Select } from '@mui/material'
+import { ContextData } from 'context/dataProviderContext'
 
 export default function TopNavbar() {
-  const [currency, setCurrency] = useState('AED')
+  const { toCurrency, setToCurrency } = useContext(ContextData)
 
   return (
     <div>
@@ -56,8 +47,8 @@ export default function TopNavbar() {
               </div>
               <div className=" z-50">
                 <Select
-                  value={currency}
-                  onChange={e => setCurrency(e.target.value)}
+                  value={toCurrency}
+                  onChange={e => setToCurrency(e.target.value)}
                   label="Currency"
                   sx={{ fontSize: '0.75rem', color: '#fff', border: 'none' }}
                 >
