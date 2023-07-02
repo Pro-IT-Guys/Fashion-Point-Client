@@ -1,84 +1,85 @@
 // next
-import NextLink from "next/link";
-import { useRouter } from "next/router";
+import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 // material
-import { styled } from "@mui/material/styles";
-import { Box, Button, AppBar, Toolbar, Container } from "@mui/material";
+import { styled } from '@mui/material/styles'
+import { Box, Button, AppBar, Toolbar, Container } from '@mui/material'
 // hooks
-import useOffSetTop from "../../hooks/useOffSetTop";
+import useOffSetTop from '../../hooks/useOffSetTop'
 // components
-import Logo from "../../components/Logo";
-import Label from "../../components/Label";
-import { MHidden } from "../../components/@material-extend";
+
+import { MHidden } from '../../components/@material-extend'
 //
-import MenuDesktop from "./MenuDesktop";
-import MenuMobile from "./MenuMobile";
-import navConfig from "./MenuConfig";
-import logo from "../../assets/logo/Main Website Logo.jpg";
-import Image from "next/image";
-import LoginFormModal from "src/components/AuthModal/LoginModal";
-import { useState } from "react";
-import { HiOutlineUser } from "react-icons/hi";
-import SignUpModal from "src/components/AuthModal/SignUpModal";
+import MenuDesktop from './MenuDesktop'
+import MenuMobile from './MenuMobile'
+import navConfig from './MenuConfig'
+import logo from '../../assets/logo/Main Website Logo.jpg'
+import Image from 'next/image'
+import LoginFormModal from 'src/components/AuthModal/LoginModal'
+import { useState } from 'react'
+import { HiOutlineUser } from 'react-icons/hi'
+import SignUpModal from 'src/components/AuthModal/SignUpModal'
+import TopNavbar from './TopNavbar'
 
 // ----------------------------------------------------------------------
 
-const APP_BAR_MOBILE = 64;
-const APP_BAR_DESKTOP = 88;
+const APP_BAR_MOBILE = 64
+const APP_BAR_DESKTOP = 88
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   height: APP_BAR_MOBILE,
-  transition: theme.transitions.create(["height", "background-color"], {
+  transition: theme.transitions.create(['height', 'background-color'], {
     easing: theme.transitions.easing.easeInOut,
     duration: theme.transitions.duration.shorter,
   }),
-  [theme.breakpoints.up("md")]: {
+  [theme.breakpoints.up('md')]: {
     height: APP_BAR_DESKTOP,
   },
-}));
+}))
 
-const ToolbarShadowStyle = styled("div")(({ theme }) => ({
+const ToolbarShadowStyle = styled('div')(({ theme }) => ({
   left: 0,
   right: 0,
   bottom: 0,
   height: 24,
   zIndex: -1,
-  margin: "auto",
-  borderRadius: "50%",
-  position: "absolute",
+  margin: 'auto',
+  borderRadius: '50%',
+  position: 'absolute',
   width: `calc(100% - 48px)`,
   boxShadow: theme.customShadows.z8,
-}));
+}))
 
 // ----------------------------------------------------------------------
 
 export default function MainNavbar() {
-  const [open, setOpen] = useState(false);
-  const [signupOpen, setSignupOpen] = useState(false);
-  const isOffset = useOffSetTop(100);
-  const { pathname } = useRouter();
-  const isHome = pathname === "/";
+  const [open, setOpen] = useState(false)
+  const [signupOpen, setSignupOpen] = useState(false)
+  const isOffset = useOffSetTop(100)
+  const { pathname } = useRouter()
+  const isHome = pathname === '/'
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleSignUpOpen = () => {
-    setSignupOpen(true);
-  };
+    setSignupOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-    setSignupOpen(false);
-  };
+    setOpen(false)
+    setSignupOpen(false)
+  }
 
   return (
-    <AppBar sx={{ boxShadow: 0, bgcolor: "transparent" }}>
+    <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
+     <TopNavbar/>
       <ToolbarStyle
         disableGutters
         sx={{
           ...(isOffset && {
-            bgcolor: "background.default",
+            bgcolor: 'background.default',
             height: { md: APP_BAR_DESKTOP - 16 },
           }),
         }}
@@ -86,9 +87,9 @@ export default function MainNavbar() {
         <Container
           maxWidth="lg"
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
           }}
         >
           <NextLink href="/">
@@ -139,18 +140,12 @@ export default function MainNavbar() {
             />
           </MHidden>
 
-          <LoginFormModal
-            open={open}
-            onClose={handleClose}
-          />
-          <SignUpModal
-            open={signupOpen}
-            onClose={handleClose}
-          />
+          <LoginFormModal open={open} onClose={handleClose} />
+          <SignUpModal open={signupOpen} onClose={handleClose} />
         </Container>
       </ToolbarStyle>
 
       {isOffset && <ToolbarShadowStyle />}
     </AppBar>
-  );
+  )
 }
