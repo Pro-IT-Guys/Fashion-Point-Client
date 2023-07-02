@@ -17,7 +17,7 @@ import MenuList from '@mui/material/MenuList';
 import { Container } from '@mui/material'
 
 
-const options = ['$ USD', "د.إ AED", 'Currency'];
+const options = ['$ USD', "د.إ AED", ];
 
 
 export default function  TopNavbar () {
