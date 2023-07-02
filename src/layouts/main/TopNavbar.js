@@ -59,7 +59,7 @@ export default function TopNavbar() {
                   value={currency}
                   onChange={e => setCurrency(e.target.value)}
                   label="Currency"
-                  sx={{ fontSize: '0.75rem' }}
+                  sx={{ fontSize: '0.75rem', color: '#fff', border: 'none' }}
                 >
                   <MenuItem value="USD">$ USD</MenuItem>
                   <MenuItem value="AED"> د.إ AED</MenuItem>
