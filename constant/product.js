@@ -66,6 +66,6 @@ export const TYPE_OPTION = [
   'Moroccan',
 ]
 export const TAG_OPTION = ['Borka', 'Fashion', 'Stylish Borka']
-export const COLOR_OPTION = ['Red', 'Green', 'Blue', 'Yellow', 'Black', 'White', 'Pink', 'Purple', 'Orange', 'Brown', 'Grey', 'Golden', 'Silver', 'Multi-Color', ]
+export const COLOR_OPTION = ['Red', 'Green', 'Blue', 'Yellow', 'Black','Pink', 'Purple', 'Orange', 'Brown', 'Grey', 'Golden', 'Silver', 'Multi-Color', ]
 
 export const SIZE_OPTION = [ 'S', 'M', 'L', 'XL', 'XXL', 'XXXL',]
