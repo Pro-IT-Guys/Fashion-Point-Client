@@ -3,23 +3,13 @@ import Button from '@mui/material/Button'
 import { Badge, Box, Drawer, Typography } from '@mui/material'
 import Scrollbar from '../Scrollbar'
 import { CustomIcons } from 'public/static/mui-icons'
-import { ContextData } from 'context/dataProviderContext'
 import { getCart, getStorage, setStorage } from 'apis/loadStorage'
+import { ContextData } from 'context/dataProviderContext'
 
 export default function CartDrawer() {
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [cart, setCart] = useState(null)
-  const [cartId, setCartId] = useState(null)
-
-  useEffect(() => {
-    const retriveCart = async () => {
-      const cartData = await getCart()
-      const cartId = await getStorage('cartId')
-      setCart(cartData)
-      setCartId(cartId)
-    }
-    retriveCart()
-  }, [])
+  const { usersCart, cartSimplified, setCartSimplified } =
+    useContext(ContextData)
 
   const handleDrawerOpen = () => {
     setDrawerOpen(true)
@@ -30,27 +20,25 @@ export default function CartDrawer() {
   }
 
   const handleIncreaseQuantity = productId => {
-    const updatedCart = [...cart]
+    const updatedCart = [...cartSimplified]
     const productIndex = updatedCart.findIndex(item => item._id === productId)
 
     if (productIndex !== -1) {
       updatedCart[productIndex].quantity += 1
-      setStorage('cart', updatedCart)
 
-      setCart(updatedCart)
+      setCartSimplified(updatedCart)
     }
   }
 
   const handleDecreaseQuantity = productId => {
-    const updatedCart = [...cart]
+    const updatedCart = [...cartSimplified]
     const productIndex = updatedCart.findIndex(item => item._id === productId)
 
     if (productIndex !== -1) {
       if (updatedCart[productIndex].quantity > 1) {
         updatedCart[productIndex].quantity -= 1
-        setStorage('cart', updatedCart)
 
-        setCart(updatedCart)
+        setCartSimplified(updatedCart)
       }
     }
   }
@@ -68,7 +56,7 @@ export default function CartDrawer() {
       <Badge
         onClick={handleDrawerOpen}
         sx={{ cursor: 'pointer' }}
-        badgeContent={3}
+        badgeContent={cartSimplified ? cartSimplified.length : 0}
         color="primary"
       >
         <CustomIcons.ShoppingCartIcon color="action" />
@@ -97,8 +85,8 @@ export default function CartDrawer() {
           </Typography>
 
           <Box sx={{ marginTop: 2 }}>
-            {cart ? (
-              cart.map((product, index) => (
+            {cartSimplified ? (
+              cartSimplified.map((product, index) => (
                 <div
                   key={index}
                   style={{
@@ -177,7 +165,10 @@ export default function CartDrawer() {
               padding: '10px',
             }}
           >
-            <Button variant="contained" onClick={() => handleViewCart(cartId)}>
+            <Button
+              variant="contained"
+              onClick={() => handleViewCart(usersCart?._id)}
+            >
               View Cart
             </Button>
             <Button variant="contained" onClick={handleCheckout}>

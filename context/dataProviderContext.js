@@ -9,6 +9,7 @@ export const ContextProvider = ({ children }) => {
   const [currentlyLoggedIn, setcurrentlyLoggedIn] = useState(null)
   const [token, setToken] = useState(null)
   const [usersCart, setUsersCart] = useState(null)
+  const [cartSimplified, setCartSimplified] = useState(null) // Simplified cart for the drawer
 
   useEffect(() => {
     const retriveUser = async () => {
@@ -22,8 +23,7 @@ export const ContextProvider = ({ children }) => {
         const cart = await getCartByUserId({ token, userId: user?.data?._id })
         if (cart?.statusCode === 200) {
           setUsersCart(cart?.data)
-          setStorage('cartId', cart?.data._id)
-          setStorage('cart', cart?.data.product)
+          setCartSimplified(cart?.data?.product)
         }
       }
     }
@@ -35,6 +35,8 @@ export const ContextProvider = ({ children }) => {
     currentlyLoggedIn,
     setToken,
     usersCart,
+    cartSimplified,
+    setCartSimplified,
   }
 
   return (
