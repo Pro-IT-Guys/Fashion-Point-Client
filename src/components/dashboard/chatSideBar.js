@@ -38,7 +38,6 @@ const ChatSideBar = () => {
   useEffect(() => {
     if (socket.current) {
       socket.current.on('getMessage', data => {
-        console.log(data, 'from socket')
         setSelectedChatMessage(prev => [...prev, data])
       })
     }

@@ -34,6 +34,8 @@ import {
 import { adminId } from 'constant/constant'
 import { ContextData } from 'context/dataProviderContext'
 import { io } from 'socket.io-client'
+import { getStorage } from 'apis/loadStorage'
+import { addToCart, updateCart } from 'apis/cart.api'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -56,7 +58,7 @@ export default function ProductDetails() {
 
   const [openChat, setOpenChat] = useState(false)
   const anchorRef = useRef(null)
-  const { currentlyLoggedIn } = useContext(ContextData)
+  const { currentlyLoggedIn, usersCart } = useContext(ContextData)
 
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
@@ -123,6 +125,28 @@ export default function ProductDetails() {
 
   const { name, sellingPrice, quantity, rating, description, images } =
     productDetails || {}
+
+  // Cart Logics===============>
+  const handleAddToCart = async () => {
+    const userId = currentlyLoggedIn?._id
+    const token = getStorage('token')
+    const productId = productDetails._id
+    const data = {
+      token,
+      userId,
+      productId,
+      quantity: productQuantity,
+    }
+
+    if (usersCart) {
+      const res = await updateCart({ ...data, cartId: usersCart?._id })
+      if (res?.statusCode === 200) alert('Product added to cart')
+    } else {
+      const res = await addToCart(data)
+      if (res?.statusCode === 200) alert('Product added to cart')
+    }
+    window.location.reload()
+  }
 
   return (
     <>
@@ -232,7 +256,7 @@ export default function ProductDetails() {
                       color="warning"
                       variant="contained"
                       startIcon={<Icon icon={roundAddShoppingCart} />}
-                      // onClick={handleAddCart}
+                      onClick={handleAddToCart}
                       sx={{ whiteSpace: 'nowrap' }}
                     >
                       Add to Cart

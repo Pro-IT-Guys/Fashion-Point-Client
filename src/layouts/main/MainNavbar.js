@@ -7,7 +7,8 @@ import { Box, Button, AppBar, Toolbar, Container } from '@mui/material'
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop'
 // components
-
+import Logo from '../../components/Logo'
+import Label from '../../components/Label'
 import { MHidden } from '../../components/@material-extend'
 //
 import MenuDesktop from './MenuDesktop'
@@ -19,6 +20,7 @@ import LoginFormModal from 'src/components/AuthModal/LoginModal'
 import { useState } from 'react'
 import { HiOutlineUser } from 'react-icons/hi'
 import SignUpModal from 'src/components/AuthModal/SignUpModal'
+import CartDrawer from '../../components/cart/CartDrawer'
 import TopNavbar from './TopNavbar'
 
 // ----------------------------------------------------------------------
@@ -74,7 +76,7 @@ export default function MainNavbar() {
 
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
-     <TopNavbar/>
+      <TopNavbar />
       <ToolbarStyle
         disableGutters
         sx={{
@@ -123,12 +125,12 @@ export default function MainNavbar() {
               <HiOutlineUser className="text-black text-xl" />
             </div>
             <div className="text-black text-xs uppercase">
-              <h1 onClick={handleClickOpen} className="cursor-pointer">
+              <h1 onClick={handleClickOpen} className="cursor-pointer mr-5">
                 Login
               </h1>
-              <h1 onClick={handleSignUpOpen} className="cursor-pointer">
+              {/* <h1 onClick={handleSignUpOpen} className="cursor-pointer">
                 Signup
-              </h1>
+              </h1> */}
             </div>
           </div>
 
@@ -139,6 +141,8 @@ export default function MainNavbar() {
               navConfig={navConfig}
             />
           </MHidden>
+
+          <CartDrawer />
 
           <LoginFormModal open={open} onClose={handleClose} />
           <SignUpModal open={signupOpen} onClose={handleClose} />
