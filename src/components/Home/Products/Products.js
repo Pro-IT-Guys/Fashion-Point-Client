@@ -17,7 +17,6 @@ import React, { useEffect, useState } from 'react'
 import ColorManyPicker from '../common/ColorManyPicker'
 import ShopProductSort from '../shop/ShopProductSort'
 import ProductCard from './ProductCard'
-import Image from 'next/image'
 import PopularProducts from './PopularProducts'
 import {
   BRAND_OPTION,
