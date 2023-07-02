@@ -2,3 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+.MuiFormControlLabel-root .MuiRadio-root input{
+    font-size: 5px !important;
+    padding: 5px !important;
+}

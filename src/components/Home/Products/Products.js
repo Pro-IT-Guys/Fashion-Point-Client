@@ -1,4 +1,5 @@
 import {
+  Box,
   Checkbox,
   Container,
   FormControlLabel,
@@ -7,67 +8,79 @@ import {
   Radio,
   RadioGroup,
   Rating,
+  Slider,
   Stack,
   Typography,
   styled,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import ColorManyPicker from "../common/ColorManyPicker";
-import ShopProductSort from "../shop/ShopProductSort";
-import ProductCard from "./ProductCard";
-import Image from "next/image";
-import PopularProducts from "./PopularProducts";
+} from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import ColorManyPicker from '../common/ColorManyPicker'
+import ShopProductSort from '../shop/ShopProductSort'
+import ProductCard from './ProductCard'
+import Image from 'next/image'
+import PopularProducts from './PopularProducts'
+import {
+  BRAND_OPTION,
+  CATEGORY_OPTION,
+  COLOR_OPTION,
+  FABRIC_OPTION,
+  SIZE_OPTION,
+  STYLE_OPTION,
+  TYPE_OPTION,
+} from 'constant/product'
+
+
+function valuetext(value) {
+  return `${value}°C`;
+}
+
 
 const Products = () => {
-  const [openFilter, setOpenFilter] = useState(false);
-  const [products, setProducts] = useState([]);
+  const [openFilter, setOpenFilter] = useState(false)
+  const [products, setProducts] = useState([])
+  const [color, setColor] = useState([])
+
+  const [value, setValue] = useState([0, 20000]);
+
+  const handlePriceRange = (event, newValue) => {
+    setValue(newValue);
+    console.log(newValue, 'newValue');
+  };
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/product")
-      .then((res) => res.json())
-      .then((data) => setProducts(data?.data));
-  }, []);
+    fetch('http://localhost:8000/api/v1/product')
+      .then(res => res.json())
+      .then(data => setProducts(data?.data))
+  }, [])
 
-
-  const RootStyle = styled("div")(({ theme }) => ({
+  const RootStyle = styled('div')(({ theme }) => ({
     paddingTop: theme.spacing(15),
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up('md')]: {
       paddingBottom: theme.spacing(15),
     },
-  }));
+  }))
 
   const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
+    setOpenFilter(true)
+  }
 
   const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
+    setOpenFilter(false)
+  }
 
-  const SORT_BY_OPTIONS = [
-    { value: "featured", label: "Featured" },
-    { value: "newest", label: "Newest" },
-    { value: "priceDesc", label: "Price: High-Low" },
-    { value: "priceAsc", label: "Price: Low-High" },
-  ];
-  const FILTER_GENDER_OPTIONS = ["Men", "Women", "Kids"];
-  const FILTER_CATEGORY_OPTIONS = ["All", "Shose", "Apparel", "Accessories"];
-  const FILTER_RATING_OPTIONS = ["up4Star", "up3Star", "up2Star", "up1Star"];
-  const FILTER_PRICE_OPTIONS = [
-    { value: "below", label: "Below $25" },
-    { value: "between", label: "Between $25 - $75" },
-    { value: "above", label: "Above $75" },
-  ];
-  const FILTER_COLOR_OPTIONS = [
-    "#00AB55",
-    "#000000",
-    "#FFFFFF",
-    "#FFC0CB",
-    "#FF4842",
-    "#1890FF",
-    "#94D82D",
-    "#FFC107",
-  ];
+
+  const handleChange = selectedColor => {
+    setColor(selectedColor)
+  }
+
+  const handleChecked = selectedColor => {
+    if (Array.isArray(color)) {
+      return color.indexOf(selectedColor) !== -1
+    }
+    return false
+  }
+
+  // console.log(color, 'color')
 
   return (
     <div className="bg-[#f7f7ff9c]">
@@ -120,32 +133,87 @@ const Products = () => {
               <div className="pt-5 space-y-5 shadow py-5 pl-5 pr-3 bg-white ">
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Gender
-                  </Typography>
-                  <FormGroup>
-                    {FILTER_GENDER_OPTIONS?.map((item) => (
-                      <FormControlLabel
-                        key={item}
-                        control={<Checkbox value={item} checked={item} />}
-                        label={item}
-                      />
-                    ))}
-                  </FormGroup>
-                </div>
-
-                <div>
-                  <Typography variant="subtitle1" gutterBottom>
                     Category
                   </Typography>
+                  <RadioGroup className="text-xs">
+                    {CATEGORY_OPTION.map(item =>
+                      item?.classify?.map(item => (
+                        <FormControlLabel
+                          className="text-xs p-0 m-0"
+                          key={item}
+                          value={item}
+                          control={<Radio />}
+                          label={item}
+                        />
+                      ))
+                    )}
+                  </RadioGroup>
+                </div>
+                <div>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Price (AED)
+                  </Typography>
+                  <Box >
+                    <Slider
+                      getAriaLabel={() => 'Price range'}
+                      value={value}
+                      onChange={handlePriceRange}
+                      min={0}
+                      max={500}
+                      valueLabelDisplay="auto"
+                      // getAriaValueText={valuetext}
+                    />
+                  </Box>
+                </div>
+                <div>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Brand
+                  </Typography>
                   <RadioGroup>
-                    {FILTER_CATEGORY_OPTIONS.map((item) => (
-                      <FormControlLabel
-                        key={item}
-                        value={item}
-                        control={<Radio />}
-                        label={item}
-                      />
-                    ))}
+                    {BRAND_OPTION.map(item =>
+                      item?.classify?.map(item => (
+                        <FormControlLabel
+                          key={item}
+                          value={item}
+                          control={<Radio />}
+                          label={item}
+                        />
+                      ))
+                    )}
+                  </RadioGroup>
+                </div>
+                <div>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Fabric
+                  </Typography>
+                  <RadioGroup>
+                    {FABRIC_OPTION.map(item =>
+                      item?.classify?.map(item => (
+                        <FormControlLabel
+                          key={item}
+                          value={item}
+                          control={<Radio />}
+                          label={item}
+                        />
+                      ))
+                    )}
+                  </RadioGroup>
+                </div>
+                <div>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Style
+                  </Typography>
+                  <RadioGroup>
+                    {STYLE_OPTION.map(item =>
+                      item?.classify?.map(item => (
+                        <FormControlLabel
+                          key={item}
+                          value={item}
+                          control={<Radio />}
+                          label={item}
+                        />
+                      ))
+                    )}
                   </RadioGroup>
                 </div>
 
@@ -155,25 +223,26 @@ const Products = () => {
                   </Typography>
                   <ColorManyPicker
                     name="colors"
-                    colors={FILTER_COLOR_OPTIONS}
-                    // onChange={handleChange}
-                    // onChecked={(color) => values.colors.includes(color)}
-                    onChecked={(color) => color}
+                    colors={COLOR_OPTION}
+                    value={color}
+                    onChange={handleChange}
+                    onChecked={handleChecked}
                     sx={{ maxWidth: 36 * 4 }}
                   />
                 </div>
 
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Price
+                    Type
                   </Typography>
-                  <RadioGroup>
-                    {FILTER_PRICE_OPTIONS.map((item) => (
+                  <RadioGroup className="text-xs">
+                    {TYPE_OPTION.map(item => (
                       <FormControlLabel
-                        key={item.value}
-                        value={item.value}
+                        className="text-xs p-0 m-0"
+                        key={item}
+                        value={item}
                         control={<Radio />}
-                        label={item.label}
+                        label={item}
                       />
                     ))}
                   </RadioGroup>
@@ -181,44 +250,29 @@ const Products = () => {
 
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
-                    Rating
+                    Size
                   </Typography>
-                  <RadioGroup>
-                    {FILTER_RATING_OPTIONS.map((item, index) => (
+                  <RadioGroup className="text-xs">
+                    {SIZE_OPTION.map(item => (
                       <FormControlLabel
+                        className="text-xs p-0 m-0"
                         key={item}
                         value={item}
-                        control={
-                          <Radio
-                            disableRipple
-                            color="default"
-                            icon={<Rating readOnly value={4 - index} />}
-                            checkedIcon={<Rating readOnly value={4 - index} />}
-                            sx={{
-                              "&:hover": { bgcolor: "transparent" },
-                            }}
-                          />
-                        }
-                        label="& Up"
-                        // sx={{
-                        //   my: 0.5,
-                        //   borderRadius: 1,
-                        //   '&:hover': { opacity: 0.48 },
-                        //   ...(values.rating.includes(item) && {
-                        //     bgcolor: 'action.selected'
-                        //   })
-                        // }}
+                        control={<Radio />}
+                        label={item}
                       />
                     ))}
                   </RadioGroup>
                 </div>
+
+             
               </div>
-              <div className=" mt-4 shadow">
+              {/* <div className=" mt-4 shadow">
                 <div className="bg-[#f2f2f2] border py-2 px-3 rounded-t">
                   <h1 className="font-semibold text-xl">Best Selling</h1>
                 </div>
                 <div className="p-2 space-y-3 bg-white rounded overflow-hidden">
-                  {products?.slice(0, 20)?.map((product) => (
+                  {products?.slice(0, 20)?.map(product => (
                     <>
                       <div className="flex gap-2 items-center">
                         <div className="w-[30%]">
@@ -243,11 +297,11 @@ const Products = () => {
                     </>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className=" w-[80%]">
               <div className="grid grid-cols-4 gap-5">
-                {products?.map((product) => (
+                {products?.map(product => (
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>
@@ -263,7 +317,7 @@ const Products = () => {
         </Grid>
       </Container>
     </div>
-  );
-};
+  )
+}
 
-export default Products;
+export default Products
