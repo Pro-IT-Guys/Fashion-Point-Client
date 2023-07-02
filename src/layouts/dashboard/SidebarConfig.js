@@ -56,15 +56,15 @@ const sidebarConfig = [
           { title: "Review & Ratings", path: PATH_DASHBOARD.product.review },
         ],
       },
-      {
-        title: "category",
-        path: PATH_DASHBOARD.category.root,
-        icon: ICONS.dashboard,
-        children: [
-          { title: "Add Category", path: PATH_DASHBOARD.category.addCategory },
-          { title: "Add Brand", path: PATH_DASHBOARD.category.addBrand },
-        ],
-      },
+      // {
+      //   title: "category",
+      //   path: PATH_DASHBOARD.category.root,
+      //   icon: ICONS.dashboard,
+      //   children: [
+      //     { title: "Add Category", path: PATH_DASHBOARD.category.addCategory },
+      //     { title: "Add Brand", path: PATH_DASHBOARD.category.addBrand },
+      //   ],
+      // },
       {
         title: "orders",
         path: PATH_DASHBOARD.order.root,

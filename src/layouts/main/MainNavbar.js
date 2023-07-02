@@ -21,6 +21,7 @@ import { useState } from 'react'
 import { HiOutlineUser } from 'react-icons/hi'
 import SignUpModal from 'src/components/AuthModal/SignUpModal'
 import CartDrawer from '../../components/cart/CartDrawer'
+import TopNavbar from './TopNavbar'
 
 // ----------------------------------------------------------------------
 
@@ -75,6 +76,7 @@ export default function MainNavbar() {
 
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
+      <TopNavbar />
       <ToolbarStyle
         disableGutters
         sx={{

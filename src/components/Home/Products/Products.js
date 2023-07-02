@@ -10,64 +10,66 @@ import {
   Stack,
   Typography,
   styled,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import ColorManyPicker from "../common/ColorManyPicker";
-import ShopProductSort from "../shop/ShopProductSort";
-import ProductCard from "./ProductCard";
-import Image from "next/image";
-import PopularProducts from "./PopularProducts";
+} from '@mui/material'
+import React, { useContext, useEffect, useState } from 'react'
+import ColorManyPicker from '../common/ColorManyPicker'
+import ShopProductSort from '../shop/ShopProductSort'
+import ProductCard from './ProductCard'
+import Image from 'next/image'
+import PopularProducts from './PopularProducts'
+import { convertCurrency } from 'helpers/currencyHandler'
+import { ContextData } from 'context/dataProviderContext'
 
 const Products = () => {
-  const [openFilter, setOpenFilter] = useState(false);
-  const [products, setProducts] = useState([]);
+  const { fromCurrency, toCurrency } = useContext(ContextData)
+  const [openFilter, setOpenFilter] = useState(false)
+  const [products, setProducts] = useState([])
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/product")
-      .then((res) => res.json())
-      .then((data) => setProducts(data?.data));
-  }, []);
+    fetch('http://localhost:8000/api/v1/product')
+      .then(res => res.json())
+      .then(data => setProducts(data?.data))
+  }, [])
 
-
-  const RootStyle = styled("div")(({ theme }) => ({
+  const RootStyle = styled('div')(({ theme }) => ({
     paddingTop: theme.spacing(15),
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up('md')]: {
       paddingBottom: theme.spacing(15),
     },
-  }));
+  }))
 
   const handleOpenFilter = () => {
-    setOpenFilter(true);
-  };
+    setOpenFilter(true)
+  }
 
   const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
+    setOpenFilter(false)
+  }
 
   const SORT_BY_OPTIONS = [
-    { value: "featured", label: "Featured" },
-    { value: "newest", label: "Newest" },
-    { value: "priceDesc", label: "Price: High-Low" },
-    { value: "priceAsc", label: "Price: Low-High" },
-  ];
-  const FILTER_GENDER_OPTIONS = ["Men", "Women", "Kids"];
-  const FILTER_CATEGORY_OPTIONS = ["All", "Shose", "Apparel", "Accessories"];
-  const FILTER_RATING_OPTIONS = ["up4Star", "up3Star", "up2Star", "up1Star"];
+    { value: 'featured', label: 'Featured' },
+    { value: 'newest', label: 'Newest' },
+    { value: 'priceDesc', label: 'Price: High-Low' },
+    { value: 'priceAsc', label: 'Price: Low-High' },
+  ]
+  const FILTER_GENDER_OPTIONS = ['Men', 'Women', 'Kids']
+  const FILTER_CATEGORY_OPTIONS = ['All', 'Shose', 'Apparel', 'Accessories']
+  const FILTER_RATING_OPTIONS = ['up4Star', 'up3Star', 'up2Star', 'up1Star']
   const FILTER_PRICE_OPTIONS = [
-    { value: "below", label: "Below $25" },
-    { value: "between", label: "Between $25 - $75" },
-    { value: "above", label: "Above $75" },
-  ];
+    { value: 'below', label: 'Below $25' },
+    { value: 'between', label: 'Between $25 - $75' },
+    { value: 'above', label: 'Above $75' },
+  ]
   const FILTER_COLOR_OPTIONS = [
-    "#00AB55",
-    "#000000",
-    "#FFFFFF",
-    "#FFC0CB",
-    "#FF4842",
-    "#1890FF",
-    "#94D82D",
-    "#FFC107",
-  ];
+    '#00AB55',
+    '#000000',
+    '#FFFFFF',
+    '#FFC0CB',
+    '#FF4842',
+    '#1890FF',
+    '#94D82D',
+    '#FFC107',
+  ]
 
   return (
     <div className="bg-[#f7f7ff9c]">
@@ -123,7 +125,7 @@ const Products = () => {
                     Gender
                   </Typography>
                   <FormGroup>
-                    {FILTER_GENDER_OPTIONS?.map((item) => (
+                    {FILTER_GENDER_OPTIONS?.map(item => (
                       <FormControlLabel
                         key={item}
                         control={<Checkbox value={item} checked={item} />}
@@ -138,7 +140,7 @@ const Products = () => {
                     Category
                   </Typography>
                   <RadioGroup>
-                    {FILTER_CATEGORY_OPTIONS.map((item) => (
+                    {FILTER_CATEGORY_OPTIONS.map(item => (
                       <FormControlLabel
                         key={item}
                         value={item}
@@ -158,7 +160,7 @@ const Products = () => {
                     colors={FILTER_COLOR_OPTIONS}
                     // onChange={handleChange}
                     // onChecked={(color) => values.colors.includes(color)}
-                    onChecked={(color) => color}
+                    onChecked={color => color}
                     sx={{ maxWidth: 36 * 4 }}
                   />
                 </div>
@@ -168,7 +170,7 @@ const Products = () => {
                     Price
                   </Typography>
                   <RadioGroup>
-                    {FILTER_PRICE_OPTIONS.map((item) => (
+                    {FILTER_PRICE_OPTIONS.map(item => (
                       <FormControlLabel
                         key={item.value}
                         value={item.value}
@@ -195,7 +197,7 @@ const Products = () => {
                             icon={<Rating readOnly value={4 - index} />}
                             checkedIcon={<Rating readOnly value={4 - index} />}
                             sx={{
-                              "&:hover": { bgcolor: "transparent" },
+                              '&:hover': { bgcolor: 'transparent' },
                             }}
                           />
                         }
@@ -218,7 +220,7 @@ const Products = () => {
                   <h1 className="font-semibold text-xl">Best Selling</h1>
                 </div>
                 <div className="p-2 space-y-3 bg-white rounded overflow-hidden">
-                  {products?.slice(0, 20)?.map((product) => (
+                  {products?.slice(0, 20)?.map(product => (
                     <>
                       <div className="flex gap-2 items-center">
                         <div className="w-[30%]">
@@ -236,7 +238,11 @@ const Products = () => {
                             {product?.name?.slice(0, 40)}
                           </h1>
                           <p className="text-xs text-secondary font-semibold mt-1">
-                            ৳ {product?.sellingPrice}
+                            {convertCurrency(
+                              fromCurrency,
+                              toCurrency,
+                              product?.sellingPrice
+                            )}
                           </p>
                         </div>
                       </div>
@@ -247,7 +253,7 @@ const Products = () => {
             </div>
             <div className=" w-[80%]">
               <div className="grid grid-cols-4 gap-5">
-                {products?.map((product) => (
+                {products?.map(product => (
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>
@@ -263,7 +269,7 @@ const Products = () => {
         </Grid>
       </Container>
     </div>
-  );
-};
+  )
+}
 
-export default Products;
+export default Products

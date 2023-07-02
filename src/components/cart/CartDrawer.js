@@ -5,8 +5,10 @@ import Scrollbar from '../Scrollbar'
 import { CustomIcons } from 'public/static/mui-icons'
 import { ContextData } from 'context/dataProviderContext'
 import { bulkUpdateCart } from 'apis/cart.api'
+import { useRouter } from 'next/router'
 
 export default function CartDrawer() {
+  const router = useRouter()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const { usersCart, cartSimplified, setCartSimplified, token } =
     useContext(ContextData)
@@ -52,7 +54,8 @@ export default function CartDrawer() {
       product: cartSimplified,
     }
     const updateCart = await bulkUpdateCart(dataToUpdate)
-    console.log(updateCart)
+
+    router.push('/cart')
   }
 
   const handleCheckout = () => {

@@ -51,7 +51,9 @@ export default function DashboardLayout({ children }) {
         onCloseSidebar={() => setOpen(false)}
       />
       <MainStyle
+      className='bg-[#f3f6ff5e]'
         sx={{
+          
           transition: theme.transitions.create('margin', {
             duration: theme.transitions.duration.complex,
           }),
