@@ -23,7 +23,7 @@ import NavSection from '../../components/NavSection';
 //
 import { MHidden } from '../../components/@material-extend';
 import sidebarConfig from './SidebarConfig';
-import logoImg from '../../assets/logo/Main Website Logo.jpg'
+import logoImg from '../../assets/logo/MainWebsiteLogo.jpg'
 import Image from 'next/image'
 
 // ----------------------------------------------------------------------

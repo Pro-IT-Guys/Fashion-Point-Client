@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from '@emotion/styled'
 import {
   Box,
   Button,
@@ -11,19 +11,32 @@ import {
   Icon,
   Stack,
   Typography,
-} from "@mui/material";
-import React from "react";
-import Scrollbar from "src/components/Scrollbar";
-import ProductList from "src/components/checkout/CheckoutProductList";
-import MainLayout from "src/layouts/main";
+} from '@mui/material'
+import axios from 'axios'
+import { ContextData } from 'context/dataProviderContext'
+import React, { useContext } from 'react'
+import StripeCheckout from 'react-stripe-checkout'
+import Scrollbar from 'src/components/Scrollbar'
+import ProductList from 'src/components/checkout/CheckoutProductList'
+import MainLayout from 'src/layouts/main'
+import logo from '../../src/assets/logo/MainWebsiteLogo.jpg'
+
+const RootStyle = styled('div')(({ theme }) => ({
+  paddingTop: theme.spacing(15),
+  [theme.breakpoints.up('md')]: {
+    paddingBottom: theme.spacing(15),
+  },
+}))
 
 const ShippingAddress = () => {
-  const RootStyle = styled("div")(({ theme }) => ({
-    paddingTop: theme.spacing(15),
-    [theme.breakpoints.up("md")]: {
-      paddingBottom: theme.spacing(15),
-    },
-  }));
+  const { currentlyLoggedIn, toCurrency } = useContext(ContextData)
+  const stripePublishableKey = `pk_test_51NL63QKBXnbzmZqgcYcweVF6rQn1AYl0PYTWdPi6iKnd6c4XY35AYLkOfge5MVeuNY722okW7W1jhAV69JhsWICJ00impyVmaz`
+  const details = 'Where style meets convenience!'
+  const fromEuroToCent = amount => amount * 100
+
+  const onToken = (amount, description) => token =>
+    console.log(token)
+
   return (
     <MainLayout>
       <RootStyle>
@@ -45,7 +58,7 @@ const ShippingAddress = () => {
                     <Typography
                       component="span"
                       variant="body2"
-                      sx={{ color: "text.secondary", ml: 1 }}
+                      sx={{ color: 'text.secondary', ml: 1 }}
                     >
                       Sobahan Baper Bari
                     </Typography>
@@ -54,15 +67,15 @@ const ShippingAddress = () => {
                   <Typography variant="body2" gutterBottom>
                     Azadi Bazar, Dharmapur, Fatikchhari, Chattogram.
                   </Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     01868032281
                   </Typography>
 
                   <Box
                     sx={{
                       mt: 3,
-                      display: "flex",
-                      position: { sm: "absolute" },
+                      display: 'flex',
+                      position: { sm: 'absolute' },
                       right: { sm: 24 },
                       bottom: { sm: 24 },
                     }}
@@ -94,7 +107,7 @@ const ShippingAddress = () => {
                     <Stack direction="row" justifyContent="space-between">
                       <Typography
                         variant="body2"
-                        sx={{ color: "text.secondary" }}
+                        sx={{ color: 'text.secondary' }}
                       >
                         Sub Total
                       </Typography>
@@ -104,7 +117,7 @@ const ShippingAddress = () => {
                     <Stack direction="row" justifyContent="space-between">
                       <Typography
                         variant="body2"
-                        sx={{ color: "text.secondary" }}
+                        sx={{ color: 'text.secondary' }}
                       >
                         Discount
                       </Typography>
@@ -114,7 +127,7 @@ const ShippingAddress = () => {
                     <Stack direction="row" justifyContent="space-between">
                       <Typography
                         variant="body2"
-                        sx={{ color: "text.secondary" }}
+                        sx={{ color: 'text.secondary' }}
                       >
                         Shipping
                       </Typography>
@@ -125,20 +138,41 @@ const ShippingAddress = () => {
 
                     <Stack direction="row" justifyContent="space-between">
                       <Typography variant="subtitle1">Total</Typography>
-                      <Box sx={{ textAlign: "right" }}>
+                      <Box sx={{ textAlign: 'right' }}>
                         <Typography
                           variant="subtitle1"
-                          sx={{ color: "error.main" }}
+                          sx={{ color: 'error.main' }}
                         >
                           32113
                         </Typography>
                         <Typography
                           variant="caption"
-                          sx={{ fontStyle: "italic" }}
+                          sx={{ fontStyle: 'italic' }}
                         >
                           (VAT included if applicable)
                         </Typography>
                       </Box>
+                    </Stack>
+
+                    <Stack>
+                      <StripeCheckout
+                        name="AYMI" // the pop-in header title
+                        description={details}
+                        image="https://i.ibb.co/pd3rkrb/Main-Website-Logo.jpg" // the pop-in header image (default none)
+                        ComponentClass="div"
+                        label="Proceed to checkout" // text inside the Stripe button
+                        panelLabel="Confirm Payment" // prepended to the amount in the bottom pay button
+                        amount={1000} // cents
+                        currency={toCurrency === 'AED' ? 'aed' : 'usd'}
+                        stripeKey={stripePublishableKey}
+                        email={currentlyLoggedIn?.email}
+                        allowRememberMe // "Remember Me" option (default true)
+                        token={onToken(1000, details)} // submit callback
+                      >
+                        <button className="btn btn-primary">
+                          Proceed to checkout
+                        </button>
+                      </StripeCheckout>
                     </Stack>
                   </Stack>
                 </CardContent>
@@ -148,7 +182,7 @@ const ShippingAddress = () => {
         </Container>
       </RootStyle>
     </MainLayout>
-  );
-};
+  )
+}
 
-export default ShippingAddress;
+export default ShippingAddress
