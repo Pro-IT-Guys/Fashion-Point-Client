@@ -17,7 +17,7 @@ import Image from "next/image";
 
 const Banner = () => {
   const RootStyle = styled("div")(({ theme }) => ({
-    paddingTop: theme.spacing(15),
+    paddingTop: theme.spacing(17),
     // [theme.breakpoints.up("md")]: {
     //   paddingBottom: theme.spacing(15),
     // },
