@@ -13,6 +13,9 @@ export const PATH_DASHBOARD = {
   general: {
     pageOne: path(ROOTS_DASHBOARD, "/ecommerce"),
   },
+  userProfile: {
+    root: path(ROOTS_DASHBOARD, "/app/my-profile"),
+  },
   user: {
     root: path(ROOTS_DASHBOARD, "/app/user"),
     pageUser: path(ROOTS_DASHBOARD, "/app/user/all-users"),

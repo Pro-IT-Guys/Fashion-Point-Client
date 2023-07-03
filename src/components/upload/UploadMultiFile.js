@@ -61,6 +61,8 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
     ...other
   });
 
+  console.log(files);
+
   const ShowRejectionItems = () => (
     <Paper
       variant="outlined"
@@ -124,7 +126,7 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
 
       {fileRejections.length > 0 && <ShowRejectionItems />}
 
-      {/* <List disablePadding sx={{ ...(hasFile && { my: 3 }) }}>
+      <List disablePadding sx={{ ...(hasFile && { my: 3 }) }}>
         <AnimatePresence>
           {files?.map((file) => {
             const { name, size, preview } = file;
@@ -205,16 +207,16 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
             );
           })}
         </AnimatePresence>
-      </List> */}
+      </List>
 
-      {/* {hasFile && (
+      {hasFile && (
         <Stack direction="row" justifyContent="flex-end">
           <Button onClick={onRemoveAll} sx={{ mr: 1.5 }}>
             Remove all
           </Button>
           <Button variant="contained">Upload files</Button>
         </Stack>
-      )} */}
+      )}
     </Box>
   );
 }

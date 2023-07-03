@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 // next
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -25,6 +25,7 @@ import { MHidden } from '../../components/@material-extend';
 import sidebarConfig from './SidebarConfig';
 import logoImg from '../../assets/logo/Main Website Logo.jpg'
 import Image from 'next/image'
+import { ContextData } from 'context/dataProviderContext';
 
 // ----------------------------------------------------------------------
 
@@ -100,6 +101,8 @@ DashboardSidebar.propTypes = {
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useRouter();
+  const { currentlyLoggedIn } = useContext(ContextData)
+  const { role, name } = currentlyLoggedIn || {}
 
   const {
     isCollapse,
@@ -181,10 +184,10 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
               />
               <Box sx={{ ml: 2 }}>
                 <Typography variant='subtitle2' sx={{ color: 'text.primary' }}>
-                  displayName
+                  {name?.firstName} {name?.lastName}
                 </Typography>
                 <Typography variant='body2' sx={{ color: 'text.secondary' }}>
-                  role
+                 {role}
                 </Typography>
               </Box>
             </AccountStyle>

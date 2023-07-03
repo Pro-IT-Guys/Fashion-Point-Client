@@ -37,7 +37,7 @@ export default function AddProductForm() {
   const [sizeValue, setSizeValue] = useState([])
   const [description, setDescription] = useState('')
   const [imagesArray, setImagesArray] = useState([])
-  const [values, setFieldValue] = useState({ images: [] })
+  const [values, setFieldValue] = useState([])
 
   const {
     register,
@@ -54,7 +54,13 @@ export default function AddProductForm() {
   const handleDrop = useCallback(
     acceptedFiles => {
       setImagesArray([...imagesArray, ...acceptedFiles])
-      setFieldValue('images', [...values?.images, ...acceptedFiles])
+      setFieldValue(
+        acceptedFiles.map((file) =>
+          Object.assign(file, {
+            preview: URL.createObjectURL(file)
+          })
+        )
+      );
     },
     [setFieldValue]
   )
@@ -522,7 +528,7 @@ export default function AddProductForm() {
                   showPreview
                   maxSize={3145728}
                   accept="image/*"
-                  files={imagesArray}
+                  files={values}
                   onDrop={handleDrop}
                   onRemove={handleRemove}
                   onRemoveAll={handleRemoveAll}

@@ -155,7 +155,7 @@ export default function ProductDetails() {
       <MainLayout>
         <div className="bg-[#f7f7ff9c] pb-20  pt-5">
           <Container maxWidth="lg">
-            <Card className="mt-20  pb-10">
+            <Card className="mt-28  pb-10">
               <Grid container>
                 <Grid
                   item
