@@ -21,8 +21,8 @@ export default function MyProfile() {
   const [image, setImage] = useState([])
   const [imgPath, setImgPath] = useState()
   const { currentlyLoggedIn } = useContext(ContextData)
-  const { _id, name } = currentlyLoggedIn || {}
-  const [country, setCountry] = useState([])
+  const { _id, name, shippingAddress, zipCode, email } = currentlyLoggedIn || {}
+  const [country, setCountry] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null)
   const [selectedState, setSelectedState] = useState(null)
   const [state, setState] = useState(null)
@@ -50,7 +50,9 @@ export default function MyProfile() {
     setSelectedState(stateId)
   }
 
-  console.log(country)
+  const handleState = data => {
+    setState(data)
+  }
 
   const {
     register,
@@ -82,14 +84,15 @@ export default function MyProfile() {
       image: image.preview,
       phone: data.phoneNumber,
       shippingAddress: {
-        country: data.country,
-        state: data.state,
+        country: selectedCountry,
+        state: selectedState,
         city: data.city,
-        street: data.street,
-        zipCode: data.zipCode,
+        address_line: data.address,
       },
-      address: data.shippingAddress,
+      zipCode: data.zipCode,
     }
+
+    console.log(userData)
 
     fetch(`${BASE_URL}/users/${_id}`, {
       method: 'PATCH',
@@ -149,6 +152,7 @@ export default function MyProfile() {
                         <TextField
                           fullWidth
                           label="First Name"
+                          placeholder={name?.firstName}
                           {...register('firstName')}
                         />
                       </div>
@@ -161,8 +165,11 @@ export default function MyProfile() {
                       </div>
                       <div className="flex flex-col items-start">
                         <TextField
+                          className="select-none "
+                          disabled
                           fullWidth
-                          label="Email"
+                          // label="Email"
+                          value={email}
                           {...register('email')}
                         />
                       </div>
@@ -194,7 +201,7 @@ export default function MyProfile() {
                                 value={option?.country}
                               >
                                 <Typography
-                                  onClick={() => setState(option?.states)}
+                                  onClick={() => handleState(option.states)}
                                 >
                                   {option?.country}
                                 </Typography>
@@ -269,6 +276,7 @@ export default function MyProfile() {
                       <textarea
                         placeholder="Azadi Bazar, Dharmapur, Fatikcchari, Chittagong, Bangladesh 4351"
                         className="border w-full h-20 p-2 text-sm rounded-md"
+                        {...register('address')}
                       ></textarea>
                     </div>
                     <div className="relative mt-5">
