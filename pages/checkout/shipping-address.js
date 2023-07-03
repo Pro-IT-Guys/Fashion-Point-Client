@@ -15,11 +15,19 @@ import {
 import axios from 'axios'
 import { ContextData } from 'context/dataProviderContext'
 import React, { useContext } from 'react'
-import StripeCheckout from 'react-stripe-checkout'
 import Scrollbar from 'src/components/Scrollbar'
 import ProductList from 'src/components/checkout/CheckoutProductList'
 import MainLayout from 'src/layouts/main'
 import logo from '../../src/assets/logo/MainWebsiteLogo.jpg'
+
+import { loadStripe } from '@stripe/stripe-js'
+import { Elements } from '@stripe/react-stripe-js'
+import StripeForm from 'src/components/checkout/StripeForm'
+
+// Replace 'YOUR_STRIPE_PUBLIC_KEY' with your actual Stripe public key
+const stripePromise = loadStripe(
+  'pk_test_51L3PqJCnJiLLpGIeL4Uixr7K4bJ183L3tSUyFg2ENBX5ovRQKSQhaYTR8kG7WbcfvkvyuLa5RfB9eZlBJfohfpYd00PM7gqopw'
+)
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(15),
@@ -30,12 +38,30 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 const ShippingAddress = () => {
   const { currentlyLoggedIn, toCurrency } = useContext(ContextData)
-  const stripePublishableKey = `pk_test_51NL63QKBXnbzmZqgcYcweVF6rQn1AYl0PYTWdPi6iKnd6c4XY35AYLkOfge5MVeuNY722okW7W1jhAV69JhsWICJ00impyVmaz`
-  const details = 'Where style meets convenience!'
-  const fromEuroToCent = amount => amount * 100
 
-  const onToken = (amount, description) => token =>
-    console.log(token)
+  const handleStripePayment = async paymentMethodId => {
+    console.log(paymentMethodId, 'paymentMethodId')
+    const response = await fetch(
+      'http://localhost:8000/api/v1/payment/stripe',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          orderId: '649af82b3a3da1ac2861fa79',
+          paymentMethodId,
+          currency: toCurrency,
+        }),
+      }
+    )
+
+    if (response.ok) {
+      console.log(response)
+    } else {
+      console.error('Payment failed')
+    }
+  }
 
   return (
     <MainLayout>
@@ -155,24 +181,9 @@ const ShippingAddress = () => {
                     </Stack>
 
                     <Stack>
-                      <StripeCheckout
-                        name="AYMI" // the pop-in header title
-                        description={details}
-                        image="https://i.ibb.co/pd3rkrb/Main-Website-Logo.jpg" // the pop-in header image (default none)
-                        ComponentClass="div"
-                        label="Proceed to checkout" // text inside the Stripe button
-                        panelLabel="Confirm Payment" // prepended to the amount in the bottom pay button
-                        amount={1000} // cents
-                        currency={toCurrency === 'AED' ? 'aed' : 'usd'}
-                        stripeKey={stripePublishableKey}
-                        email={currentlyLoggedIn?.email}
-                        allowRememberMe // "Remember Me" option (default true)
-                        token={onToken(1000, details)} // submit callback
-                      >
-                        <button className="btn btn-primary">
-                          Proceed to checkout
-                        </button>
-                      </StripeCheckout>
+                      <Elements stripe={stripePromise}>
+                        <StripeForm handleSubmit={handleStripePayment} />
+                      </Elements>
                     </Stack>
                   </Stack>
                 </CardContent>
