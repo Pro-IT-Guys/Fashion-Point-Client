@@ -10,11 +10,12 @@ import {
   Grid,
   Icon,
   Stack,
+  TextField,
   Typography,
 } from '@mui/material'
 import axios from 'axios'
 import { ContextData } from 'context/dataProviderContext'
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Scrollbar from 'src/components/Scrollbar'
 import ProductList from 'src/components/checkout/CheckoutProductList'
 import MainLayout from 'src/layouts/main'
@@ -39,6 +40,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 const ShippingAddress = () => {
   const { currentlyLoggedIn, toCurrency } = useContext(ContextData)
+  const [paypalPayment, setPaypalPayment] = useState(false)
 
   const handleStripePayment = async paymentMethodId => {
     console.log(paymentMethodId, 'paymentMethodId')
@@ -126,34 +128,84 @@ const ShippingAddress = () => {
               <Button color="inherit">Continue Shopping</Button>
             </Grid>
 
-            <Grid item xs={12} md={4}>
-              <Card sx={{ mb: 3 }}>
-                <CardHeader title="Pay with card" />
-                <CardContent>
-                  <Stack spacing={2}>
-                    <Stack>
-                      <Elements stripe={stripePromise}>
-                        <StripeForm handleSubmit={handleStripePayment} />
-                      </Elements>
+            {!paypalPayment && (
+              <Grid item xs={12} md={4}>
+                <Card sx={{ mb: 3 }}>
+                  <CardHeader title="Pay with card" />
+                  <CardContent>
+                    <Stack spacing={2}>
+                      <Stack>
+                        <Elements stripe={stripePromise}>
+                          <StripeForm handleSubmit={handleStripePayment} />
+                        </Elements>
 
-                      <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 2 }}>
-                        <Typography
-                          variant="body2"
-                          sx={{ fontSize: 16, fontWeight: 'bold' }}
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            marginTop: 2,
+                          }}
                         >
-                          Or pay with
-                        </Typography>
-                        <img
-                          className="w-[100px] cursor-pointer"
-                          src="https://i.ibb.co/WgWs4FC/paypal.png"
-                          alt=""
-                        />
-                      </Box>
+                          <Typography
+                            variant="body2"
+                            sx={{ fontSize: 16, fontWeight: 'bold' }}
+                          >
+                            Or pay with
+                          </Typography>
+                          <img
+                            onClick={() => setPaypalPayment(true)}
+                            className="w-[100px] cursor-pointer"
+                            src="https://i.ibb.co/WgWs4FC/paypal.png"
+                            alt=""
+                          />
+                        </Box>
+                      </Stack>
                     </Stack>
-                  </Stack>
-                </CardContent>
-              </Card>
-            </Grid>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
+            {paypalPayment && (
+              <Grid item xs={12} md={4}>
+                <Card sx={{ mb: 3 }}>
+                  <CardHeader title="Pay with PayPal" />
+                  <CardContent>
+                    <Stack spacing={2}>
+                      <Stack>
+                        <TextField  fullWidth label="Your PayPal Email" />
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          sx={{ mt: 2, width: '90px' }}
+                        >
+                          Pay Now
+                        </Button>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            marginTop: 2,
+                          }}
+                        >
+                          <Typography
+                            variant="body2"
+                            sx={{ fontSize: 16, fontWeight: 'bold' }}
+                          >
+                            Or pay with
+                          </Typography>
+                          <img
+                            onClick={() => setPaypalPayment(false)}
+                            className="w-[50px] cursor-pointer ml-2"
+                            src="https://i.ibb.co/mHLhz9h/stripe-logo-2.png"
+                            alt=""
+                          />
+                        </Box>
+                      </Stack>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
           </Grid>
         </Container>
       </RootStyle>

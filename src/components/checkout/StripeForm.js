@@ -23,14 +23,11 @@ const StripeForm = ({ handleSubmit }) => {
       card: cardElement,
     })
 
-    console.log(paymentMethod, 'paymentMethod')
-
     if (error) {
-      console.error(error)
       setLoading(false)
       return
     }
-
+    setLoading(false)
     handleSubmit(paymentMethod.id)
   }
 
