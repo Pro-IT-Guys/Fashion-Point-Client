@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { BASE_URL } from './url'
 
 export const stripePayment = async data => {
   const { orderId, token, currency, amount } = data
@@ -10,6 +11,22 @@ export const stripePayment = async data => {
       currency,
       amount,
     })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const paypalPaymentApi = async data => {
+  const { orderId, email, currency } = data
+
+  try {
+    const response = await axios.post(`${BASE_URL}/payment/paypal`, {
+      orderId,
+      email,
+      currency,
+    })
+
+    return response.data
   } catch (error) {
     console.log(error)
   }

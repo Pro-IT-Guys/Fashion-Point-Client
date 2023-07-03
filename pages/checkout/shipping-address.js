@@ -13,18 +13,14 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import axios from 'axios'
 import { ContextData } from 'context/dataProviderContext'
 import React, { useContext, useState } from 'react'
-import Scrollbar from 'src/components/Scrollbar'
-import ProductList from 'src/components/checkout/CheckoutProductList'
 import MainLayout from 'src/layouts/main'
-import logo from '../../src/assets/logo/MainWebsiteLogo.jpg'
-import paypalImage from '../../public/static/brand/paypal.png'
 
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import StripeForm from 'src/components/checkout/StripeForm'
+import { paypalPaymentApi } from 'apis/payment.api'
 
 // Replace 'YOUR_STRIPE_PUBLIC_KEY' with your actual Stripe public key
 const stripePromise = loadStripe(
@@ -40,10 +36,11 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 const ShippingAddress = () => {
   const { currentlyLoggedIn, toCurrency } = useContext(ContextData)
+  const [email, setEmail] = useState('')
   const [paypalPayment, setPaypalPayment] = useState(false)
+  const [paypalLink, setPaypalLink] = useState(null)
 
   const handleStripePayment = async paymentMethodId => {
-    console.log(paymentMethodId, 'paymentMethodId')
     const response = await fetch(
       'http://localhost:8000/api/v1/payment/stripe',
       {
@@ -63,6 +60,18 @@ const ShippingAddress = () => {
       console.log(response)
     } else {
       console.error('Payment failed')
+    }
+  }
+
+  const handlePaypalPayment = async () => {
+    const response = await paypalPaymentApi({
+      orderId: '649af82b3a3da1ac2861fa79',
+      email: email,
+      currency: 'USD',
+    })
+
+    if (response?.statusCode === 200) {
+      setPaypalLink(response?.data?.redirectUrl)
     }
   }
 
@@ -172,14 +181,31 @@ const ShippingAddress = () => {
                   <CardContent>
                     <Stack spacing={2}>
                       <Stack>
-                        <TextField  fullWidth label="Your PayPal Email" />
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          sx={{ mt: 2, width: '90px' }}
-                        >
-                          Pay Now
-                        </Button>
+                        <TextField
+                          onChange={e => setEmail(e.target.value)}
+                          fullWidth
+                          label="Your PayPal Email"
+                        />
+                        {paypalLink ? (
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{ mt: 2, width: '170px' }}
+                            onClick={() => window.open(paypalLink, '_blank')}
+                          >
+                            Proceed to PayPal
+                          </Button>
+                        ) : (
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            sx={{ mt: 2, width: '90px' }}
+                            onClick={handlePaypalPayment}
+                          >
+                            Confirm
+                          </Button>
+                        )}
+
                         <Box
                           sx={{
                             display: 'flex',
