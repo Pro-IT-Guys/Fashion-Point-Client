@@ -37,7 +37,7 @@ import DashboardLayout from "src/layouts/dashboard";
 
 const TABLE_HEAD = [
   { id: "name", label: "Name", alignRight: false },
-  { id: "company", label: "Company", alignRight: false },
+  { id: "email", label: "Email", alignRight: false },
   { id: "role", label: "Role", alignRight: false },
   { id: "isVerified", label: "Verified", alignRight: false },
   { id: "action", label: "Action", alignRight: true },
