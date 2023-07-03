@@ -32,12 +32,12 @@ export default function ProductCard({ product }) {
   return (
     <div className="shadow hover:shadow-md rounded overflow-hidden  h-full">
       <div className="bg-white h-full">
-        <div className="h-60 w-full overflow-hidden">
+        <div className="h-80 w-full overflow-hidden">
           <Image
             // src={`http://localhost:8000/images/product/${frontImage} `}
             src={frontImage}
             alt="Picture of the borka"
-            height={600}
+            height={800}
             width={500}
             className="object-cover max-h-full w-full"
           />

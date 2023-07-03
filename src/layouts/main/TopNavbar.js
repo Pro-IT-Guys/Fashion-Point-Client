@@ -52,10 +52,14 @@ export default function TopNavbar() {
                   label="Currency"
                   className="hover:border-none"
                   sx={{
-                    fontSize: '0.75rem',
+                    fontSize: '0.7rem',
                     color: '#fff',
+                    padding: '0',
                     border: 'none',
                     '&:hover': {
+                      border: 'none',
+                    },
+                    ":focus": {
                       border: 'none',
                     },
                   }}

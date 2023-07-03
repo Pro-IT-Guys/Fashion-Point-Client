@@ -39,6 +39,11 @@ const sidebarConfig = [
     subheader: "management",
     items: [
       {
+        title: "my profile",
+        path: PATH_DASHBOARD.userProfile.root,
+        icon: ICONS.user,
+      },
+      {
         title: "customer",
         path: PATH_DASHBOARD.user.root,
         icon: ICONS.user,
