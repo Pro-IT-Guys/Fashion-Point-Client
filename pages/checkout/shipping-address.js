@@ -19,6 +19,7 @@ import Scrollbar from 'src/components/Scrollbar'
 import ProductList from 'src/components/checkout/CheckoutProductList'
 import MainLayout from 'src/layouts/main'
 import logo from '../../src/assets/logo/MainWebsiteLogo.jpg'
+import paypalImage from '../../public/static/brand/paypal.png'
 
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
@@ -127,63 +128,27 @@ const ShippingAddress = () => {
 
             <Grid item xs={12} md={4}>
               <Card sx={{ mb: 3 }}>
-                <CardHeader title="Order Summary" />
+                <CardHeader title="Pay with card" />
                 <CardContent>
                   <Stack spacing={2}>
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography
-                        variant="body2"
-                        sx={{ color: 'text.secondary' }}
-                      >
-                        Sub Total
-                      </Typography>
-                      <Typography variant="subtitle2">3424</Typography>
-                    </Stack>
-
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography
-                        variant="body2"
-                        sx={{ color: 'text.secondary' }}
-                      >
-                        Discount
-                      </Typography>
-                      <Typography variant="subtitle2">34</Typography>
-                    </Stack>
-
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography
-                        variant="body2"
-                        sx={{ color: 'text.secondary' }}
-                      >
-                        Shipping
-                      </Typography>
-                      <Typography variant="subtitle2">34</Typography>
-                    </Stack>
-
-                    <Divider />
-
-                    <Stack direction="row" justifyContent="space-between">
-                      <Typography variant="subtitle1">Total</Typography>
-                      <Box sx={{ textAlign: 'right' }}>
-                        <Typography
-                          variant="subtitle1"
-                          sx={{ color: 'error.main' }}
-                        >
-                          32113
-                        </Typography>
-                        <Typography
-                          variant="caption"
-                          sx={{ fontStyle: 'italic' }}
-                        >
-                          (VAT included if applicable)
-                        </Typography>
-                      </Box>
-                    </Stack>
-
                     <Stack>
                       <Elements stripe={stripePromise}>
                         <StripeForm handleSubmit={handleStripePayment} />
                       </Elements>
+
+                      <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 2 }}>
+                        <Typography
+                          variant="body2"
+                          sx={{ fontSize: 16, fontWeight: 'bold' }}
+                        >
+                          Or pay with
+                        </Typography>
+                        <img
+                          className="w-[100px] cursor-pointer"
+                          src="https://i.ibb.co/WgWs4FC/paypal.png"
+                          alt=""
+                        />
+                      </Box>
                     </Stack>
                   </Stack>
                 </CardContent>
