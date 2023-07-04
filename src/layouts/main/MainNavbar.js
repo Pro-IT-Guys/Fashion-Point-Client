@@ -65,8 +65,8 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-const APPBAR_MOBILE = 0;
-const APPBAR_DESKTOP = 92;
+const APPBAR_MOBILE = 0
+const APPBAR_DESKTOP = 92
 
 const SearchbarStyle = styled('div')(({ theme }) => ({
   top: 0,
@@ -84,13 +84,10 @@ const SearchbarStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 3),
   boxShadow: theme.customShadows.z8,
   // backgroundColor: `${alpha(theme.palette.background.default, 0.72)}`,
-  // [theme.breakpoints.up('md')]: {
-  //   height: APPBAR_DESKTOP,
-  //   padding: theme.spacing(0, 5),
-  // },
-}));
-
-
+  [theme.breakpoints.down('md')]: {
+    visibility: 'hidden',
+  },
+}))
 
 export default function MainNavbar() {
   const [open, setOpen] = useState(false)
@@ -141,105 +138,92 @@ export default function MainNavbar() {
               justifyContent: 'space-between',
             }}
           >
-            <NextLink href="/">
-              {/* <Logo /> */}
-              <Image
-                src={logo}
-                alt="Picture of the logo"
-                width={100}
-                height={40}
-                className="cursor-pointer"
-              />
-            </NextLink>
-            <SearchbarStyle>
-            <Input
-              className="border px-2 py-1 rounded"
-              autoFocus
-              fullWidth
-              disableUnderline
-              placeholder="Search…"
-              startAdornment={
-                <InputAdornment position="start">
-                  <Box
-                    component={Icon}
-                    icon={searchFill}
-                    sx={{ color: 'text.disabled', width: 20, height: 20,  }}
-                  />
-                </InputAdornment>
-              }
-              sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
-            />
-            {/* <Button variant="contained" onClick={handleClose}>
-              Search
-            </Button> */}
-            </SearchbarStyle>
-            <Box sx={{ flexGrow: 1 }} />
-
-            {/* <MHidden width="mdDown">
-            <MenuDesktop
-              isOffset={isOffset}
-              // isHome={isHome}
-              navConfig={navConfig}
-            />
-          </MHidden> */}
-
-            {/* <Button variant="contained" onClick={handleClickOpen}>
-            Login
-          </Button> */}
-
-            <CartDrawer />
-
-            <div className="flex items-center">
-              <div>
-                <HiOutlineUser className="text-black text-3xl" />
-              </div>
-              <div className="text-black ">
-                <h1 className="cursor-pointer text-sm uppercase hover:text-secondary duration-200 font-semibold">
-                  Accounts
-                </h1>
-                {loggedInUser ? (
-                  <div className="text-[10px] flex gap-1 justify-center">
-                    <h1
-                      onClick={handleClickOpen}
-                      className="hover:text-secondary duration-200 cursor-pointer"
-                    >
-                      Edit
-                    </h1>
-                    <span> / </span>
-                    <h1
-                      onClick={handleSignUpOpen}
-                      className="hover:text-secondary duration-200 cursor-pointer"
-                    >
-                      Logout
-                    </h1>
-                  </div>
-                ) : (
-                  <div className="text-[10px] flex gap-1 justify-center">
-                    <h1
-                      onClick={handleClickOpen}
-                      className="hover:text-secondary duration-200 cursor-pointer"
-                    >
-                      Login
-                    </h1>
-                    <span> / </span>
-                    <h1
-                      onClick={handleSignUpOpen}
-                      className="hover:text-secondary duration-200 cursor-pointer"
-                    >
-                      Signup
-                    </h1>
-                  </div>
-                )}
-              </div>
+            <div className="w-[15%]">
+              <NextLink href="/">
+                {/* <Logo /> */}
+                <Image
+                  src={logo}
+                  alt="Picture of the logo"
+                  width={100}
+                  height={40}
+                  className="cursor-pointer w-full"
+                />
+              </NextLink>
             </div>
 
-            {/* <MHidden width="mdUp">
-            <MenuMobile
-              isOffset={isOffset}
-              isHome={isHome}
-              navConfig={navConfig}
-            />
-          </MHidden> */}
+            <div className="w-[80%] md:block hidden">
+              <SearchbarStyle>
+                <Input
+                  className="border px-2 py-1 rounded md:block hidden"
+                  autoFocus
+                  fullWidth
+                  disableUnderline
+                  placeholder="Search…"
+                  startAdornment={
+                    <InputAdornment position="start">
+                      <Box
+                        component={Icon}
+                        icon={searchFill}
+                        sx={{ color: 'text.disabled', width: 20, height: 20 }}
+                      />
+                    </InputAdornment>
+                  }
+                  sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
+                />
+                {/* <Button variant="contained" onClick={handleClose}>
+              Search
+            </Button> */}
+              </SearchbarStyle>
+            </div>
+            {/* <Box sx={{ flexGrow: 1 }} /> */}
+
+            <div className='flex items-center '>
+              <CartDrawer />
+
+              <div className="flex md:gap-0 gap-1 items-center md:ml-0 ml-1">
+                <div>
+                  <HiOutlineUser className="text-black md:text-3xl text-2xl" />
+                </div>
+                <div className="text-black ">
+                  <h1 className="cursor-pointer  md:text-sm text-[10px] uppercase hover:text-secondary duration-200 font-bold ">
+                    Accounts
+                  </h1>
+                  {loggedInUser ? (
+                    <div className="text-[10px] flex gap-1 justify-center">
+                      <h1
+                        onClick={handleClickOpen}
+                        className="hover:text-secondary duration-200 cursor-pointer"
+                      >
+                        Edit
+                      </h1>
+                      <span> / </span>
+                      <h1
+                        onClick={handleSignUpOpen}
+                        className="hover:text-secondary duration-200 cursor-pointer"
+                      >
+                        Logout
+                      </h1>
+                    </div>
+                  ) : (
+                    <div className="text-[10px] flex gap-1 justify-center">
+                      <h1
+                        onClick={handleClickOpen}
+                        className="hover:text-secondary duration-200 cursor-pointer"
+                      >
+                        Login
+                      </h1>
+                      <span> / </span>
+                      <h1
+                        onClick={handleSignUpOpen}
+                        className="hover:text-secondary duration-200 cursor-pointer"
+                      >
+                        Signup
+                      </h1>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
 
             <LoginFormModal open={open} onClose={handleClose} />
             <SignUpModal open={signupOpen} onClose={handleClose} />
