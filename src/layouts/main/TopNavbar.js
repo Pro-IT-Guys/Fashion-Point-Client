@@ -13,7 +13,7 @@ export default function TopNavbar() {
 
   return (
     <div>
-      <div className="bg-[#3f3f3f] py-1 md:block hidden">
+      <div className="bg-[#3f3f3f] py-1">
         <Container maxWidth="lg">
           <div className="flex justify-between items-center">
             <div>

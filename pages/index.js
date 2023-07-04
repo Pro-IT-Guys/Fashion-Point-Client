@@ -4,9 +4,10 @@ import MainLayout from 'src/layouts/main'
 import { styled } from '@mui/material/styles'
 // components
 import Page from 'src/components/Page'
-import { Toaster } from "react-hot-toast";
+import { Toaster } from 'react-hot-toast'
 import Banner from 'src/components/Home/Banner/Banner'
 import Products from 'src/components/Home/Products/Products'
+import CategoryNav from 'src/layouts/main/CategoryNav'
 
 // ----------------------------------------------------------------------
 
