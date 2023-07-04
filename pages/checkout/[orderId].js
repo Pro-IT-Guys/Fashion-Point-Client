@@ -35,7 +35,7 @@ const RootStyle = styled('div')(({ theme }) => ({
   },
 }))
 
-const ShippingAddress = () => {
+const CheckoutPayment = () => {
   const { currentlyLoggedIn, toCurrency } = useContext(ContextData)
   const [email, setEmail] = useState('')
   const [paypalPayment, setPaypalPayment] = useState(false)
@@ -253,4 +253,4 @@ const ShippingAddress = () => {
   )
 }
 
-export default ShippingAddress
+export default CheckoutPayment

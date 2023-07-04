@@ -25,6 +25,7 @@ export default function MyProfile() {
   const [country, setCountry] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null)
   const [selectedState, setSelectedState] = useState(null)
+  const [selectedCity, setSelectedCity] = useState(null)
   const [state, setState] = useState(null)
   const [city, setCity] = useState(null)
 
@@ -35,8 +36,6 @@ export default function MyProfile() {
         setCountry(data.data)
       })
   }, [])
-
-  // console.log(state)
 
   const handleCountryChange = e => {
     const countryId = e.target.value
@@ -201,7 +200,7 @@ export default function MyProfile() {
                                 value={option?.country}
                               >
                                 <Typography
-                                  onClick={() => handleState(option.states)}
+                                  onClick={() => setState(option.states)}
                                 >
                                   {option?.country}
                                 </Typography>
@@ -226,10 +225,13 @@ export default function MyProfile() {
                             >
                               {state?.map(option => (
                                 <MenuItem
+                                  style={{ display: 'block' }}
+                                  className="d-block customizer-select2 bg-red-700"
                                   key={option.state_code}
                                   value={option?.state_code}
                                 >
                                   <Typography
+                                    style={{ display: 'block' }}
                                     onClick={() => setCity(option?.cities)}
                                   >
                                     {option?.state_name}
@@ -242,24 +244,25 @@ export default function MyProfile() {
                       )}
                       {selectedState && (
                         <div className="flex flex-col items-start">
-                          <TextField
-                            select
-                            fullWidth
-                            label="City"
-                            placeholder="City"
-                            SelectProps={{ native: true }}
-                            {...register('city')}
-                          >
-                            <option value="" />
-                            {city?.map(option => (
-                              <option
-                                key={option.city_name}
-                                value={option?.city_name}
-                              >
-                                {option?.city_name}
-                              </option>
-                            ))}
-                          </TextField>
+                          <FormControl fullWidth>
+                            <InputLabel id="city-label">City</InputLabel>
+                            <Select
+                              labelId="city-label"
+                              id="demo-simple-select"
+                              value={selectedCity || ''}
+                              label="City"
+                              onChange={e => setSelectedCity(e.target.value)}
+                            >
+                              {city?.map(i => (
+                                <MenuItem
+                                  key={i?.city_name}
+                                  value={i?.city_name}
+                                >
+                                  {i?.city_name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       )}
 

@@ -1,5 +1,5 @@
-import { Card, Container, Grid } from "@mui/material";
-import MainLayout from "src/layouts/main";
+import { Card, Container, Grid } from '@mui/material'
+import MainLayout from 'src/layouts/main'
 
 export default function CartPage() {
   return (
@@ -8,9 +8,7 @@ export default function CartPage() {
         <Container maxWidth="lg">
           <Card className="mt-20  pb-10">
             <Grid container>
-                          <Grid>
-                              
-              </Grid>
+              <Grid></Grid>
             </Grid>
           </Card>
         </Container>

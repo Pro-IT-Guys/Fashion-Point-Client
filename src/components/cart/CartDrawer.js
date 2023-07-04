@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import Button from '@mui/material/Button'
 import { Badge, Box, Drawer, Typography } from '@mui/material'
 import Scrollbar from '../Scrollbar'
