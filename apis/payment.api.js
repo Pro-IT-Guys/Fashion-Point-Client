@@ -31,3 +31,18 @@ export const paypalPaymentApi = async data => {
     console.log(error)
   }
 }
+
+export const paypalPaymentVerifyWebhook = async data => {
+  const { paymentId } = data
+  try {
+    const response = await axios.post(`${BASE_URL}/payment/paypal/webhook`, {
+      resource: {
+        id: paymentId,
+      },
+    })
+
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}

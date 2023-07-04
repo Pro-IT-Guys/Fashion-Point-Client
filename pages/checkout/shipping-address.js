@@ -20,7 +20,8 @@ import MainLayout from 'src/layouts/main'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import StripeForm from 'src/components/checkout/StripeForm'
-import { paypalPaymentApi } from 'apis/payment.api'
+import { paypalPaymentApi, paypalPaymentVerifyWebhook } from 'apis/payment.api'
+import { getOrderById } from 'apis/order.api'
 
 // Replace 'YOUR_STRIPE_PUBLIC_KEY' with your actual Stripe public key
 const stripePromise = loadStripe(
@@ -72,6 +73,19 @@ const ShippingAddress = () => {
 
     if (response?.statusCode === 200) {
       setPaypalLink(response?.data?.redirectUrl)
+      window.open(response?.data?.redirectUrl, '_blank')
+    }
+  }
+
+  const handlePaypalPaymentVerify = async () => {
+    const order = await getOrderById({ orderId: '649af82b3a3da1ac2861fa79' })
+    if (!order) return alert('Order not found')
+    const response = await paypalPaymentVerifyWebhook({
+      paymentId: order.data.paymentId,
+    })
+
+    if (response?.statusCode === 200) {
+      console.log(response)
     }
   }
 
@@ -191,9 +205,9 @@ const ShippingAddress = () => {
                             variant="contained"
                             color="primary"
                             sx={{ mt: 2, width: '170px' }}
-                            onClick={() => window.open(paypalLink, '_blank')}
+                            onClick={handlePaypalPaymentVerify}
                           >
-                            Proceed to PayPal
+                            Verify Payment
                           </Button>
                         ) : (
                           <Button
