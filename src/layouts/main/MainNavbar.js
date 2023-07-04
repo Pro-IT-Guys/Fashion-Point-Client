@@ -1,7 +1,7 @@
-// next
+import searchFill from '@iconify/icons-eva/search-fill'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-// material
+import { Icon } from '@iconify/react'
 import { styled } from '@mui/material/styles'
 import {
   Box,
@@ -12,14 +12,13 @@ import {
   FormControl,
   Select,
   MenuItem,
+  Input,
+  InputAdornment,
+  alpha,
 } from '@mui/material'
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop'
-// components
-import Logo from '../../components/Logo'
-import Label from '../../components/Label'
 import { MHidden } from '../../components/@material-extend'
-//
 
 import logo from '../../assets/logo/MainWebsiteLogo.jpg'
 import Image from 'next/image'
@@ -65,6 +64,33 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 }))
 
 // ----------------------------------------------------------------------
+
+const APPBAR_MOBILE = 0;
+const APPBAR_DESKTOP = 92;
+
+const SearchbarStyle = styled('div')(({ theme }) => ({
+  top: 0,
+  left: 0,
+  zIndex: 99,
+  width: '100%',
+  display: 'flex',
+  borderRadius: '10px',
+  padding: '0px ',
+  // position: 'absolute',
+  alignItems: 'center',
+  height: APPBAR_MOBILE,
+  backdropFilter: 'blur(6px)',
+  WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
+  padding: theme.spacing(0, 3),
+  boxShadow: theme.customShadows.z8,
+  // backgroundColor: `${alpha(theme.palette.background.default, 0.72)}`,
+  // [theme.breakpoints.up('md')]: {
+  //   height: APPBAR_DESKTOP,
+  //   padding: theme.spacing(0, 5),
+  // },
+}));
+
+
 
 export default function MainNavbar() {
   const [open, setOpen] = useState(false)
@@ -125,9 +151,28 @@ export default function MainNavbar() {
                 className="cursor-pointer"
               />
             </NextLink>
-            {/* <Label color="info" sx={{ ml: 1 }}>
-            E-commerce UAE
-          </Label> */}
+            <SearchbarStyle>
+            <Input
+              className="border px-2 py-1 rounded"
+              autoFocus
+              fullWidth
+              disableUnderline
+              placeholder="Search…"
+              startAdornment={
+                <InputAdornment position="start">
+                  <Box
+                    component={Icon}
+                    icon={searchFill}
+                    sx={{ color: 'text.disabled', width: 20, height: 20,  }}
+                  />
+                </InputAdornment>
+              }
+              sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
+            />
+            {/* <Button variant="contained" onClick={handleClose}>
+              Search
+            </Button> */}
+            </SearchbarStyle>
             <Box sx={{ flexGrow: 1 }} />
 
             {/* <MHidden width="mdDown">
