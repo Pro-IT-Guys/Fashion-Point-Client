@@ -3,7 +3,16 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 // material
 import { styled } from '@mui/material/styles'
-import { Box, Button, AppBar, Toolbar, Container, FormControl, Select, MenuItem } from '@mui/material'
+import {
+  Box,
+  Button,
+  AppBar,
+  Toolbar,
+  Container,
+  FormControl,
+  Select,
+  MenuItem,
+} from '@mui/material'
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop'
 // components
@@ -17,11 +26,14 @@ import navConfig from './MenuConfig'
 import logo from '../../assets/logo/MainWebsiteLogo.jpg'
 import Image from 'next/image'
 import LoginFormModal from 'src/components/AuthModal/LoginModal'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { HiOutlineUser } from 'react-icons/hi'
 import SignUpModal from 'src/components/AuthModal/SignUpModal'
 import CartDrawer from '../../components/cart/CartDrawer'
 import TopNavbar from './TopNavbar'
+import { ContextData } from 'context/dataProviderContext'
+import { loggedInUser } from 'apis/auth.api'
+import AccountPopover from '../dashboard/AccountPopover'
 
 // ----------------------------------------------------------------------
 
@@ -59,6 +71,8 @@ export default function MainNavbar() {
   const [signupOpen, setSignupOpen] = useState(false)
   const isOffset = useOffSetTop(100)
   const { pathname } = useRouter()
+  const { currentlyLoggedIn } = useContext(ContextData)
+  const { role, name, image } = currentlyLoggedIn || {}
   const isHome = pathname === '/'
 
   const handleClickOpen = () => {
@@ -123,31 +137,35 @@ export default function MainNavbar() {
 
           <CartDrawer />
 
-          <div className="flex items-center">
-            <div>
-              <HiOutlineUser className="text-black text-3xl" />
-            </div>
-            <div className="text-black ">
-              <h1 className="cursor-pointer text-sm uppercase font-semibold">
-                Accounts
-              </h1>
-              <div className="text-[10px] flex gap-1 justify-center">
-                <h1
-                  onClick={handleClickOpen}
-                  className="hover:text-secondary duration-200 cursor-pointer"
-                >
-                  Login
+          {loggedInUser ? (
+            <AccountPopover />
+          ) : (
+            <div className="flex items-center">
+              <div>
+                <HiOutlineUser className="text-black text-3xl" />
+              </div>
+              <div className="text-black ">
+                <h1 className="cursor-pointer text-sm uppercase font-semibold">
+                  Accounts
                 </h1>
-                <span> / </span>
-                <h1
-                  onClick={handleSignUpOpen}
-                  className="hover:text-secondary duration-200 cursor-pointer"
-                >
-                  Signup
-                </h1>
+                <div className="text-[10px] flex gap-1 justify-center">
+                  <h1
+                    onClick={handleClickOpen}
+                    className="hover:text-secondary duration-200 cursor-pointer"
+                  >
+                    Login
+                  </h1>
+                  <span> / </span>
+                  <h1
+                    onClick={handleSignUpOpen}
+                    className="hover:text-secondary duration-200 cursor-pointer"
+                  >
+                    Signup
+                  </h1>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* <MHidden width="mdUp">
             <MenuMobile
