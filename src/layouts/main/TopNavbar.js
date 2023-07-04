@@ -9,7 +9,7 @@ import { Container, FormControl, InputLabel, Select } from '@mui/material'
 import { ContextData } from 'context/dataProviderContext'
 
 export default function TopNavbar() {
-  const { toCurrency, setToCurrency } = useContext(ContextData)
+  const { toCurrency , setToCurrency } = useContext(ContextData)
 
   return (
     <div>
@@ -48,7 +48,7 @@ export default function TopNavbar() {
               <div className=" z-50">
                 <FormControl variant='standard'>
                   <Select
-                    value={toCurrency}
+                    value={toCurrency }
                     onChange={e => setToCurrency(e.target.value)}
                     label="Currency"
                     sx={{
@@ -69,7 +69,6 @@ export default function TopNavbar() {
                       $ USD
                     </MenuItem>
                     <MenuItem className="p-0" value="AED">
-                      {' '}
                       د.إ AED
                     </MenuItem>
                   </Select>

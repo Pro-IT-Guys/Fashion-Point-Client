@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
+import { getAllCountriesWithFees } from 'apis/fee.api'
 import { BASE_URL } from 'apis/url'
 import countries from 'constant/countries'
 import { ContextData } from 'context/dataProviderContext'
@@ -30,11 +31,11 @@ export default function MyProfile() {
   const [city, setCity] = useState(null)
 
   useEffect(() => {
-    fetch(`${BASE_URL}/fee/all`)
-      .then(res => res.json())
-      .then(data => {
-        setCountry(data.data)
-      })
+    const _retriveCountry = async () => {
+      const result = await getAllCountriesWithFees()
+      setCountry(result?.data)
+    }
+    _retriveCountry()
   }, [])
 
   const handleCountryChange = e => {
@@ -47,10 +48,6 @@ export default function MyProfile() {
 
     const stateId = e.target.value
     setSelectedState(stateId)
-  }
-
-  const handleState = data => {
-    setState(data)
   }
 
   const {
@@ -226,7 +223,6 @@ export default function MyProfile() {
                               {state?.map(option => (
                                 <MenuItem
                                   style={{ display: 'block' }}
-                                  className="d-block customizer-select2 bg-red-700"
                                   key={option.state_code}
                                   value={option?.state_code}
                                 >

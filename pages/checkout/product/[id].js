@@ -12,8 +12,9 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+import { getAllCountriesWithFees } from 'apis/fee.api'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Scrollbar from 'src/components/Scrollbar'
 import ProductList from 'src/components/checkout/CheckoutProductList'
 import ShippingAddressPopup from 'src/components/checkout/ShippingAddressPopup'
@@ -26,9 +27,52 @@ const RootStyle = styled('div')(({ theme }) => ({
   },
 }))
 
-const Checkout = () => {
+export default function Checkout() {
   const [addressPopup, setAddressPopup] = useState(false)
   const router = useRouter()
+
+  const [country, setCountry] = useState(null)
+  const [selectedCountry, setSelectedCountry] = useState(null)
+  const [selectedState, setSelectedState] = useState(null)
+  const [selectedCity, setSelectedCity] = useState(null)
+  const [state, setState] = useState(null)
+  const [city, setCity] = useState(null)
+  const [additionalInfo, setAdditionalInfo] = useState({
+    zipCode: '',
+    address_line: '',
+  })
+
+  const handleAdditionalInfo = e => {
+    const { name, value } = e.target
+    setAdditionalInfo(prev => ({ ...prev, [name]: value }))
+  }
+
+  useEffect(() => {
+    const _retriveCountry = async () => {
+      const result = await getAllCountriesWithFees()
+      setCountry(result?.data)
+    }
+    _retriveCountry()
+  }, [])
+
+  const handleCountryChange = e => {
+    const countryId = e.target.value
+    setSelectedCountry(countryId)
+  }
+
+  const handleStateChange = e => {
+    if (!selectedCountry) return
+
+    const stateId = e.target.value
+    setSelectedState(stateId)
+  }
+
+  const handleConfirmAddress = () => {
+    console.log(selectedCountry)
+    console.log(selectedState)
+    console.log(selectedCity)
+    console.log(additionalInfo)
+  }
 
   return (
     <>
@@ -131,9 +175,24 @@ const Checkout = () => {
           </Container>
         </RootStyle>
       </MainLayout>
-      {addressPopup && <ShippingAddressPopup setOpenPopup={setAddressPopup} />}
+      {addressPopup && (
+        <ShippingAddressPopup
+          handleCountryChange={handleCountryChange}
+          selectedCountry={selectedCountry}
+          country={country}
+          setState={setState}
+          handleStateChange={handleStateChange}
+          selectedState={selectedState}
+          state={state}
+          setCity={setCity}
+          selectedCity={selectedCity}
+          city={city}
+          setSelectedCity={setSelectedCity}
+          handleAdditionalInfo={handleAdditionalInfo}
+          handleConfirmAddress={handleConfirmAddress}
+          setOpenPopup={setAddressPopup}
+        />
+      )}
     </>
   )
 }
-
-export default Checkout

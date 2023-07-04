@@ -39,7 +39,7 @@ const CheckoutPayment = () => {
   const { currentlyLoggedIn, toCurrency } = useContext(ContextData)
   const [email, setEmail] = useState('')
   const [paypalPayment, setPaypalPayment] = useState(false)
-  const [paypalLink, setPaypalLink] = useState(null)
+  const [paypalLink, setPaypalLink] = useState('')
 
   const handleStripePayment = async paymentMethodId => {
     const response = await fetch(
@@ -198,6 +198,7 @@ const CheckoutPayment = () => {
                         <TextField
                           onChange={e => setEmail(e.target.value)}
                           fullWidth
+                          value={email}
                           label="Your PayPal Email"
                         />
                         {paypalLink ? (

@@ -264,7 +264,9 @@ export default function ProductDetails() {
                       Add to Cart
                     </Button>
                     <Button
-                      onClick={() => router.push(`/checkout`)}
+                      onClick={() =>
+                        router.push(`/checkout/product/sku=${productDetails.sku}`)
+                      }
                       fullWidth
                       size="large"
                       type="submit"

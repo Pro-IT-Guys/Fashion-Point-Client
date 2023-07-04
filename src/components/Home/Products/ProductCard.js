@@ -45,7 +45,7 @@ export default function ProductCard({ product }) {
         <div className="px-2 bg-white py-2">
           <div className="h-14">
             <h1
-              onClick={() => router.push(`/product/${path}`)}
+              onClick={() => router.push(`/products/${path}`)}
               className="font-semibold mt-2 h-full text-xs cursor-pointer hover:text-[#4d50ff]"
             >
               {' '}
