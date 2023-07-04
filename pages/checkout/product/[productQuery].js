@@ -30,6 +30,8 @@ const RootStyle = styled('div')(({ theme }) => ({
 export default function Checkout() {
   const [addressPopup, setAddressPopup] = useState(false)
   const router = useRouter()
+  const query = router.query.productQuery
+  const [product, setProduct] = useState([])
 
   const [country, setCountry] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null)

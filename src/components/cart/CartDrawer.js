@@ -59,12 +59,15 @@ export default function CartDrawer() {
   }
 
   const handleCheckout = () => {
-    console.log('Checkout')
+    router.push(`/checkout/product/cart=${usersCart?._id}`)
   }
 
   return (
     <>
-      <div onClick={handleDrawerOpen} className='flex gap-3 items-center cursor-pointer'>
+      <div
+        onClick={handleDrawerOpen}
+        className="flex gap-3 items-center cursor-pointer"
+      >
         <Badge
           sx={{ cursor: 'pointer', mt: 1 }}
           badgeContent={cartSimplified ? cartSimplified.length : 0}
@@ -80,7 +83,9 @@ export default function CartDrawer() {
             Cart
           </h1>
           <div className="text-[10px] flex gap-1">
-            <p className='hover:text-secondary duration-200'>({cartSimplified ? cartSimplified.length : 0}) items</p>
+            <p className="hover:text-secondary duration-200">
+              ({cartSimplified ? cartSimplified.length : 0}) items
+            </p>
           </div>
         </div>
       </div>
