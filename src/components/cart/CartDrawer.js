@@ -64,14 +64,26 @@ export default function CartDrawer() {
 
   return (
     <>
-      <Badge
-        onClick={handleDrawerOpen}
-        sx={{ cursor: 'pointer' }}
-        badgeContent={cartSimplified ? cartSimplified.length : 0}
-        color="primary"
-      >
-        <CustomIcons.ShoppingCartIcon color="action" />
-      </Badge>
+      <div onClick={handleDrawerOpen} className='flex gap-3 items-center cursor-pointer'>
+        <Badge
+          sx={{ cursor: 'pointer', mt: 1 }}
+          badgeContent={cartSimplified ? cartSimplified.length : 0}
+          color="primary"
+        >
+          <CustomIcons.ShoppingCartIcon color="action" />
+        </Badge>
+        <div className="text-black ">
+          <h1
+            // onClick={handleClickOpen}
+            className="cursor-pointer text-sm uppercase font-semibold mr-5"
+          >
+            Cart
+          </h1>
+          <div className="text-[10px] flex gap-1">
+            <p className='hover:text-secondary duration-200'>({cartSimplified ? cartSimplified.length : 0}) items</p>
+          </div>
+        </div>
+      </div>
 
       <Drawer
         open={drawerOpen}

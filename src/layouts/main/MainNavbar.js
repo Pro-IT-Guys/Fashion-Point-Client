@@ -3,7 +3,7 @@ import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 // material
 import { styled } from '@mui/material/styles'
-import { Box, Button, AppBar, Toolbar, Container } from '@mui/material'
+import { Box, Button, AppBar, Toolbar, Container, FormControl, Select, MenuItem } from '@mui/material'
 // hooks
 import useOffSetTop from '../../hooks/useOffSetTop'
 // components
@@ -109,40 +109,53 @@ export default function MainNavbar() {
           </Label> */}
           <Box sx={{ flexGrow: 1 }} />
 
-          <MHidden width="mdDown">
+          {/* <MHidden width="mdDown">
             <MenuDesktop
               isOffset={isOffset}
               // isHome={isHome}
               navConfig={navConfig}
             />
-          </MHidden>
+          </MHidden> */}
 
           {/* <Button variant="contained" onClick={handleClickOpen}>
             Login
           </Button> */}
-          <div className="flex gap-2 items-center">
+
+          <CartDrawer />
+
+          <div className="flex items-center">
             <div>
-              <HiOutlineUser className="text-black text-xl" />
+              <HiOutlineUser className="text-black text-3xl" />
             </div>
-            <div className="text-black text-xs uppercase">
-              <h1 onClick={handleClickOpen} className="cursor-pointer mr-5">
-                Login
+            <div className="text-black ">
+              <h1 className="cursor-pointer text-sm uppercase font-semibold">
+                Accounts
               </h1>
-              {/* <h1 onClick={handleSignUpOpen} className="cursor-pointer">
-                Signup
-              </h1> */}
+              <div className="text-[10px] flex gap-1 justify-center">
+                <h1
+                  onClick={handleClickOpen}
+                  className="hover:text-secondary duration-200 cursor-pointer"
+                >
+                  Login
+                </h1>
+                <span> / </span>
+                <h1
+                  onClick={handleSignUpOpen}
+                  className="hover:text-secondary duration-200 cursor-pointer"
+                >
+                  Signup
+                </h1>
+              </div>
             </div>
           </div>
 
-          <MHidden width="mdUp">
+          {/* <MHidden width="mdUp">
             <MenuMobile
               isOffset={isOffset}
               isHome={isHome}
               navConfig={navConfig}
             />
-          </MHidden>
-
-          <CartDrawer />
+          </MHidden> */}
 
           <LoginFormModal open={open} onClose={handleClose} />
           <SignUpModal open={signupOpen} onClose={handleClose} />

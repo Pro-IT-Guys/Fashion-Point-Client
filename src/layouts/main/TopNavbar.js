@@ -5,7 +5,7 @@ import { BsTwitter } from 'react-icons/bs'
 import { MdEmail } from 'react-icons/md'
 import { BsTelephoneOutboundFill } from 'react-icons/bs'
 import MenuItem from '@mui/material/MenuItem'
-import { Container, Select } from '@mui/material'
+import { Container, FormControl, InputLabel, Select } from '@mui/material'
 import { ContextData } from 'context/dataProviderContext'
 
 export default function TopNavbar() {
@@ -13,7 +13,7 @@ export default function TopNavbar() {
 
   return (
     <div>
-      <div className="bg-primary py-1 md:block hidden">
+      <div className="bg-[#3f3f3f] py-1 md:block hidden">
         <Container maxWidth="lg">
           <div className="flex justify-between items-center">
             <div>
@@ -46,27 +46,34 @@ export default function TopNavbar() {
                 01868-032281
               </div>
               <div className=" z-50">
-                <Select
-                  value={toCurrency}
-                  onChange={e => setToCurrency(e.target.value)}
-                  label="Currency"
-                  className="hover:border-none"
-                  sx={{
-                    fontSize: '0.7rem',
-                    color: '#fff',
-                    padding: '0',
-                    border: 'none',
-                    '&:hover': {
+                <FormControl variant='standard'>
+                  <Select
+                    value={toCurrency}
+                    onChange={e => setToCurrency(e.target.value)}
+                    label="Currency"
+                    sx={{
+                      fontSize: '0.7rem',
+                      color: '#fff',
+                      padding: '0px',
                       border: 'none',
-                    },
-                    ":focus": {
-                      border: 'none',
-                    },
-                  }}
-                >
-                  <MenuItem value="USD">$ USD</MenuItem>
-                  <MenuItem value="AED"> د.إ AED</MenuItem>
-                </Select>
+                      '&:hover': {
+                        border: 'none',
+                      },
+                      ':focus': {
+                        border: 'none',
+                      },
+                    }}
+                    className="hover:border-none p-0 m-0 text-[10px]"
+                  >
+                    <MenuItem className="p-0" value="USD">
+                      $ USD
+                    </MenuItem>
+                    <MenuItem className="p-0" value="AED">
+                      {' '}
+                      د.إ AED
+                    </MenuItem>
+                  </Select>
+                </FormControl>
               </div>
             </div>
           </div>

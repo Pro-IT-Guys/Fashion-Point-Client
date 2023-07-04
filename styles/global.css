@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+
+.css-1ew3ff4-MuiInputBase-root-MuiOutlinedInput-root{
+    border: none !important;
+    border-radius: 0 !important;
+    border-color: #3f3f3f !important;
+    box-shadow: none !important;
+    box-sizing: none !important;
+    margin: 0;
+}
+
+.css-c9wwpg-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-c9wwpg-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-c9wwpg-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input{
+    padding: 0px 0 7px 10px;
+    margin: 0;
+}
