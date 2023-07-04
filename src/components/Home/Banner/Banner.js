@@ -14,6 +14,7 @@ import img1 from '../../../assets/banner/img1.jpg'
 import img2 from '../../../assets/banner/img2.jpg'
 import img3 from '../../../assets/banner/banner1.jpg'
 import Image from "next/image";
+import CategoryNav from "src/layouts/main/CategoryNav";
 
 const Banner = () => {
   const RootStyle = styled("div")(({ theme }) => ({
@@ -27,6 +28,7 @@ const Banner = () => {
   return (
     <div className="bg-[#f7f7ff9c]">
       <RootStyle>
+        {/* <CategoryNav/> */}
         <Container maxWidth="lg">
           <Grid container  justifyContent="center">
             <Image
