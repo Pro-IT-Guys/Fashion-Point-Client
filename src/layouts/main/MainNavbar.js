@@ -137,17 +137,31 @@ export default function MainNavbar() {
 
           <CartDrawer />
 
-          {loggedInUser ? (
-            <AccountPopover />
-          ) : (
-            <div className="flex items-center">
-              <div>
-                <HiOutlineUser className="text-black text-3xl" />
-              </div>
-              <div className="text-black ">
-                <h1 className="cursor-pointer text-sm uppercase font-semibold">
-                  Accounts
-                </h1>
+          <div className="flex items-center">
+            <div>
+              <HiOutlineUser className="text-black text-3xl" />
+            </div>
+            <div className="text-black ">
+              <h1 className="cursor-pointer text-sm uppercase hover:text-secondary duration-200 font-semibold">
+                Accounts
+              </h1>
+              {loggedInUser ? (
+                <div className="text-[10px] flex gap-1 justify-center">
+                  <h1
+                    onClick={handleClickOpen}
+                    className="hover:text-secondary duration-200 cursor-pointer"
+                  >
+                    Edit
+                  </h1>
+                  <span> / </span>
+                  <h1
+                    onClick={handleSignUpOpen}
+                    className="hover:text-secondary duration-200 cursor-pointer"
+                  >
+                    Logout
+                  </h1>
+                </div>
+              ) : (
                 <div className="text-[10px] flex gap-1 justify-center">
                   <h1
                     onClick={handleClickOpen}
@@ -163,9 +177,9 @@ export default function MainNavbar() {
                     Signup
                   </h1>
                 </div>
-              </div>
+              )}
             </div>
-          )}
+          </div>
 
           {/* <MHidden width="mdUp">
             <MenuMobile

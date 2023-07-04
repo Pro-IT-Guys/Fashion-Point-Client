@@ -75,7 +75,7 @@ export default function CartDrawer() {
         <div className="text-black ">
           <h1
             // onClick={handleClickOpen}
-            className="cursor-pointer text-sm uppercase font-semibold mr-5"
+            className="cursor-pointer text-sm uppercase hover:text-secondary duration-200 font-semibold mr-5"
           >
             Cart
           </h1>
