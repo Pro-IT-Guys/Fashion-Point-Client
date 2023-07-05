@@ -12,6 +12,10 @@ import {
   Typography,
   alpha,
   Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material'
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble'
 import React, { useContext, useEffect, useRef, useState } from 'react'
@@ -64,6 +68,8 @@ export default function ProductDetails() {
 
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
+  const [productSize, setProductSize] = useState('')
+  const [productColor, setProductColor] = useState('')
   const router = useRouter()
   const params = router.query.id
 
@@ -150,6 +156,8 @@ export default function ProductDetails() {
     // window.location.reload()
   }
 
+  console.log(productDetails)
+
   return (
     <>
       <MainLayout>
@@ -199,18 +207,77 @@ export default function ProductDetails() {
                     ৳ {sellingPrice}
                   </strike> */}
 
-                  <div className="mt-4">
+                  {/* <div className="mt-4">
                     <div className="flex items-center gap-5">
                       <p className="text-sm">Size</p>
                       <div className="flex items-center ">
                         {productDetails?.size?.map(size => (
-                          <div className="border border-[#7a7a7a] px-3 py-1 mx-1 cursor-pointer text-xs rounded">
+                          <div
+                            onClick={() => setProductSize(size)}
+                            className="border border-[#7a7a7a] px-3 py-1 mx-1 cursor-pointer text-xs rounded"
+                          >
                             {size}
                           </div>
                         ))}
                       </div>
                     </div>
-                  </div>
+                  </div> */}
+
+                  <Grid container spacing={2} sx={{ mt: 1 }}>
+                    <Grid item xs={6}>
+                      <FormControl fullWidth>
+                        <InputLabel id="size-label">Size</InputLabel>
+                        <Select
+                          labelId="size-label"
+                          id="demo-simple-select"
+                          value={productSize || ''}
+                          label="Size"
+                          onChange={e => setProductSize(e.target.value)}
+                        >
+                          {productDetails?.size?.map(size => (
+                            <MenuItem key={size} value={size}>
+                              {size}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+
+                    <Grid item xs={6}>
+                      <FormControl fullWidth>
+                        <InputLabel id="color-label">Color</InputLabel>
+                        <Select
+                          labelId="color-label"
+                          id="demo-simple-select"
+                          value={productColor || ''}
+                          label="Color"
+                          onChange={e => setProductColor(e.target.value)}
+                        >
+                          {productDetails?.color?.map(color => (
+                            <MenuItem key={color} value={color}>
+                              {color}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+
+                  {/* <div className="mt-4">
+                    <div className="flex items-center gap-5">
+                      <p className="text-sm">Color</p>
+                      <div className="flex items-center ">
+                        {productDetails?.size?.map(size => (
+                          <div
+                            onClick={() => setProductSize(size)}
+                            className="border border-[#7a7a7a] px-3 py-1 mx-1 cursor-pointer text-xs rounded"
+                          >
+                            {size}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div> */}
 
                   <div className="mt-10 pb-20 gap-4 relative items-center flex">
                     <p className="text-sm">Quantity :</p>
@@ -265,7 +332,9 @@ export default function ProductDetails() {
                     </Button>
                     <Button
                       onClick={() =>
-                        router.push(`/checkout/product/sku=${productDetails.sku}`)
+                        router.push(
+                          `/checkout/product/sku=${productDetails.sku}`
+                        )
                       }
                       fullWidth
                       size="large"
