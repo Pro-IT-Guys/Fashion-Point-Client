@@ -10,6 +10,12 @@ import {
   Grid,
   Icon,
   Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
 } from '@mui/material'
 import { getCartByCartId, getCartByUserId } from 'apis/cart.api'
@@ -30,12 +36,21 @@ const RootStyle = styled('div')(({ theme }) => ({
   },
 }))
 
+const ThumbImgStyle = styled('img')(({ theme }) => ({
+  width: 64,
+  height: 64,
+  objectFit: 'cover',
+  marginRight: theme.spacing(2),
+  borderRadius: theme.shape.borderRadiusSm,
+}))
+
 export default function Checkout() {
   const { token, userId } = useContext(ContextData)
   const [addressPopup, setAddressPopup] = useState(false)
   const router = useRouter()
   const query = router.query.productQuery
   const [product, setProduct] = useState([])
+  const [loader, setLoader] = useState(false)
 
   const [country, setCountry] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null)
@@ -54,31 +69,43 @@ export default function Checkout() {
   }
 
   useEffect(() => {
+    setLoader(true)
     const _retriveCountry = async () => {
       // Retrive all countries with states and cities
       const result = await getAllCountriesWithFees()
       setCountry(result?.data)
+      setLoader(false)
     }
     _retriveCountry()
   }, [])
 
   useEffect(() => {
     const _retriveProduct = async () => {
+      setLoader(true)
       // Retrive product based on query
-      if (query?.split('=')[0] === 'sku') {
-        const sku = query?.split('=')[1]
+      if (query?.split('&')[0].split('=')[0] === 'sku') {
+        const sku = query?.split('&')[0].split('=')[1]
         const res = await getProductBySku(sku)
-        setProduct([res?.data])
-      } else if (query?.split('=')[0] === 'cart' && token) {
+
+        let singleProduct = {}
+        let productId = res?.data
+        singleProduct.quantity = query?.split('&')[1].split('=')[1]
+        singleProduct.size = query?.split('&')[2].split('=')[1]
+        singleProduct.color = query?.split('&')[3].split('=')[1]
+
+        singleProduct.productId = productId
+
+        setProduct([singleProduct])
+        setLoader(false)
+      } else if (query?.split('&')[0].split('=')[0] === 'cart' && token) {
         const cartId = query?.split('=')[1]
         const res = await getCartByCartId({ token, cartId })
         setProduct(res?.data?.product)
+        setLoader(false)
       }
     }
     _retriveProduct()
   }, [query, token])
-
-  console.log(product)
 
   const handleCountryChange = e => {
     const countryId = e.target.value
@@ -99,6 +126,8 @@ export default function Checkout() {
     console.log(additionalInfo)
   }
 
+  if (loader) return <h1>Loading...</h1>
+  console.log(product)
   return (
     <>
       <MainLayout>
@@ -117,12 +146,30 @@ export default function Checkout() {
                   <h1 className="p-5 text-xl font-bold">
                     Card{' '}
                     <span className="text-[#4e4e4e] font-medium text-sm">
-                      (23 items)
+                      {product?.length} items
                     </span>
                   </h1>
 
                   <Scrollbar>
-                    <ProductList product={product} />
+                    <TableContainer sx={{ minWidth: 720 }}>
+                      <Table>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>Product</TableCell>
+                            <TableCell align="left">Price</TableCell>
+                            <TableCell align="left">Quantity</TableCell>
+                            <TableCell align="right">Total Price</TableCell>
+                            <TableCell align="right" />
+                          </TableRow>
+                        </TableHead>
+
+                        <TableBody>
+                          {product?.map((item, index) => {
+                            return <ProductList key={index} item={item} />
+                          })}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
                   </Scrollbar>
                 </Card>
 

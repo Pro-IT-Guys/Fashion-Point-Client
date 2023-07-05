@@ -41,6 +41,7 @@ import { io } from 'socket.io-client'
 import { getStorage } from 'apis/loadStorage'
 import { addToCart, updateCart } from 'apis/cart.api'
 import { convertCurrency } from 'helpers/currencyHandler'
+import { toast } from 'react-hot-toast'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -72,10 +73,12 @@ export default function ProductDetails() {
   const [productColor, setProductColor] = useState('')
   const router = useRouter()
   const params = router.query.id
+  const [loader, setLoader] = useState(false)
 
   // Create chat with admin / get chat if already exist
   useEffect(() => {
     const retriveChat = async () => {
+      setLoader(true)
       if (currentlyLoggedIn?.role === 'admin') return
       let data
 
@@ -91,6 +94,7 @@ export default function ProductDetails() {
         })
       }
       setChat(data?.data)
+      setLoader(false)
     }
     retriveChat()
   }, [currentlyLoggedIn])
@@ -98,10 +102,12 @@ export default function ProductDetails() {
   // Get chat of sender and receiver
   useEffect(() => {
     const retriveMessage = async () => {
+      setLoader(true)
       if (chat?._id) {
         const messages = await getMessageOfChatId(chat?._id)
         setMessage(messages?.data)
       }
+      setLoader(false)
     }
     retriveMessage()
   }, [chat])
@@ -126,24 +132,35 @@ export default function ProductDetails() {
   }
 
   useEffect(() => {
+    setLoader(true)
     fetch(`http://localhost:8000/api/v1/product/path/${params}`)
       .then(res => res.json())
       .then(data => setProductDetails(data?.data))
+      .finally(() => setLoader(false))
   }, [params])
 
   const { name, sellingPrice, quantity, rating, description, images } =
     productDetails || {}
+
+  if (loader) return <h1>Loading...</h1>
 
   // Cart Logics===============>
   const handleAddToCart = async () => {
     const userId = currentlyLoggedIn?._id
     const token = getStorage('token')
     const productId = productDetails._id
+
+    if (!productSize) return toast.error('Please select a size')
+    if (!productColor) return toast.error('Please select a color')
+    if (!userId) return toast.error('Please login first')
+
     const data = {
       token,
       userId,
       productId,
       quantity: productQuantity,
+      size: productSize,
+      color: productColor,
     }
 
     if (usersCart) {
@@ -333,7 +350,7 @@ export default function ProductDetails() {
                     <Button
                       onClick={() =>
                         router.push(
-                          `/checkout/product/sku=${productDetails.sku}`
+                          `/checkout/product/sku=${productDetails.sku}&quantity=${productQuantity}&size=${productSize}&color=${productColor}`
                         )
                       }
                       fullWidth

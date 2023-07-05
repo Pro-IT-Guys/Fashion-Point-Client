@@ -43,14 +43,40 @@ const ThumbImgStyle = styled('img')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-function Incrementer({ available, quantity, onIncrease, onDecrease }) {
+function Incrementer({
+  selectedProduct,
+  setSelectedProduct,
+  id,
+  setQuantity,
+  available,
+  quantity,
+}) {
+  const decreaseQuantity = () => {
+    let newQuantity = quantity - 1
+    if (newQuantity < 1) {
+      newQuantity = 1
+    }
+    setQuantity(newQuantity)
+  }
+
+  const increaseQuantity = () => {
+    let newQuantity = quantity + 1
+    if (newQuantity > available) {
+      newQuantity = available
+    }
+    setQuantity(newQuantity)
+  }
+
   return (
     <Box sx={{ width: 96, textAlign: 'right' }}>
       <IncrementerStyle>
         <MIconButton
           size="small"
           color="inherit"
-          onClick={onDecrease}
+          onClick={() => {
+            setSelectedProduct(id)
+            decreaseQuantity()
+          }}
           disabled={quantity <= 1}
         >
           <Icon icon={minusFill} width={16} height={16} />
@@ -59,7 +85,10 @@ function Incrementer({ available, quantity, onIncrease, onDecrease }) {
         <MIconButton
           size="small"
           color="inherit"
-          onClick={onIncrease}
+          onClick={() => {
+            setSelectedProduct(id)
+            increaseQuantity()
+          }}
           disabled={quantity >= available}
         >
           <Icon icon={plusFill} width={16} height={16} />
@@ -79,109 +108,98 @@ ProductList.propTypes = {
   onIncreaseQuantity: PropTypes.func,
 }
 
-export default function ProductList({ product }) {
-  const [products, setProducts] = useState([])
+export default function ProductList({ item }) {
+  const [quantity, setQuantity] = useState(item.quantity)
+  const [available, setAvailable] = useState(item.productId.quantity)
+  const [selectedProduct, setSelectedProduct] = useState(null)
+  const { color, size } = item
+  const { name, frontImage, sellingPrice } = item.productId
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/v1/product')
-      .then(res => res.json())
-      .then(data => setProducts(data?.data))
-  }, [])
+    setQuantity(item.quantity)
+    setAvailable(item.productId.quantity)
+  }, [item])
 
+  item.quantity = quantity
+  
   return (
-    <TableContainer sx={{ minWidth: 720 }}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Product</TableCell>
-            <TableCell align="left">Price</TableCell>
-            <TableCell align="left">Quantity</TableCell>
-            <TableCell align="right">Total Price</TableCell>
-            <TableCell align="right" />
-          </TableRow>
-        </TableHead>
+    <TableRow>
+      <TableCell>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <ThumbImgStyle alt="product image" src={frontImage} />
+          <Box>
+            <Typography
+              noWrap
+              variant="subtitle2"
+              sx={{ maxWidth: 240, mb: 0.5 }}
+            >
+              {name}
+            </Typography>
 
-        <TableBody>
-          {products?.slice(0, 5)?.map(product => {
-            const {
-              id,
-              name,
-              size,
-              sellingPrice,
-              color,
-              frontImage,
-              quantity,
-              available,
-            } = product
-            return (
-              <TableRow key={id}>
-                <TableCell>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <ThumbImgStyle alt="product image" src={frontImage} />
-                    <Box>
-                      <Typography
-                        noWrap
-                        variant="subtitle2"
-                        sx={{ maxWidth: 240, mb: 0.5 }}
-                      >
-                        {name}
-                      </Typography>
+            <Stack
+              direction="row"
+              spacing={1}
+              alignItems="center"
+              divider={
+                <Divider
+                  orientation="vertical"
+                  sx={{
+                    height: 14,
+                    alignSelf: 'center',
+                  }}
+                />
+              }
+            >
+              <Typography variant="body2">
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{ color: 'text.secondary' }}
+                >
+                  size:&nbsp;
+                </Typography>
+                {size}
+              </Typography>
 
-                      <Stack
-                        direction="row"
-                        spacing={1}
-                        alignItems="center"
-                        divider={
-                          <Divider
-                            orientation="vertical"
-                            sx={{ height: 14, alignSelf: 'center' }}
-                          />
-                        }
-                      >
-                        <Typography variant="body2">
-                          <Typography
-                            component="span"
-                            variant="body2"
-                            sx={{ color: 'text.secondary' }}
-                          >
-                            size:&nbsp;
-                          </Typography>
-                          {size}
-                        </Typography>
+              <Typography variant="body2">
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{ color: 'text.secondary' }}
+                >
+                  color: {color};
+                </Typography>
+              </Typography>
+            </Stack>
+          </Box>
+        </Box>
+      </TableCell>
 
-                        <Typography variant="body2">
-                          <Typography
-                            component="span"
-                            variant="body2"
-                            sx={{ color: 'text.secondary' }}
-                          >
-                            color: {color};
-                          </Typography>
-                          {/* {getColorName(color)} */}
-                        </Typography>
-                      </Stack>
-                    </Box>
-                  </Box>
-                </TableCell>
+      <TableCell align="left">{sellingPrice}</TableCell>
 
-                <TableCell align="left">{sellingPrice}</TableCell>
+      <TableCell align="left">
+        <Incrementer
+          setSelectedProduct={setSelectedProduct}
+          selectedProduct={selectedProduct}
+          id={item.productId._id}
+          setQuantity={setQuantity}
+          quantity={quantity}
+          available={available}
+        />
+      </TableCell>
 
-                <TableCell align="left">
-                  <Incrementer quantity={quantity} available={available} />
-                </TableCell>
+      <TableCell align="right">{sellingPrice * quantity}</TableCell>
 
-                <TableCell align="right">{sellingPrice * quantity}</TableCell>
-
-                <TableCell align="right">
-                  <MIconButton>
-                    <Icon icon={trash2Fill} width={20} height={20} />
-                  </MIconButton>
-                </TableCell>
-              </TableRow>
-            )
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
+      <TableCell align="right">
+        <MIconButton>
+          <Icon icon={trash2Fill} width={20} height={20} />
+        </MIconButton>
+      </TableCell>
+    </TableRow>
   )
 }

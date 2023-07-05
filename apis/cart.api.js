@@ -2,7 +2,7 @@ import axios from 'axios'
 import { CART_URL } from './url'
 
 export const addToCart = async data => {
-  const { token, userId, productId, quantity } = data
+  const { token, userId, productId, quantity, size, color } = data
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -11,7 +11,7 @@ export const addToCart = async data => {
   try {
     const res = await axios.post(
       `${CART_URL}`,
-      { userId, product: [{ productId, quantity }] },
+      { userId, product: [{ productId, quantity, size, color }] },
       config
     )
     return res?.data
@@ -51,7 +51,7 @@ export const getCartByCartId = async data => {
 }
 
 export const updateCart = async data => {
-  const { token, userId, productId, quantity, cartId } = data
+  const { token, userId, productId, quantity, cartId, size, color } = data
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ export const updateCart = async data => {
   try {
     const res = await axios.patch(
       `${CART_URL}/${cartId}`,
-      { userId, product: [{ productId, quantity }] },
+      { userId, product: [{ productId, quantity, size, color }] },
       config
     )
     return res?.data
