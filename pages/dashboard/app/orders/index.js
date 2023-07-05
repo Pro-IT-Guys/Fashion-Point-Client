@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import { sentenceCase } from 'change-case'
 import { useState, useEffect, useContext } from 'react'
 import plusFill from '@iconify/icons-eva/plus-fill'
-import { Link as RouterLink } from 'react-router-dom'
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined'
 // material
 import { useTheme } from '@mui/material/styles'
 import {
@@ -34,6 +34,7 @@ import Label from 'src/components/Label'
 import DashboardLayout from 'src/layouts/dashboard'
 import { ContextData } from 'context/dataProviderContext'
 import { convertCurrency } from 'helpers/currencyHandler'
+import { useRouter } from 'next/router'
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +45,7 @@ const TABLE_HEAD = [
   { id: 'items', label: 'Total Items', alignRight: false },
   { id: 'amount', label: 'Amount', alignRight: false },
   { id: 'method', label: 'Payment Method', alignRight: false },
+  { id: 'view', label: 'View', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   { id: 'action', label: 'Action', alignRight: true },
 ]
@@ -83,16 +85,15 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function AllOrders() {
-  const theme = useTheme()
+  const router = useRouter()
   const [page, setPage] = useState(0)
-  const [order, setOrder] = useState('asc')
   const [selected, setSelected] = useState([])
   const [orderBy, setOrderBy] = useState('name')
   const [filterName, setFilterName] = useState('')
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [userList, setUserList] = useState([])
   const { fromCurrency, toCurrency } = useContext(ContextData)
-  const [update, setUpdate]= useState('')
+  const [update, setUpdate] = useState('')
 
   useEffect(() => {
     fetch(
@@ -141,14 +142,14 @@ export default function AllOrders() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        console.log(data)
         setUpdate(Math.random())
       })
   }
 
   return (
     <DashboardLayout>
-      <Page title="User: List | Minimal-UI">
+      <Page title="Order: List | Aymi">
         <Container maxWidth="xl">
           <h1 className="font-bold text-2xl">Order List</h1>
           <div className="flex gap-2 text-sm mt-3 text-[#636262]">
@@ -229,14 +230,31 @@ export default function AllOrders() {
                             )}
                           </TableCell>
                           <TableCell align="left"> {paymentMethod}</TableCell>
-                          <TableCell
-                            className={`${
-                              deliveryStatus == 'Pending' && 'text-primary'
-                            }`}
-                            align="left"
-                          >
+                          <TableCell align="left">
+                            <RemoveRedEyeOutlinedIcon onClick={() =>
+                                router.push(
+                                  `/dashboard/app/orders/details/${_id}`
+                                )
+                              } className='cursor-pointer'/>
+                          </TableCell>
+                          <TableCell align="left">
                             {' '}
-                            {deliveryStatus}
+                            <span
+                              className={`font-semibold ${
+                                deliveryStatus === 'Pending' && 'text-secondary'
+                              } ${
+                                deliveryStatus === 'Delivered' && 'text-success'
+                              } ${
+                                deliveryStatus === 'Cancelled' &&
+                                'text-[#b9b9b9]'
+                              } ${
+                                deliveryStatus === 'Processing' &&
+                                'text-warning'
+                              }  `}
+                            >
+                              {' '}
+                              {deliveryStatus}
+                            </span>
                           </TableCell>
 
                           <TableCell align="right">

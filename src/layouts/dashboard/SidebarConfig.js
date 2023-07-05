@@ -75,16 +75,16 @@ const sidebarConfig = [
         path: PATH_DASHBOARD.order.root,
         icon: ICONS.user,
       },
-      {
-        title: "My Shop",
-        path: PATH_DASHBOARD.settings.root,
-        icon: ICONS.analytics,
-      },
-      {
-        title: "Banner Setting",
-        path: PATH_DASHBOARD.banner.root,
-        icon: ICONS.dashboard,
-      },
+      // {
+      //   title: "My Shop",
+      //   path: PATH_DASHBOARD.settings.root,
+      //   icon: ICONS.analytics,
+      // },
+      // {
+      //   title: "Banner Setting",
+      //   path: PATH_DASHBOARD.banner.root,
+      //   icon: ICONS.dashboard,
+      // },
       {
         title: "tickets",
         path: PATH_DASHBOARD.ticket.root,

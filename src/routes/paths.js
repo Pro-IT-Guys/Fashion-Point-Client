@@ -35,12 +35,12 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, "/app/orders"),
     // getOrders: path(ROOTS_DASHBOARD, "/app/category/all-orders"),
   },
-  settings: {
-    root: path(ROOTS_DASHBOARD, "/app/settings/my-shop"),
-  },
-  banner: {
-    root: path(ROOTS_DASHBOARD, "/app/settings/banner"),
-  },
+  // settings: {
+  //   root: path(ROOTS_DASHBOARD, "/app/settings/my-shop"),
+  // },
+  // banner: {
+  //   root: path(ROOTS_DASHBOARD, "/app/settings/banner"),
+  // },
   ticket: {
     root: path(ROOTS_DASHBOARD, "/app/tickets/chat"),
   },

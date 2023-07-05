@@ -17,17 +17,32 @@ import useCategorySetTop from 'src/hooks/useCategorySetTop'
 import { CATEGORY_OPTION } from 'constant/product'
 import CategoryIcon from '@mui/icons-material/Category'
 import Searchbar from '../dashboard/Searchbar'
+import ProductFilterDrawer from 'src/components/Home/Products/ProductFilterDrawer'
+import { useState } from 'react'
 
 // ----------------------------------------------------------------------
 
 export default function CategoryNav() {
-  const { pathname } = useRouter()
-  const isOffset = useCategorySetTop(130)
+  const [openFilter, setOpenFilter] = useState(false)
+
+  const handleOpenFilter = () => {
+    setOpenFilter(true)
+  }
+
+  const handleCloseFilter = () => {
+    setOpenFilter(false)
+  }
+
+  const handleResetFilter = () => {
+    handleSubmit()
+    resetForm()
+  }
+
   return (
     <>
-      <div className="bg-[#fbfbfd] py-2 text-black border-y-[1px] border-gray-200">
+      <div className="bg-[#fbfbfd] py-2 text-black border-y-[1px] border-gray-200 md:block hidden">
         <Container maxWidth="lg" className="text-black">
-          <div className='flex justify-between items-center'>
+          <div className="flex justify-between items-center">
             <div className="flex items-center gap-10">
               <div className="flex gap-1 items-center">
                 <CategoryIcon />
@@ -46,6 +61,19 @@ export default function CategoryNav() {
               </div>
             </div>
             {/* <Searchbar /> */}
+          </div>
+        </Container>
+      </div>
+      <div className="bg-white py-1 text-black border-y-[1px] md:hidden block">
+        <Container maxWidth="lg" >
+          <div className="text-black flex justify-between">
+            <Searchbar />
+            <ProductFilterDrawer
+              isOpenFilter={openFilter}
+              onResetFilter={handleResetFilter}
+              onOpenFilter={handleOpenFilter}
+              onCloseFilter={handleCloseFilter}
+            />
           </div>
         </Container>
       </div>

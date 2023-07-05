@@ -8,40 +8,77 @@ import {
   Stack,
   Typography,
   styled,
-} from "@mui/material";
-import React from "react";
-import img1 from '../../../assets/banner/img1.jpg'
-import img2 from '../../../assets/banner/img2.jpg'
-import img3 from '../../../assets/banner/banner1.jpg'
-import Image from "next/image";
-import CategoryNav from "src/layouts/main/CategoryNav";
+} from '@mui/material'
+import React from 'react'
+import Image from 'next/image'
+import CategoryNav from 'src/layouts/main/CategoryNav'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/pagination'
+// import styles from "./Sidebar.module.css";
+import 'swiper/css/autoplay'
+import SwiperCore, { Pagination, Autoplay } from 'swiper'
 
 const Banner = () => {
-  const RootStyle = styled("div")(({ theme }) => ({
+  const RootStyle = styled('div')(({ theme }) => ({
     paddingTop: theme.spacing(17),
     // [theme.breakpoints.up("md")]: {
     //   paddingBottom: theme.spacing(15),
     // },
     // paddingBottom: theme.spacing(5),
-  }));
+  }))
 
   return (
     <div className="bg-[#f7f7ff9c]">
       <RootStyle>
         {/* <CategoryNav/> */}
         <Container maxWidth="lg">
-          <Grid container  justifyContent="center">
-            <Image
-              src={img2}
-              className="img-fluid w-full"
-              height={400}
-              width={1200}
-            />
-          </Grid>
+          <div className="flex md:gap-5 gap-2">
+            <div className="md:w-[73%] w-[73%]">
+              <Swiper
+                spaceBetween={30}
+                pagination={{
+                  clickable: true,
+                }}
+                modules={[Pagination, Autoplay]}
+                // className={styles}
+                autoplay={true}
+                navigation
+              >
+                <SwiperSlide>
+                  <div className=" ">
+                    <img
+                      alt="banner"
+                      src="https://i.ibb.co/k6bPwrY/Delivery-within-48-Hours-Banner-AYMI-Fashion-1200x600.png"
+                      className="w-full h-full object-cover rounded-b-lg"
+                    />
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className=" ">
+                    <img
+                      alt="banner"
+                      src="https://i.ibb.co/p3H86Hs/Free-Delivery-Banner-AYMI-Fashion-1200x600.png"
+                      className="w-full h-full object-cover rounded-b-lg"
+                    />
+                  </div>
+                </SwiperSlide>
+              </Swiper>
+            </div>
+            <div className="md:w-[27%] w-[27%]">
+              <div className=" ">
+                <img
+                  alt="banner"
+                  src="https://i.ibb.co/8BbchCg/Save-Upto-80-AED-Side-Banner-AYMI-Fashion-custom-415x600.jpg"
+                  className="w-full h-full rounded-b-lg"
+                />
+              </div>
+            </div>
+          </div>
         </Container>
       </RootStyle>
     </div>
-  );
-};
+  )
+}
 
-export default Banner;
+export default Banner

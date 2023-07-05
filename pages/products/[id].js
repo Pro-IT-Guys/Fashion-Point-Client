@@ -153,7 +153,7 @@ export default function ProductDetails() {
   return (
     <>
       <MainLayout>
-        <div className="bg-[#f7f7ff9c] pb-20  pt-5">
+        <div className="bg-[#f7f7ff9c] pb-20  pt-10">
           <Container maxWidth="lg">
             <Card className="mt-28  pb-10">
               <Grid container>

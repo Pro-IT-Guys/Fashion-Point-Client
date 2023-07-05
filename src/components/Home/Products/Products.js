@@ -85,16 +85,16 @@ const Products = () => {
   // console.log(color, 'color')
 
   return (
-    <div className="bg-[#f7f7ff9c] md:pt-20 pt-10">
+    <div className="bg-[#f7f7ff9c] md:pt-10 pt-10">
       <Container maxWidth="lg" className="pb-20 ">
         <Grid container>
           <div className="flex  w-full mb-5">
             <div className="w-[20%]">
-              <h2 className="font-semibold text-xl pb-2 w-40">
+              <h2 className="font-semibold text-xl w-40">
                 Filter Product
               </h2>
             </div>
-            <div className="md:block hidden  w-[80%] ">
+            <div className="  w-[80%] hidden">
               <div className="flex justify-between items-center">
                 <div className="input-group relative flex  items-stretch w-[80%]">
                   <input
@@ -135,17 +135,17 @@ const Products = () => {
                 </div>
               </div>
             </div>
-            <div className="md:hidden block w-[80%] text-end">
+            {/* <div className="md:hidden block w-[80%] text-end">
               <ProductFilterDrawer
                 isOpenFilter={openFilter}
                 onResetFilter={handleResetFilter}
                 onOpenFilter={handleOpenFilter}
                 onCloseFilter={handleCloseFilter}
               />
-            </div>
+            </div> */}
           </div>
 
-          <div className=" md:flex w-full mt-3 gap-5">
+          <div className=" md:flex w-full gap-5">
             <div className="md:w-[20%] md:block hidden">
               <div className="pt-5 space-y-5 shadow py-5 pl-5 pr-3 bg-white ">
                 {/* <div>
