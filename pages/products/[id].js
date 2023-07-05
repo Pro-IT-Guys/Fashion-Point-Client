@@ -173,8 +173,6 @@ export default function ProductDetails() {
     // window.location.reload()
   }
 
-  console.log(productDetails)
-
   return (
     <>
       <MainLayout>

@@ -122,7 +122,6 @@ export default function ProductList({ item, setProduct, product }) {
 
   useEffect(() => {
     if (selectedProduct === item.productId._id) {
-      // Update the product array
       const newProduct = product.map(singleProduct => {
         if (singleProduct.productId._id === item.productId._id) {
           return {

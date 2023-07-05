@@ -19,7 +19,7 @@ import {
   Typography,
 } from '@mui/material'
 import { getCartByCartId, getCartByUserId } from 'apis/cart.api'
-import { getAllCountriesWithFees } from 'apis/fee.api'
+import { getAllCountriesWithFees, getFeeOfLocation } from 'apis/fee.api'
 import { getProductBySku } from 'apis/product.api'
 import { ContextData } from 'context/dataProviderContext'
 import { useRouter } from 'next/router'
@@ -51,6 +51,9 @@ export default function Checkout() {
   const query = router.query.productQuery
   const [product, setProduct] = useState([])
   const [loader, setLoader] = useState(false)
+
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [totalDeliveryFee, setTotalDeliveryFee] = useState(0)
 
   const [country, setCountry] = useState(null)
   const [selectedCountry, setSelectedCountry] = useState(null)
@@ -107,6 +110,24 @@ export default function Checkout() {
     _retriveProduct()
   }, [query, token])
 
+  useEffect(() => {
+    if (product && product.length > 0) {
+      let totalPrice = 0
+      let totalDeliveryFee = 0
+      product.forEach(item => {
+        console.log(item)
+        totalPrice +=
+          parseInt(item.quantity) * parseInt(item.productId.sellingPrice)
+        totalDeliveryFee +=
+          parseInt(item.quantity) * parseInt(item.productId.deliveryFee)
+      })
+      setTotalPrice(totalPrice)
+      setTotalDeliveryFee(totalDeliveryFee)
+    }
+  }, [product])
+
+  console.log(totalDeliveryFee, totalPrice)
+
   const handleCountryChange = e => {
     const countryId = e.target.value
     setSelectedCountry(countryId)
@@ -119,15 +140,17 @@ export default function Checkout() {
     setSelectedState(stateId)
   }
 
-  const handleConfirmAddress = () => {
-    console.log(selectedCountry)
-    console.log(selectedState)
-    console.log(selectedCity)
-    console.log(additionalInfo)
+  const handleConfirmAddress = async () => {
+    const shippingFee = await getFeeOfLocation({
+      countryId: selectedCountry,
+      stateCode: selectedState,
+      city_name: selectedCity,
+    })
+    console.log(shippingFee)
   }
 
   if (loader) return <h1>Loading...</h1>
-  console.log(product)
+
   return (
     <>
       <MainLayout>

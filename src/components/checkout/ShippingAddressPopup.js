@@ -57,7 +57,7 @@ const ShippingAddressPopup = ({
                     {country?.map(option => (
                       <MenuItem
                         key={option.country_code}
-                        value={option?.country}
+                        value={option?.country_code}
                       >
                         <Typography onClick={() => setState(option.states)}>
                           {option?.country}
