@@ -10,9 +10,10 @@ export const createProduct = async data => {
   }
 }
 
-const getProductBySku = async sku => {
+export const getProductBySku = async sku => {
   try {
     const res = await axios.get(`${BASE_URL}/product/sku/${sku}`)
+    
     return res?.data
   } catch (error) {
     console.log(error)

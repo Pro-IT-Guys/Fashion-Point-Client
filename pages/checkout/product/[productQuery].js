@@ -12,9 +12,12 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
+import { getCartByCartId, getCartByUserId } from 'apis/cart.api'
 import { getAllCountriesWithFees } from 'apis/fee.api'
+import { getProductBySku } from 'apis/product.api'
+import { ContextData } from 'context/dataProviderContext'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Scrollbar from 'src/components/Scrollbar'
 import ProductList from 'src/components/checkout/CheckoutProductList'
 import ShippingAddressPopup from 'src/components/checkout/ShippingAddressPopup'
@@ -28,6 +31,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 }))
 
 export default function Checkout() {
+  const { token, userId } = useContext(ContextData)
   const [addressPopup, setAddressPopup] = useState(false)
   const router = useRouter()
   const query = router.query.productQuery
@@ -51,11 +55,30 @@ export default function Checkout() {
 
   useEffect(() => {
     const _retriveCountry = async () => {
+      // Retrive all countries with states and cities
       const result = await getAllCountriesWithFees()
       setCountry(result?.data)
     }
     _retriveCountry()
   }, [])
+
+  useEffect(() => {
+    const _retriveProduct = async () => {
+      // Retrive product based on query
+      if (query?.split('=')[0] === 'sku') {
+        const sku = query?.split('=')[1]
+        const res = await getProductBySku(sku)
+        setProduct([res?.data])
+      } else if (query?.split('=')[0] === 'cart' && token) {
+        const cartId = query?.split('=')[1]
+        const res = await getCartByCartId({ token, cartId })
+        setProduct(res?.data?.product)
+      }
+    }
+    _retriveProduct()
+  }, [query, token])
+
+  console.log(product)
 
   const handleCountryChange = e => {
     const countryId = e.target.value
@@ -99,7 +122,7 @@ export default function Checkout() {
                   </h1>
 
                   <Scrollbar>
-                    <ProductList />
+                    <ProductList product={product} />
                   </Scrollbar>
                 </Card>
 
