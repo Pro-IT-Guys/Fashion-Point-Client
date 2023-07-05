@@ -20,7 +20,7 @@ import {
 import useOffSetTop from '../../hooks/useOffSetTop'
 import { MHidden } from '../../components/@material-extend'
 
-import logo from '../../assets/logo/MainWebsiteLogo.jpg'
+import logo from '../../assets/logo/aymi-logo.png'
 import Image from 'next/image'
 import LoginFormModal from 'src/components/AuthModal/LoginModal'
 import { useContext, useState } from 'react'
