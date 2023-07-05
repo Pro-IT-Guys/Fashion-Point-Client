@@ -108,7 +108,7 @@ ProductList.propTypes = {
   onIncreaseQuantity: PropTypes.func,
 }
 
-export default function ProductList({ item }) {
+export default function ProductList({ item, setProduct, product }) {
   const [quantity, setQuantity] = useState(item.quantity)
   const [available, setAvailable] = useState(item.productId.quantity)
   const [selectedProduct, setSelectedProduct] = useState(null)
@@ -120,8 +120,22 @@ export default function ProductList({ item }) {
     setAvailable(item.productId.quantity)
   }, [item])
 
-  item.quantity = quantity
-  
+  useEffect(() => {
+    if (selectedProduct === item.productId._id) {
+      // Update the product array
+      const newProduct = product.map(singleProduct => {
+        if (singleProduct.productId._id === item.productId._id) {
+          return {
+            ...singleProduct,
+            quantity,
+          }
+        }
+        return singleProduct
+      })
+      setProduct(newProduct)
+    }
+  }, [quantity, selectedProduct])
+
   return (
     <TableRow>
       <TableCell>

@@ -144,7 +144,7 @@ export default function Checkout() {
               <Grid item xs={12} md={8}>
                 <Card className="p-2">
                   <h1 className="p-5 text-xl font-bold">
-                    Card{' '}
+                    Cart{' '}
                     <span className="text-[#4e4e4e] font-medium text-sm">
                       {product?.length} items
                     </span>
@@ -165,7 +165,14 @@ export default function Checkout() {
 
                         <TableBody>
                           {product?.map((item, index) => {
-                            return <ProductList key={index} item={item} />
+                            return (
+                              <ProductList
+                                setProduct={setProduct}
+                                product={product}
+                                key={index}
+                                item={item}
+                              />
+                            )
                           })}
                         </TableBody>
                       </Table>
