@@ -87,3 +87,21 @@ export const bulkUpdateCart = async data => {
     console.log(error)
   }
 }
+
+export const deleteAProductFromCart = async data => {
+  const { token, productId, cartId } = data
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  try {
+    const res = await axios.delete(
+      `${CART_URL}/remove/${cartId}/${productId}`,
+      config
+    )
+    return res?.data
+  } catch (error) {
+    console.log(error)
+  }
+}

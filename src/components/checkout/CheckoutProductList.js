@@ -110,7 +110,13 @@ ProductList.propTypes = {
   onIncreaseQuantity: PropTypes.func,
 }
 
-export default function ProductList({ item, setProduct, product }) {
+export default function ProductList({
+  item,
+  setProduct,
+  product,
+  setSelectedProductIdForDelete,
+  handleProductRemove,
+}) {
   const { toCurrency, fromCurrency } = useContext(ContextData)
   const [quantity, setQuantity] = useState(item.quantity)
   const [available, setAvailable] = useState(item.productId.quantity)
@@ -221,7 +227,14 @@ export default function ProductList({ item, setProduct, product }) {
 
       <TableCell align="right">
         <MIconButton>
-          <Icon icon={trash2Fill} width={20} height={20} />
+          <Icon
+            onClick={() => {
+              handleProductRemove(item._id)
+            }}
+            icon={trash2Fill}
+            width={20}
+            height={20}
+          />
         </MIconButton>
       </TableCell>
     </TableRow>

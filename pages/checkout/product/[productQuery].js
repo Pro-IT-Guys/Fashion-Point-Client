@@ -18,7 +18,11 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import { getCartByCartId, getCartByUserId } from 'apis/cart.api'
+import {
+  deleteAProductFromCart,
+  getCartByCartId,
+  getCartByUserId,
+} from 'apis/cart.api'
 import { getAllCountriesWithFees, getFeeOfLocation } from 'apis/fee.api'
 import { placeOrder } from 'apis/order.api'
 import { getProductBySku } from 'apis/product.api'
@@ -163,6 +167,34 @@ export default function Checkout() {
     setSelectedState(stateId)
   }
 
+  const handleProductRemove = async id => {
+    if (id) {
+      const newProductList = product.filter(item => {
+        return item._id !== id
+      })
+      setProduct(newProductList)
+      if (newProductList.length === 0) {
+        setTotalPrice(0)
+        setTotalDeliveryFee(0)
+      }
+
+      product.forEach(async item => {
+        if (item._id === id) {
+          const res = await deleteAProductFromCart({
+            token,
+            cartId: query?.split('=')[1],
+            productId: item.productId._id,
+          })
+          if (res?.statusCode === 200) {
+            toast.success('Product removed successfully.')
+          } else {
+            toast.error('Something went wrong.')
+          }
+        }
+      })
+    }
+  }
+
   const handleConfirmAddress = async () => {
     const shippingFee = await getFeeOfLocation({
       countryId: selectedCountry,
@@ -222,6 +254,8 @@ export default function Checkout() {
 
   if (loader) return <Loader />
 
+  console.log('product', product)
+
   return (
     <>
       <MainLayout>
@@ -262,6 +296,7 @@ export default function Checkout() {
                             return (
                               <ProductList
                                 setProduct={setProduct}
+                                handleProductRemove={handleProductRemove}
                                 product={product}
                                 key={index}
                                 item={item}
