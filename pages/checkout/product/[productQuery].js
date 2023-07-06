@@ -53,6 +53,7 @@ export default function Checkout() {
   const [loader, setLoader] = useState(false)
 
   const [totalPrice, setTotalPrice] = useState(0)
+  const [feeOfLocation, setFeeOfLocation] = useState(0)
   const [totalDeliveryFee, setTotalDeliveryFee] = useState(0)
 
   const [country, setCountry] = useState(null)
@@ -61,14 +62,14 @@ export default function Checkout() {
   const [selectedCity, setSelectedCity] = useState(null)
   const [state, setState] = useState(null)
   const [city, setCity] = useState(null)
-  const [additionalInfo, setAdditionalInfo] = useState({
+  const [shippingAddress, setShippingAddress] = useState({
     zipCode: '',
     address_line: '',
   })
 
   const handleAdditionalInfo = e => {
     const { name, value } = e.target
-    setAdditionalInfo(prev => ({ ...prev, [name]: value }))
+    setShippingAddress(prev => ({ ...prev, [name]: value }))
   }
 
   useEffect(() => {
@@ -126,8 +127,6 @@ export default function Checkout() {
     }
   }, [product])
 
-  console.log(totalDeliveryFee, totalPrice)
-
   const handleCountryChange = e => {
     const countryId = e.target.value
     setSelectedCountry(countryId)
@@ -146,8 +145,11 @@ export default function Checkout() {
       stateCode: selectedState,
       city_name: selectedCity,
     })
-    console.log(shippingFee)
+
+    setFeeOfLocation(shippingFee?.data?.delivery_fee)
   }
+
+  console.log(feeOfLocation)
 
   if (loader) return <h1>Loading...</h1>
 

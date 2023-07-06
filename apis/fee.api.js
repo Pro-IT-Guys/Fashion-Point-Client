@@ -13,7 +13,7 @@ export const getAllCountriesWithFees = async () => {
 export const getFeeOfLocation = async data => {
   const { countryId, stateCode, city_name } = data
   try {
-    const response = await axios.get(`${BASE_URL}/fee`, {
+    const response = await axios.post(`${BASE_URL}/fee/get_fee`, {
       countryId,
       stateCode,
       city_name,

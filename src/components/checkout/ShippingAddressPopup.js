@@ -55,10 +55,7 @@ const ShippingAddressPopup = ({
                     onChange={e => handleCountryChange(e)}
                   >
                     {country?.map(option => (
-                      <MenuItem
-                        key={option.country_code}
-                        value={option?.country_code}
-                      >
+                      <MenuItem key={option.country_code} value={option?._id}>
                         <Typography onClick={() => setState(option.states)}>
                           {option?.country}
                         </Typography>
