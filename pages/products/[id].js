@@ -165,7 +165,9 @@ export default function ProductDetails() {
 
     if (usersCart) {
       const res = await updateCart({ ...data, cartId: usersCart?._id })
-      if (res?.statusCode === 200) alert('Product added to cart')
+      if (res?.statusCode === 200) {
+        toast.success('Product added to cart')
+      }
     } else {
       const res = await addToCart(data)
       if (res?.statusCode === 200) alert('Product added to cart')

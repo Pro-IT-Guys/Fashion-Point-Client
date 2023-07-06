@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 export default function CartDrawer() {
   const router = useRouter()
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const { usersCart, updateCart, cartSimplified, setCartSimplified, token } =
+  const { usersCart, cartSimplified, setCartSimplified, token } =
     useContext(ContextData)
 
   const handleDrawerOpen = () => {
