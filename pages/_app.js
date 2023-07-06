@@ -1,3 +1,4 @@
+import { Toaster } from 'react-hot-toast'
 // scroll bar
 import 'simplebar/src/simplebar.css'
 // editor
@@ -60,6 +61,7 @@ export default function MyApp(props) {
           </CollapseDrawerProvider>
         </SettingsProvider>
       </ContextProvider>
+      <Toaster />
     </>
   )
 }

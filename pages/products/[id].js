@@ -13,6 +13,7 @@ import {
   alpha,
   Box,
   FormControl,
+  InputLabel,
   Select,
   MenuItem,
 } from '@mui/material'
@@ -40,6 +41,8 @@ import { io } from 'socket.io-client'
 import { getStorage } from 'apis/loadStorage'
 import { addToCart, updateCart } from 'apis/cart.api'
 import { convertCurrency } from 'helpers/currencyHandler'
+import { toast } from 'react-hot-toast'
+import Loader from 'src/components/Loader/Loader'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -67,12 +70,15 @@ export default function ProductDetails() {
   const [productSize, setProductSize] = useState('XL')
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
+  const [productColor, setProductColor] = useState('')
   const router = useRouter()
   const params = router.query.id
+  const [loader, setLoader] = useState(false)
 
   // Create chat with admin / get chat if already exist
   useEffect(() => {
     const retriveChat = async () => {
+      setLoader(true)
       if (currentlyLoggedIn?.role === 'admin') return
       let data
 
@@ -88,6 +94,7 @@ export default function ProductDetails() {
         })
       }
       setChat(data?.data)
+      setLoader(false)
     }
     retriveChat()
   }, [currentlyLoggedIn])
@@ -95,10 +102,12 @@ export default function ProductDetails() {
   // Get chat of sender and receiver
   useEffect(() => {
     const retriveMessage = async () => {
+      setLoader(true)
       if (chat?._id) {
         const messages = await getMessageOfChatId(chat?._id)
         setMessage(messages?.data)
       }
+      setLoader(false)
     }
     retriveMessage()
   }, [chat])
@@ -123,24 +132,35 @@ export default function ProductDetails() {
   }
 
   useEffect(() => {
+    setLoader(true)
     fetch(`http://localhost:8000/api/v1/product/path/${params}`)
       .then(res => res.json())
       .then(data => setProductDetails(data?.data))
+      .finally(() => setLoader(false))
   }, [params])
 
   const { name, sellingPrice, quantity, rating, description, images } =
     productDetails || {}
+
+  if (loader) return <Loader />
 
   // Cart Logics===============>
   const handleAddToCart = async () => {
     const userId = currentlyLoggedIn?._id
     const token = getStorage('token')
     const productId = productDetails._id
+
+    if (!productSize) return toast.error('Please select a size')
+    if (!productColor) return toast.error('Please select a color')
+    if (!userId) return toast.error('Please login first')
+
     const data = {
       token,
       userId,
       productId,
       quantity: productQuantity,
+      size: productSize,
+      color: productColor,
     }
 
     if (usersCart) {
@@ -202,36 +222,77 @@ export default function ProductDetails() {
                     ৳ {sellingPrice}
                   </strike> */}
 
-                  <div className="mt-4">
+                  {/* <div className="mt-4">
                     <div className="flex items-center gap-5">
                       <p className="text-sm">Size</p>
-                      <FormControl variant='standard'>
+                      <div className="flex items-center ">
+                        {productDetails?.size?.map(size => (
+                          <div
+                            onClick={() => setProductSize(size)}
+                            className="border border-[#7a7a7a] px-3 py-1 mx-1 cursor-pointer text-xs rounded"
+                          >
+                            {size}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div> */}
+
+                  <Grid container spacing={2} sx={{ mt: 1 }}>
+                    <Grid item xs={6}>
+                      <FormControl fullWidth>
+                        <InputLabel id="size-label">Size</InputLabel>
                         <Select
+                          labelId="size-label"
+                          id="demo-simple-select"
+                          value={productSize || ''}
                           label="Size"
-                          value={productSize}
                           onChange={e => setProductSize(e.target.value)}
-                          sx={{
-                            fontSize: '0.7rem',
-                            padding: '0px',
-                            border: 'none',
-                            '&:hover': {
-                              border: 'none',
-                            },
-                            ':focus': {
-                              border: 'none',
-                            },
-                          }}
-                          className="hover:border-none p-0 m-0 text-[10px]"
                         >
-                          {productDetails?.size?.map(item => (
-                            <MenuItem className="p-0" value={item}>
-                              {item}
+                          {productDetails?.size?.map(size => (
+                            <MenuItem key={size} value={size}>
+                              {size}
                             </MenuItem>
                           ))}
                         </Select>
                       </FormControl>
+                    </Grid>
+
+                    <Grid item xs={6}>
+                      <FormControl fullWidth>
+                        <InputLabel id="color-label">Color</InputLabel>
+                        <Select
+                          labelId="color-label"
+                          id="demo-simple-select"
+                          value={productColor || ''}
+                          label="Color"
+                          onChange={e => setProductColor(e.target.value)}
+                        >
+                          {productDetails?.color?.map(color => (
+                            <MenuItem key={color} value={color}>
+                              {color}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+
+                  {/* <div className="mt-4">
+                    <div className="flex items-center gap-5">
+                      <p className="text-sm">Color</p>
+                      <div className="flex items-center ">
+                        {productDetails?.size?.map(size => (
+                          <div
+                            onClick={() => setProductSize(size)}
+                            className="border border-[#7a7a7a] px-3 py-1 mx-1 cursor-pointer text-xs rounded"
+                          >
+                            {size}
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="mt-10 pb-20 gap-4 relative items-center flex">
                     <p className="text-sm">Quantity :</p>
@@ -287,7 +348,7 @@ export default function ProductDetails() {
                     <Button
                       onClick={() =>
                         router.push(
-                          `/checkout/product/sku=${productDetails.sku}`
+                          `/checkout/product/sku=${productDetails.sku}&quantity=${productQuantity}&size=${productSize}&color=${productColor}`
                         )
                       }
                       fullWidth

@@ -29,7 +29,6 @@ const ShippingAddressPopup = ({
   handleAdditionalInfo,
   handleConfirmAddress,
 }) => {
-  const { currentlyLoggedIn, toCurrency } = useContext(ContextData)
 
   return (
     <div className="popup_wrapper">
@@ -55,10 +54,7 @@ const ShippingAddressPopup = ({
                     onChange={e => handleCountryChange(e)}
                   >
                     {country?.map(option => (
-                      <MenuItem
-                        key={option.country_code}
-                        value={option?.country}
-                      >
+                      <MenuItem key={option.country_code} value={option?._id}>
                         <Typography onClick={() => setState(option.states)}>
                           {option?.country}
                         </Typography>
@@ -125,7 +121,18 @@ const ShippingAddressPopup = ({
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={12} md={city && city.length > 0 ? 12 : 6}>
+
+              <Grid item xs={12} md={6}>
+                <FormControl fullWidth>
+                  <TextField
+                    label="Phone Number"
+                    name="phoneNumber"
+                    onChange={e => handleAdditionalInfo(e)}
+                  />
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} md={city && city.length > 0 ? 6 : 12}>
                 <FormControl fullWidth>
                   <TextField
                     label="Address line"
@@ -134,6 +141,7 @@ const ShippingAddressPopup = ({
                   />
                 </FormControl>
               </Grid>
+
               <Grid item xs={12} md={city && city.length > 0 ? 12 : 6}>
                 <ButtonAnimate mediumClick={true}>
                   <Button

@@ -13,7 +13,8 @@ export const ContextProvider = ({ children }) => {
   const [fromCurrency, setFromCurrency] = useState(null)
   const [toCurrency, setToCurrency] = useState(null)
   const [usersCart, setUsersCart] = useState(null)
-  const [cartSimplified, setCartSimplified] = useState(null) // Simplified cart for the drawer
+  const [cartSimplified, setCartSimplified] = useState(null)
+  const [updateCart, setUpdateCart] = useState('')
 
   useEffect(() => {
     const retriveUser = async () => {
@@ -26,7 +27,12 @@ export const ContextProvider = ({ children }) => {
         setFromCurrency('AED')
         setToCurrency('USD')
       }
+    }
+    retriveUser()
+  }, [])
 
+  useEffect(() => {
+    const cartGet = async () => {
       const token = await getStorage('token')
       setToken(token)
 
@@ -41,8 +47,8 @@ export const ContextProvider = ({ children }) => {
         }
       }
     }
-    retriveUser()
-  }, [])
+    cartGet()
+  }, [token, updateCart])
 
   const contextValues = {
     token,
@@ -55,6 +61,8 @@ export const ContextProvider = ({ children }) => {
     fromCurrency,
     toCurrency,
     setToCurrency,
+    setUpdateCart,
+    updateCart,
   }
 
   return (

@@ -10,3 +10,12 @@ export const getOrderById = async data => {
     console.log(error)
   }
 }
+
+export const placeOrder = async data => {
+  try {
+    const response = await axios.post(`${BASE_URL}/order`, data)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
