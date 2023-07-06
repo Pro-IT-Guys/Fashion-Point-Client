@@ -28,6 +28,7 @@ import {
   TYPE_OPTION,
 } from 'constant/product'
 import ProductFilterDrawer from './ProductFilterDrawer'
+import { BASE_URL } from 'apis/url'
 
 function valuetext(value) {
   return `${value}°C`
@@ -42,14 +43,14 @@ const Products = () => {
 
   const handlePriceRange = (event, newValue) => {
     setValue(newValue)
-    console.log(newValue, 'newValue')
+    // console.log(newValue, 'newValue')
   }
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/v1/product')
+    fetch(`${BASE_URL}/product?minPrice=${value[0]}&maxPrice=${value[1]}`)
       .then(res => res.json())
       .then(data => setProducts(data?.data))
-  }, [])
+  }, [value])
 
   const RootStyle = styled('div')(({ theme }) => ({
     paddingTop: theme.spacing(15),
@@ -90,9 +91,7 @@ const Products = () => {
         <Grid container>
           <div className="flex  w-full mb-5">
             <div className="w-[20%]">
-              <h2 className="font-semibold text-xl w-40">
-                Filter Product
-              </h2>
+              <h2 className="font-semibold text-xl w-40">Filter Product</h2>
             </div>
             <div className="  w-[80%] hidden">
               <div className="flex justify-between items-center">
@@ -148,24 +147,6 @@ const Products = () => {
           <div className=" md:flex w-full gap-5">
             <div className="md:w-[20%] md:block hidden">
               <div className="pt-5 space-y-5 shadow py-5 pl-5 pr-3 bg-white ">
-                {/* <div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    Category
-                  </Typography>
-                  <RadioGroup className="text-xs">
-                    {CATEGORY_OPTION.map(item =>
-                      item?.classify?.map(item => (
-                        <FormControlLabel
-                          className="text-xs p-0 m-0"
-                          key={item}
-                          value={item}
-                          control={<Radio />}
-                          label={item}
-                        />
-                      ))
-                    )}
-                  </RadioGroup>
-                </div> */}
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
                     Price (AED)
@@ -181,6 +162,15 @@ const Products = () => {
                       // getAriaValueText={valuetext}
                     />
                   </Box>
+
+                  <div className="flex justify-between items-center">
+                    <div className="border px-3 rounded shadow-sm">
+                      <p>{value[0]}</p>
+                    </div>
+                    <div className="border px-3 rounded shadow-sm">
+                      <p>{value[1]}</p>
+                    </div>
+                  </div>
                 </div>
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
