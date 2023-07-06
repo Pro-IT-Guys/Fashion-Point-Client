@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CircularProgress,
   Container,
   Divider,
   Grid,
@@ -14,7 +15,7 @@ import {
   Typography,
 } from '@mui/material'
 import { ContextData } from 'context/dataProviderContext'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import MainLayout from 'src/layouts/main'
 
 import { loadStripe } from '@stripe/stripe-js'
@@ -22,6 +23,8 @@ import { Elements } from '@stripe/react-stripe-js'
 import StripeForm from 'src/components/checkout/StripeForm'
 import { paypalPaymentApi, paypalPaymentVerifyWebhook } from 'apis/payment.api'
 import { getOrderById } from 'apis/order.api'
+import { useRouter } from 'next/router'
+import { toast } from 'react-hot-toast'
 
 // Replace 'YOUR_STRIPE_PUBLIC_KEY' with your actual Stripe public key
 const stripePromise = loadStripe(
@@ -37,11 +40,25 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 const CheckoutPayment = () => {
   const { currentlyLoggedIn, toCurrency } = useContext(ContextData)
+  const router = useRouter()
+  const orderId = router.query.orderId
+  const [existingOrder, setExistingOrder] = useState(null)
   const [email, setEmail] = useState('')
   const [paypalPayment, setPaypalPayment] = useState(false)
   const [paypalLink, setPaypalLink] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const _retriveOrder = async () => {
+      const order = await getOrderById({ orderId })
+      if (!order) return alert('Order not found')
+      setExistingOrder(order.data)
+    }
+    _retriveOrder()
+  }, [orderId])
 
   const handleStripePayment = async paymentMethodId => {
+    setLoading(true)
     const response = await fetch(
       'http://localhost:8000/api/v1/payment/stripe',
       {
@@ -50,7 +67,7 @@ const CheckoutPayment = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          orderId: '649af82b3a3da1ac2861fa79',
+          orderId,
           paymentMethodId,
           currency: toCurrency,
         }),
@@ -58,15 +75,17 @@ const CheckoutPayment = () => {
     )
 
     if (response.ok) {
-      console.log(response)
+      toast.success('Payment successful')
+      setLoading(false)
     } else {
       console.error('Payment failed')
     }
   }
 
   const handlePaypalPayment = async () => {
+    setLoading(true)
     const response = await paypalPaymentApi({
-      orderId: '649af82b3a3da1ac2861fa79',
+      orderId,
       email: email,
       currency: 'USD',
     })
@@ -75,18 +94,23 @@ const CheckoutPayment = () => {
       setPaypalLink(response?.data?.redirectUrl)
       window.open(response?.data?.redirectUrl, '_blank')
     }
+    setLoading(false)
   }
 
   const handlePaypalPaymentVerify = async () => {
-    const order = await getOrderById({ orderId: '649af82b3a3da1ac2861fa79' })
+    setLoading(true)
+    const order = await getOrderById({ orderId })
     if (!order) return alert('Order not found')
     const response = await paypalPaymentVerifyWebhook({
       paymentId: order.data.paymentId,
     })
 
     if (response?.statusCode === 200) {
-      console.log(response)
+      toast.success('Payment successful')
+    } else {
+      toast.error('Payment failed')
     }
+    setLoading(false)
   }
 
   return (
@@ -207,8 +231,13 @@ const CheckoutPayment = () => {
                             color="primary"
                             sx={{ mt: 2, width: '170px' }}
                             onClick={handlePaypalPaymentVerify}
+                            disabled={loading}
                           >
-                            Verify Payment
+                            {loading ? (
+                              <CircularProgress size={24} />
+                            ) : (
+                              'Complete Payment'
+                            )}
                           </Button>
                         ) : (
                           <Button
@@ -216,8 +245,13 @@ const CheckoutPayment = () => {
                             color="primary"
                             sx={{ mt: 2, width: '90px' }}
                             onClick={handlePaypalPayment}
+                            disabled={!email || loading}
                           >
-                            Confirm
+                            {loading ? (
+                              <CircularProgress size={24} />
+                            ) : (
+                              'Confirm'
+                            )}
                           </Button>
                         )}
 

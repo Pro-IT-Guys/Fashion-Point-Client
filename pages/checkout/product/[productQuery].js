@@ -20,11 +20,13 @@ import {
 } from '@mui/material'
 import { getCartByCartId, getCartByUserId } from 'apis/cart.api'
 import { getAllCountriesWithFees, getFeeOfLocation } from 'apis/fee.api'
+import { placeOrder } from 'apis/order.api'
 import { getProductBySku } from 'apis/product.api'
 import { ContextData } from 'context/dataProviderContext'
 import { convertCurrencyForCalculation } from 'helpers/currencyHandler'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
 import Scrollbar from 'src/components/Scrollbar'
 import ProductList from 'src/components/checkout/CheckoutProductList'
 import ShippingAddressPopup from 'src/components/checkout/ShippingAddressPopup'
@@ -46,7 +48,7 @@ const ThumbImgStyle = styled('img')(({ theme }) => ({
 }))
 
 export default function Checkout() {
-  const { token, userId, toCurrency, currentlyLoggedIn, fromCurrency } =
+  const { token, toCurrency, currentlyLoggedIn, fromCurrency } =
     useContext(ContextData)
   const [addressPopup, setAddressPopup] = useState(false)
   const router = useRouter()
@@ -54,6 +56,7 @@ export default function Checkout() {
   const [product, setProduct] = useState([])
   const [loader, setLoader] = useState(false)
   const [muiLoader, setMuiLoader] = useState(false)
+  const [orderItem, setOrderItem] = useState([])
 
   const [totalPrice, setTotalPrice] = useState(0)
   const [feeOfLocation, setFeeOfLocation] = useState(0)
@@ -95,15 +98,24 @@ export default function Checkout() {
         const sku = query?.split('&')[0].split('=')[1]
         const res = await getProductBySku(sku)
 
+        let singleOrderItem = {}
         let singleProduct = {}
         let productId = res?.data
+        let singleProductId = res?.data?._id
+
         singleProduct.quantity = query?.split('&')[1].split('=')[1]
         singleProduct.size = query?.split('&')[2].split('=')[1]
         singleProduct.color = query?.split('&')[3].split('=')[1]
 
+        singleOrderItem.quantity = query?.split('&')[1].split('=')[1]
+        singleOrderItem.size = query?.split('&')[2].split('=')[1]
+        singleOrderItem.color = query?.split('&')[3].split('=')[1]
+
         singleProduct.productId = productId
+        singleOrderItem.product = singleProductId
 
         setProduct([singleProduct])
+        setOrderItem([singleOrderItem])
         setLoader(false)
       } else if (query?.split('&')[0].split('=')[0] === 'cart' && token) {
         const cartId = query?.split('=')[1]
@@ -157,8 +169,8 @@ export default function Checkout() {
     })
 
     const orderData = {
-      userId,
-      orderItems: product,
+      userId: currentlyLoggedIn?._id,
+      orderItems: orderItem,
       phoneNumber: shippingAddress.phoneNumber,
       email: currentlyLoggedIn?.email,
       shippingAddress: {
@@ -181,7 +193,22 @@ export default function Checkout() {
       ),
     }
 
-    console.log(orderData)
+    if (!currentlyLoggedIn) return toast.error('Please login to continue.')
+    if (!selectedCountry) return toast.error('Please select a country.')
+    if (!selectedState) return toast.error('Please select a state.')
+    if (city.length > 0 && !selectedCity)
+      return toast.error('Please select a city.')
+    if (!shippingAddress.zipCode) return toast.error('Please enter zip code.')
+    if (!shippingAddress.phoneNumber)
+      return toast.error('Please enter phone number.')
+    if (!shippingAddress.address_line)
+      return toast.error('Please enter address.')
+
+    const res = await placeOrder(orderData)
+    if (res?.statusCode === 200) {
+      toast.success('Order placed successfully.')
+      router.push(`/checkout/payment/${res?.data?._id}`)
+    }
   }
 
   if (loader) return <h1>Loading...</h1>
@@ -300,7 +327,7 @@ export default function Checkout() {
                             {convertCurrencyForCalculation(
                               fromCurrency,
                               toCurrency,
-                              (totalPrice + totalDeliveryFee)
+                              totalPrice + totalDeliveryFee
                             )}
                           </Typography>
                           <Typography
