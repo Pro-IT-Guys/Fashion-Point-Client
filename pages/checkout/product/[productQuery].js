@@ -27,6 +27,7 @@ import { convertCurrencyForCalculation } from 'helpers/currencyHandler'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
+import Loader from 'src/components/Loader/Loader'
 import Scrollbar from 'src/components/Scrollbar'
 import ProductList from 'src/components/checkout/CheckoutProductList'
 import ShippingAddressPopup from 'src/components/checkout/ShippingAddressPopup'
@@ -211,7 +212,7 @@ export default function Checkout() {
     }
   }
 
-  if (loader) return <h1>Loading...</h1>
+  if (loader) return <Loader />
 
   return (
     <>

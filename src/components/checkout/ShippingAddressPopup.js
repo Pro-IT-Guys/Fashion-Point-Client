@@ -29,7 +29,6 @@ const ShippingAddressPopup = ({
   handleAdditionalInfo,
   handleConfirmAddress,
 }) => {
-  const { currentlyLoggedIn, toCurrency } = useContext(ContextData)
 
   return (
     <div className="popup_wrapper">

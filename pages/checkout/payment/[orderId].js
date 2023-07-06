@@ -25,8 +25,9 @@ import { paypalPaymentApi, paypalPaymentVerifyWebhook } from 'apis/payment.api'
 import { getOrderById } from 'apis/order.api'
 import { useRouter } from 'next/router'
 import { toast } from 'react-hot-toast'
+import { ButtonAnimate } from 'src/components/animate'
+import Loader from 'src/components/Loader/Loader'
 
-// Replace 'YOUR_STRIPE_PUBLIC_KEY' with your actual Stripe public key
 const stripePromise = loadStripe(
   'pk_test_51L3PqJCnJiLLpGIeL4Uixr7K4bJ183L3tSUyFg2ENBX5ovRQKSQhaYTR8kG7WbcfvkvyuLa5RfB9eZlBJfohfpYd00PM7gqopw'
 )
@@ -47,12 +48,15 @@ const CheckoutPayment = () => {
   const [paypalPayment, setPaypalPayment] = useState(false)
   const [paypalLink, setPaypalLink] = useState('')
   const [loading, setLoading] = useState(false)
+  const [pageLoading, setPageLoading] = useState(false)
 
   useEffect(() => {
+    setPageLoading(true)
     const _retriveOrder = async () => {
-      const order = await getOrderById({ orderId })
-      if (!order) return alert('Order not found')
-      setExistingOrder(order.data)
+      const id = await router.query.orderId
+      const order = await getOrderById({ orderId: id })
+      setExistingOrder(order?.data)
+      setPageLoading(false)
     }
     _retriveOrder()
   }, [orderId])
@@ -78,7 +82,7 @@ const CheckoutPayment = () => {
       toast.success('Payment successful')
       setLoading(false)
     } else {
-      console.error('Payment failed')
+      toast.error('Payment failed')
     }
   }
 
@@ -100,7 +104,7 @@ const CheckoutPayment = () => {
   const handlePaypalPaymentVerify = async () => {
     setLoading(true)
     const order = await getOrderById({ orderId })
-    if (!order) return alert('Order not found')
+    if (!order) return toast.error('Order not found')
     const response = await paypalPaymentVerifyWebhook({
       paymentId: order.data.paymentId,
     })
@@ -111,6 +115,10 @@ const CheckoutPayment = () => {
       toast.error('Payment failed')
     }
     setLoading(false)
+  }
+
+  if (pageLoading) {
+    return <Loader />
   }
 
   return (
@@ -136,15 +144,15 @@ const CheckoutPayment = () => {
                       variant="body2"
                       sx={{ color: 'text.secondary', ml: 1 }}
                     >
-                      Sobahan Baper Bari
+                      {existingOrder?.shippingAddress?.address_line}
                     </Typography>
                   </Typography>
 
                   <Typography variant="body2" gutterBottom>
-                    Azadi Bazar, Dharmapur, Fatikchhari, Chattogram.
+                    {`${existingOrder?.shippingAddress?.zipCode}, ${existingOrder?.shippingAddress?.city}, ${existingOrder?.shippingAddress?.state}, ${existingOrder?.shippingAddress?.country}`}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    01868032281
+                  <Typography variant="body2" gutterBottom>
+                    Phone: {existingOrder?.phoneNumber}
                   </Typography>
 
                   <Box
@@ -156,18 +164,16 @@ const CheckoutPayment = () => {
                       bottom: { sm: 24 },
                     }}
                   >
-                    <Button variant="outlined" size="small" color="inherit">
-                      Delete
-                    </Button>
-
                     <Box sx={{ mx: 0.5 }} />
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      // onClick={handleCreateBilling}
-                    >
-                      Deliver to this Address
-                    </Button>
+                    <ButtonAnimate mediumClick={true}>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        // onClick={handleCreateBilling}
+                      >
+                        Update Address
+                      </Button>
+                    </ButtonAnimate>
                   </Box>
                 </CardContent>
               </Card>

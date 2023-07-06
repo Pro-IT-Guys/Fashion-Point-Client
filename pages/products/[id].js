@@ -42,6 +42,7 @@ import { getStorage } from 'apis/loadStorage'
 import { addToCart, updateCart } from 'apis/cart.api'
 import { convertCurrency } from 'helpers/currencyHandler'
 import { toast } from 'react-hot-toast'
+import Loader from 'src/components/Loader/Loader'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -142,7 +143,7 @@ export default function ProductDetails() {
   const { name, sellingPrice, quantity, rating, description, images } =
     productDetails || {}
 
-  if (loader) return <h1>Loading...</h1>
+  if (loader) return <Loader />
 
   // Cart Logics===============>
   const handleAddToCart = async () => {
