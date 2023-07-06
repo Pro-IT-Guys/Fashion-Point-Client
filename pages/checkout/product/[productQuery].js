@@ -34,18 +34,10 @@ import ShippingAddressPopup from 'src/components/checkout/ShippingAddressPopup'
 import MainLayout from 'src/layouts/main'
 
 const RootStyle = styled('div')(({ theme }) => ({
-  paddingTop: theme.spacing(15),
+  paddingTop: theme.spacing(20),
   [theme.breakpoints.up('md')]: {
-    paddingBottom: theme.spacing(15),
+    paddingBottom: theme.spacing(8),
   },
-}))
-
-const ThumbImgStyle = styled('img')(({ theme }) => ({
-  width: 64,
-  height: 64,
-  objectFit: 'cover',
-  marginRight: theme.spacing(2),
-  borderRadius: theme.shape.borderRadiusSm,
 }))
 
 export default function Checkout() {

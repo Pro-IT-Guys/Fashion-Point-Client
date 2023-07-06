@@ -33,9 +33,9 @@ const stripePromise = loadStripe(
 )
 
 const RootStyle = styled('div')(({ theme }) => ({
-  paddingTop: theme.spacing(15),
+  paddingTop: theme.spacing(20),
   [theme.breakpoints.up('md')]: {
-    paddingBottom: theme.spacing(15),
+    paddingBottom: theme.spacing(8),
   },
 }))
 
