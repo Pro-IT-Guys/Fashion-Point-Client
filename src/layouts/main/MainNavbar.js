@@ -138,15 +138,15 @@ export default function MainNavbar() {
               justifyContent: 'space-between',
             }}
           >
-            <div className="w-[15%]">
+            <div className="md:w-[15%] w-[25%]">
               <NextLink href="/">
                 {/* <Logo /> */}
                 <Image
                   src={logo}
                   alt="Picture of the logo"
-                  width={100}
-                  height={40}
-                  className="cursor-pointer w-full"
+                  width={150}
+                  height={50}
+                  className="cursor-pointer object-cover w-full"
                 />
               </NextLink>
             </div>

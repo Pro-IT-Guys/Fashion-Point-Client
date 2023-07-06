@@ -12,6 +12,9 @@ import {
   Typography,
   alpha,
   Box,
+  FormControl,
+  Select,
+  MenuItem,
 } from '@mui/material'
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble'
 import React, { useContext, useEffect, useRef, useState } from 'react'
@@ -61,7 +64,7 @@ export default function ProductDetails() {
   const anchorRef = useRef(null)
   const { currentlyLoggedIn, usersCart, fromCurrency, toCurrency } =
     useContext(ContextData)
-
+  const [productSize, setProductSize] = useState('XL')
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
   const router = useRouter()
@@ -202,13 +205,31 @@ export default function ProductDetails() {
                   <div className="mt-4">
                     <div className="flex items-center gap-5">
                       <p className="text-sm">Size</p>
-                      <div className="flex items-center ">
-                        {productDetails?.size?.map(size => (
-                          <div className="border border-[#7a7a7a] px-3 py-1 mx-1 cursor-pointer text-xs rounded">
-                            {size}
-                          </div>
-                        ))}
-                      </div>
+                      <FormControl variant='standard'>
+                        <Select
+                          label="Size"
+                          value={productSize}
+                          onChange={e => setProductSize(e.target.value)}
+                          sx={{
+                            fontSize: '0.7rem',
+                            padding: '0px',
+                            border: 'none',
+                            '&:hover': {
+                              border: 'none',
+                            },
+                            ':focus': {
+                              border: 'none',
+                            },
+                          }}
+                          className="hover:border-none p-0 m-0 text-[10px]"
+                        >
+                          {productDetails?.size?.map(item => (
+                            <MenuItem className="p-0" value={item}>
+                              {item}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </div>
                   </div>
 
@@ -265,7 +286,9 @@ export default function ProductDetails() {
                     </Button>
                     <Button
                       onClick={() =>
-                        router.push(`/checkout/product/sku=${productDetails.sku}`)
+                        router.push(
+                          `/checkout/product/sku=${productDetails.sku}`
+                        )
                       }
                       fullWidth
                       size="large"
