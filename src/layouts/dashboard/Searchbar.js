@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import searchFill from '@iconify/icons-eva/search-fill'
 // material
 import { styled, alpha } from '@mui/material/styles'
@@ -13,6 +13,7 @@ import {
 } from '@mui/material'
 // components
 import { MIconButton } from '../../components/@material-extend'
+import { ContextData } from 'context/dataProviderContext'
 
 // ----------------------------------------------------------------------
 
@@ -43,6 +44,7 @@ const SearchbarStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Searchbar() {
+  const { setSearchTerm } = useContext(ContextData)
   const [isOpen, setOpen] = useState(false)
 
   const handleOpen = () => {
@@ -58,7 +60,7 @@ export default function Searchbar() {
       <div>
         {!isOpen && (
           <div className="flex text-black items-center">
-            <h1 className='font-semibold'>Search</h1>
+            <h1 className="font-semibold">Search</h1>
             <MIconButton onClick={handleOpen}>
               <Icon icon={searchFill} width={20} height={20} />
             </MIconButton>
@@ -68,6 +70,7 @@ export default function Searchbar() {
         <Slide direction="down" in={isOpen} mountOnEnter unmountOnExit>
           <SearchbarStyle>
             <Input
+              onChange={e => setSearchTerm(e.target.value)}
               autoFocus
               fullWidth
               disableUnderline
