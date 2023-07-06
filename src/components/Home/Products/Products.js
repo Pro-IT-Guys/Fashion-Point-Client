@@ -37,18 +37,21 @@ function valuetext(value) {
 }
 
 const Products = () => {
-  const { searchTerm } = useContext(ContextData)
+  const {
+    searchTerm,
+    category,
+    type,
+    style,
+    fabric,
+    setType,
+    setStyle,
+    setFabric,
+    value,
+    setValue,
+  } = useContext(ContextData)
   const [openFilter, setOpenFilter] = useState(false)
   const [products, setProducts] = useState([])
   const [color, setColor] = useState([])
-
-  const [value, setValue] = useState([0, 20000])
-
-  // Query states
-  const [category, setCategory] = useState('')
-  const [type, setType] = useState('')
-  const [style, setStyle] = useState('')
-  const [fabric, setFabric] = useState('')
 
   const handlePriceRange = (event, newValue) => {
     setValue(newValue)
@@ -191,7 +194,7 @@ const Products = () => {
                     </div>
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <Typography variant="subtitle1" gutterBottom>
                     Brand
                   </Typography>
@@ -207,7 +210,7 @@ const Products = () => {
                       ))
                     )}
                   </RadioGroup>
-                </div>
+                </div> */}
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
                     Fabric

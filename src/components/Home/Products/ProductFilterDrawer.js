@@ -29,9 +29,10 @@ import {
   TYPE_OPTION,
 } from 'constant/product'
 import { MIconButton } from 'src/components/@material-extend'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import ColorManyPicker from '../common/ColorManyPicker'
 import Scrollbar from '../common/Scrollbar'
+import { ContextData } from 'context/dataProviderContext'
 
 // ----------------------------------------------------------------------
 
@@ -49,12 +50,27 @@ export default function ProductFilterDrawer({
   onCloseFilter,
 }) {
   const [color, setColor] = useState([])
+  const {
+    searchTerm,
+    category,
+    type,
+    style,
+    fabric,
+    setType,
+    setStyle,
+    setFabric,
+    value,
+    setValue,
+    setCategory,
+  } = useContext(ContextData)
 
-  const [value, setValue] = useState([0, 20000])
+  const handleSelectFilterOption = (e, callback) => {
+    const { value } = e.target
+    callback(value)
+  }
 
   const handlePriceRange = (event, newValue) => {
     setValue(newValue)
-    console.log(newValue, 'newValue')
   }
 
   const handleChange = selectedColor => {
@@ -104,14 +120,127 @@ export default function ProductFilterDrawer({
         <Divider />
 
         <Scrollbar>
-        <div className="pt-5 space-y-5 shadow py-5 pl-5 pr-3 bg-white ">
-          <div>
-            <Typography variant="subtitle1" gutterBottom>
-              Category
-            </Typography>
-            <RadioGroup className="text-xs">
-              {CATEGORY_OPTION.map(item =>
-                item?.classify?.map(item => (
+          <div className="pt-5 space-y-5 shadow py-5 pl-5 pr-3 bg-white ">
+            <div>
+              <Typography variant="subtitle1" gutterBottom>
+                Category
+              </Typography>
+              <RadioGroup
+                className="text-xs"
+                value={category}
+                onChange={e => handleSelectFilterOption(e, setCategory)}
+              >
+                {CATEGORY_OPTION.map(item =>
+                  item?.classify?.map(item => (
+                    <FormControlLabel
+                      className="text-xs p-0 m-0"
+                      key={item}
+                      value={item}
+                      control={<Radio />}
+                      label={item}
+                    />
+                  ))
+                )}
+              </RadioGroup>
+            </div>
+            <div>
+              <Typography variant="subtitle1" gutterBottom>
+                Price (AED)
+              </Typography>
+              <Box>
+                <Slider
+                  getAriaLabel={() => 'Price range'}
+                  value={value}
+                  onChange={handlePriceRange}
+                  min={0}
+                  max={500}
+                  valueLabelDisplay="auto"
+                  // getAriaValueText={valuetext}
+                />
+              </Box>
+            </div>
+            {/* <div>
+              <Typography variant="subtitle1" gutterBottom>
+                Brand
+              </Typography>
+              <RadioGroup>
+                {BRAND_OPTION.map(item =>
+                  item?.classify?.map(item => (
+                    <FormControlLabel
+                      key={item}
+                      value={item}
+                      control={<Radio />}
+                      label={item}
+                    />
+                  ))
+                )}
+              </RadioGroup>
+            </div> */}
+            <div>
+              <Typography variant="subtitle1" gutterBottom>
+                Fabric
+              </Typography>
+              <RadioGroup
+                value={fabric}
+                onChange={e => handleSelectFilterOption(e, setFabric)}
+              >
+                {FABRIC_OPTION.map(item =>
+                  item?.classify?.map(item => (
+                    <FormControlLabel
+                      key={item}
+                      value={item}
+                      control={<Radio />}
+                      label={item}
+                    />
+                  ))
+                )}
+              </RadioGroup>
+            </div>
+            <div>
+              <Typography variant="subtitle1" gutterBottom>
+                Style
+              </Typography>
+              <RadioGroup
+                value={style}
+                onChange={e => handleSelectFilterOption(e, setStyle)}
+              >
+                {STYLE_OPTION.map(item =>
+                  item?.classify?.map(item => (
+                    <FormControlLabel
+                      key={item}
+                      value={item}
+                      control={<Radio />}
+                      label={item}
+                    />
+                  ))
+                )}
+              </RadioGroup>
+            </div>
+
+            {/* <div>
+              <Typography variant="subtitle1" gutterBottom>
+                Colour
+              </Typography>
+              <ColorManyPicker
+                name="colors"
+                colors={COLOR_OPTION}
+                value={color}
+                onChange={handleChange}
+                onChecked={handleChecked}
+                sx={{ maxWidth: 36 * 4 }}
+              />
+            </div> */}
+
+            <div>
+              <Typography variant="subtitle1" gutterBottom>
+                Type
+              </Typography>
+              <RadioGroup
+                className="text-xs"
+                value={type}
+                onChange={e => handleSelectFilterOption(e, setType)}
+              >
+                {TYPE_OPTION.map(item => (
                   <FormControlLabel
                     className="text-xs p-0 m-0"
                     key={item}
@@ -119,126 +248,27 @@ export default function ProductFilterDrawer({
                     control={<Radio />}
                     label={item}
                   />
-                ))
-              )}
-            </RadioGroup>
-          </div>
-          <div>
-            <Typography variant="subtitle1" gutterBottom>
-              Price (AED)
-            </Typography>
-            <Box>
-              <Slider
-                getAriaLabel={() => 'Price range'}
-                value={value}
-                onChange={handlePriceRange}
-                min={0}
-                max={500}
-                valueLabelDisplay="auto"
-                // getAriaValueText={valuetext}
-              />
-            </Box>
-          </div>
-          <div>
-            <Typography variant="subtitle1" gutterBottom>
-              Brand
-            </Typography>
-            <RadioGroup>
-              {BRAND_OPTION.map(item =>
-                item?.classify?.map(item => (
+                ))}
+              </RadioGroup>
+            </div>
+
+            {/* <div>
+              <Typography variant="subtitle1" gutterBottom>
+                Size
+              </Typography>
+              <RadioGroup className="text-xs">
+                {SIZE_OPTION.map(item => (
                   <FormControlLabel
+                    className="text-xs p-0 m-0"
                     key={item}
                     value={item}
                     control={<Radio />}
                     label={item}
                   />
-                ))
-              )}
-            </RadioGroup>
+                ))}
+              </RadioGroup>
+            </div> */}
           </div>
-          <div>
-            <Typography variant="subtitle1" gutterBottom>
-              Fabric
-            </Typography>
-            <RadioGroup>
-              {FABRIC_OPTION.map(item =>
-                item?.classify?.map(item => (
-                  <FormControlLabel
-                    key={item}
-                    value={item}
-                    control={<Radio />}
-                    label={item}
-                  />
-                ))
-              )}
-            </RadioGroup>
-          </div>
-          <div>
-            <Typography variant="subtitle1" gutterBottom>
-              Style
-            </Typography>
-            <RadioGroup>
-              {STYLE_OPTION.map(item =>
-                item?.classify?.map(item => (
-                  <FormControlLabel
-                    key={item}
-                    value={item}
-                    control={<Radio />}
-                    label={item}
-                  />
-                ))
-              )}
-            </RadioGroup>
-          </div>
-
-          <div>
-            <Typography variant="subtitle1" gutterBottom>
-              Colour
-            </Typography>
-            <ColorManyPicker
-              name="colors"
-              colors={COLOR_OPTION}
-              value={color}
-              onChange={handleChange}
-              onChecked={handleChecked}
-              sx={{ maxWidth: 36 * 4 }}
-            />
-          </div>
-
-          <div>
-            <Typography variant="subtitle1" gutterBottom>
-              Type
-            </Typography>
-            <RadioGroup className="text-xs">
-              {TYPE_OPTION.map(item => (
-                <FormControlLabel
-                  className="text-xs p-0 m-0"
-                  key={item}
-                  value={item}
-                  control={<Radio />}
-                  label={item}
-                />
-              ))}
-            </RadioGroup>
-          </div>
-
-          <div>
-            <Typography variant="subtitle1" gutterBottom>
-              Size
-            </Typography>
-            <RadioGroup className="text-xs">
-              {SIZE_OPTION.map(item => (
-                <FormControlLabel
-                  className="text-xs p-0 m-0"
-                  key={item}
-                  value={item}
-                  control={<Radio />}
-                  label={item}
-                />
-              ))}
-            </RadioGroup>
-          </div>
-        </div>
         </Scrollbar>
       </Drawer>
     </>

@@ -14,7 +14,14 @@ export const ContextProvider = ({ children }) => {
   const [toCurrency, setToCurrency] = useState(null)
   const [usersCart, setUsersCart] = useState(null)
   const [cartSimplified, setCartSimplified] = useState(null)
+
+  // Search Term amd Filter
   const [searchTerm, setSearchTerm] = useState('')
+  const [category, setCategory] = useState('')
+  const [type, setType] = useState('')
+  const [style, setStyle] = useState('')
+  const [fabric, setFabric] = useState('')
+  const [value, setValue] = useState([0, 20000])
 
   useEffect(() => {
     const retriveUser = async () => {
@@ -58,6 +65,16 @@ export const ContextProvider = ({ children }) => {
     setToCurrency,
     searchTerm,
     setSearchTerm,
+    category,
+    setCategory,
+    type,
+    setType,
+    style,
+    setStyle,
+    fabric,
+    setFabric,
+    value,
+    setValue,
   }
 
   return (
