@@ -13,7 +13,7 @@ import {
   Typography,
   styled,
 } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import ColorManyPicker from '../common/ColorManyPicker'
 import ShopProductSort from '../shop/ShopProductSort'
 import ProductCard from './ProductCard'
@@ -29,17 +29,26 @@ import {
 } from 'constant/product'
 import ProductFilterDrawer from './ProductFilterDrawer'
 import { BASE_URL } from 'apis/url'
+import { multiFilterProduct } from 'apis/product.api'
+import { ContextData } from 'context/dataProviderContext'
 
 function valuetext(value) {
   return `${value}°C`
 }
 
 const Products = () => {
+  const { searchTerm } = useContext(ContextData)
   const [openFilter, setOpenFilter] = useState(false)
   const [products, setProducts] = useState([])
   const [color, setColor] = useState([])
 
   const [value, setValue] = useState([0, 20000])
+
+  // Query states
+  const [category, setCategory] = useState('')
+  const [type, setType] = useState('')
+  const [style, setStyle] = useState('')
+  const [fabric, setFabric] = useState('')
 
   const handlePriceRange = (event, newValue) => {
     setValue(newValue)
@@ -47,17 +56,29 @@ const Products = () => {
   }
 
   useEffect(() => {
-    fetch(`${BASE_URL}/product?minPrice=${value[0]}&maxPrice=${value[1]}`)
-      .then(res => res.json())
-      .then(data => setProducts(data?.data))
-  }, [value])
+    const queryParams = {
+      searchTerm,
+      category,
+      maxPrice: value[1],
+      minPrice: value[0],
+      type,
+      style,
+      fabric,
+    }
 
-  const RootStyle = styled('div')(({ theme }) => ({
-    paddingTop: theme.spacing(15),
-    [theme.breakpoints.up('md')]: {
-      paddingBottom: theme.spacing(15),
-    },
-  }))
+    const retriveProduct = async () => {
+      const response = await multiFilterProduct(queryParams)
+      if (response?.statusCode === 200) {
+        setProducts(response?.data)
+      }
+    }
+    retriveProduct()
+  }, [searchTerm, category, value, type, style, fabric])
+
+  const handleSelectFilterOption = (e, callback) => {
+    const { value } = e.target
+    callback(value)
+  }
 
   const handleOpenFilter = () => {
     setOpenFilter(true)
@@ -82,8 +103,6 @@ const Products = () => {
     }
     return false
   }
-
-  // console.log(color, 'color')
 
   return (
     <div className="bg-[#f7f7ff9c] md:pt-10 pt-10">
@@ -193,7 +212,10 @@ const Products = () => {
                   <Typography variant="subtitle1" gutterBottom>
                     Fabric
                   </Typography>
-                  <RadioGroup>
+                  <RadioGroup
+                    value={fabric}
+                    onChange={e => handleSelectFilterOption(e, setFabric)}
+                  >
                     {FABRIC_OPTION.map(item =>
                       item?.classify?.map(item => (
                         <FormControlLabel
@@ -210,7 +232,10 @@ const Products = () => {
                   <Typography variant="subtitle1" gutterBottom>
                     Style
                   </Typography>
-                  <RadioGroup>
+                  <RadioGroup
+                    value={style}
+                    onChange={e => handleSelectFilterOption(e, setStyle)}
+                  >
                     {STYLE_OPTION.map(item =>
                       item?.classify?.map(item => (
                         <FormControlLabel
@@ -224,7 +249,7 @@ const Products = () => {
                   </RadioGroup>
                 </div>
 
-                <div>
+                {/* <div>
                   <Typography variant="subtitle1" gutterBottom>
                     Colour
                   </Typography>
@@ -236,13 +261,17 @@ const Products = () => {
                     onChecked={handleChecked}
                     sx={{ maxWidth: 36 * 4 }}
                   />
-                </div>
+                </div> */}
 
                 <div>
                   <Typography variant="subtitle1" gutterBottom>
                     Type
                   </Typography>
-                  <RadioGroup className="text-xs">
+                  <RadioGroup
+                    className="text-xs"
+                    value={type}
+                    onChange={e => handleSelectFilterOption(e, setType)}
+                  >
                     {TYPE_OPTION.map(item => (
                       <FormControlLabel
                         className="text-xs p-0 m-0"
@@ -255,7 +284,7 @@ const Products = () => {
                   </RadioGroup>
                 </div>
 
-                <div>
+                {/* <div>
                   <Typography variant="subtitle1" gutterBottom>
                     Size
                   </Typography>
@@ -270,7 +299,7 @@ const Products = () => {
                       />
                     ))}
                   </RadioGroup>
-                </div>
+                </div> */}
               </div>
               {/* <div className=" mt-4 shadow">
                 <div className="bg-[#f2f2f2] border py-2 px-3 rounded-t">

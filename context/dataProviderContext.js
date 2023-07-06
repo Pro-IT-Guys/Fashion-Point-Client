@@ -13,7 +13,8 @@ export const ContextProvider = ({ children }) => {
   const [fromCurrency, setFromCurrency] = useState(null)
   const [toCurrency, setToCurrency] = useState(null)
   const [usersCart, setUsersCart] = useState(null)
-  const [cartSimplified, setCartSimplified] = useState(null) 
+  const [cartSimplified, setCartSimplified] = useState(null)
+  const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
     const retriveUser = async () => {
@@ -55,6 +56,8 @@ export const ContextProvider = ({ children }) => {
     fromCurrency,
     toCurrency,
     setToCurrency,
+    searchTerm,
+    setSearchTerm,
   }
 
   return (

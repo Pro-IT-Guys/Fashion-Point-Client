@@ -94,7 +94,7 @@ export default function MainNavbar() {
   const [signupOpen, setSignupOpen] = useState(false)
   const isOffset = useOffSetTop(100)
   const { pathname } = useRouter()
-  const { currentlyLoggedIn } = useContext(ContextData)
+  const { currentlyLoggedIn, setSearchTerm } = useContext(ContextData)
   const { role, name, image } = currentlyLoggedIn || {}
   const isHome = pathname === '/'
 
@@ -154,6 +154,7 @@ export default function MainNavbar() {
             <div className="w-[80%] md:block hidden">
               <SearchbarStyle>
                 <Input
+                  onChange={e => setSearchTerm(e.target.value)}
                   className="border px-2 py-1 rounded md:block hidden"
                   autoFocus
                   fullWidth
@@ -177,7 +178,7 @@ export default function MainNavbar() {
             </div>
             {/* <Box sx={{ flexGrow: 1 }} /> */}
 
-            <div className='flex items-center '>
+            <div className="flex items-center ">
               <CartDrawer />
 
               <div className="flex md:gap-0 gap-1 items-center md:ml-0 ml-1">
