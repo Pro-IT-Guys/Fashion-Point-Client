@@ -113,6 +113,22 @@ export default function Checkout() {
       } else if (query?.split('&')[0].split('=')[0] === 'cart' && token) {
         const cartId = query?.split('=')[1]
         const res = await getCartByCartId({ token, cartId })
+
+        let orderItems = []
+        res?.data?.product?.forEach(item => {
+          let singleOrderItem = {}
+          let singleProductId = item?.productId?._id
+
+          singleOrderItem.quantity = item?.quantity
+          singleOrderItem.size = item?.size
+          singleOrderItem.color = item?.color
+
+          singleOrderItem.product = singleProductId
+
+          orderItems.push(singleOrderItem)
+        })
+
+        setOrderItem(orderItems)
         setProduct(res?.data?.product)
         setLoader(false)
       }
@@ -189,7 +205,7 @@ export default function Checkout() {
     if (!currentlyLoggedIn) return toast.error('Please login to continue.')
     if (!selectedCountry) return toast.error('Please select a country.')
     if (!selectedState) return toast.error('Please select a state.')
-    if (city.length > 0 && !selectedCity)
+    if (city?.length > 0 && !selectedCity)
       return toast.error('Please select a city.')
     if (!shippingAddress.zipCode) return toast.error('Please enter zip code.')
     if (!shippingAddress.phoneNumber)

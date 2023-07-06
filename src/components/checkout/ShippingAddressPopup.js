@@ -3,6 +3,7 @@ import { ImCross } from 'react-icons/im'
 import { ContextData } from 'context/dataProviderContext'
 import {
   Button,
+  CircularProgress,
   FormControl,
   Grid,
   InputLabel,
@@ -28,8 +29,8 @@ const ShippingAddressPopup = ({
   setSelectedCity,
   handleAdditionalInfo,
   handleConfirmAddress,
+  loading,
 }) => {
-
   return (
     <div className="popup_wrapper">
       <div className="popup_content relative">
@@ -149,8 +150,9 @@ const ShippingAddressPopup = ({
                     color="primary"
                     sx={{ mt: 2, width: '130px' }}
                     onClick={handleConfirmAddress}
+                    disabled={loading}
                   >
-                    Confirm
+                    {loading ? <CircularProgress size={24} /> : 'Confirm'}
                   </Button>
                 </ButtonAnimate>
               </Grid>
