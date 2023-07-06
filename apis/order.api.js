@@ -19,3 +19,12 @@ export const placeOrder = async data => {
     console.log(error)
   }
 }
+
+export const updateOrder = async (orderId, data) => {
+  try {
+    const response = await axios.patch(`${BASE_URL}/order/${orderId}`, data)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
