@@ -42,17 +42,17 @@ export default function CategoryNav() {
     <>
       <div className="bg-[#fbfbfd] py-2 text-black border-y-[1px] border-gray-200 md:block hidden">
         <Container maxWidth="lg" className="text-black">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-10">
-              <div className="flex gap-1 items-center">
+          <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center gap-10">
+              {/* <div className="flex gap-1 items-center">
                 <CategoryIcon />
                 <h1 className="uppercase font-semibold text-sm">Category</h1>
-              </div>
-              <div className="flex gap-4 justify-center text-sm">
+              </div> */}
+              <div className="flex gap-4 justify-center text-[14px]">
                 {CATEGORY_OPTION.map((item, index) =>
                   item?.classify.map((category, index) => (
                     <NextLink key={index} href={`/category/${category}`}>
-                      <a className="text-black hover:text-[#ff4d4f] hover:underline font-semibold">
+                      <a className="text-black hover:text-[#ff4d4f] hover:underline uppercase font-bold ">
                         {category}
                       </a>
                     </NextLink>
@@ -65,7 +65,7 @@ export default function CategoryNav() {
         </Container>
       </div>
       <div className="bg-white py-1 text-black border-y-[1px] md:hidden block">
-        <Container maxWidth="lg" >
+        <Container maxWidth="lg">
           <div className="text-black flex justify-between">
             <Searchbar />
             <ProductFilterDrawer

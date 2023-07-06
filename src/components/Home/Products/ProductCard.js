@@ -37,8 +37,8 @@ export default function ProductCard({ product }) {
             // src={`http://localhost:8000/images/product/${frontImage} `}
             src={frontImage}
             alt="Picture of the borka"
-            height={800}
-            width={500}
+            height={1000}
+            width={600}
             className="object-cover max-h-full w-full"
           />
         </div>
