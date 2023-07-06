@@ -22,6 +22,7 @@ import { getCartByCartId, getCartByUserId } from 'apis/cart.api'
 import { getAllCountriesWithFees, getFeeOfLocation } from 'apis/fee.api'
 import { getProductBySku } from 'apis/product.api'
 import { ContextData } from 'context/dataProviderContext'
+import { convertCurrencyForCalculation } from 'helpers/currencyHandler'
 import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
 import Scrollbar from 'src/components/Scrollbar'
@@ -45,12 +46,14 @@ const ThumbImgStyle = styled('img')(({ theme }) => ({
 }))
 
 export default function Checkout() {
-  const { token, userId } = useContext(ContextData)
+  const { token, userId, toCurrency, currentlyLoggedIn, fromCurrency } =
+    useContext(ContextData)
   const [addressPopup, setAddressPopup] = useState(false)
   const router = useRouter()
   const query = router.query.productQuery
   const [product, setProduct] = useState([])
   const [loader, setLoader] = useState(false)
+  const [muiLoader, setMuiLoader] = useState(false)
 
   const [totalPrice, setTotalPrice] = useState(0)
   const [feeOfLocation, setFeeOfLocation] = useState(0)
@@ -64,6 +67,7 @@ export default function Checkout() {
   const [city, setCity] = useState(null)
   const [shippingAddress, setShippingAddress] = useState({
     zipCode: '',
+    phoneNumber: '',
     address_line: '',
   })
 
@@ -114,15 +118,15 @@ export default function Checkout() {
   useEffect(() => {
     if (product && product.length > 0) {
       let totalPrice = 0
-      let totalDeliveryFee = 0
+      let calculatedDeliveryFee = 0
       product.forEach(item => {
-        console.log(item)
         totalPrice +=
           parseInt(item.quantity) * parseInt(item.productId.sellingPrice)
-        totalDeliveryFee += parseInt(item.quantity) * parseInt(feeOfLocation)
+        calculatedDeliveryFee +=
+          parseInt(item.quantity) * parseInt(feeOfLocation)
       })
       setTotalPrice(totalPrice)
-      setTotalDeliveryFee(totalDeliveryFee)
+      setTotalDeliveryFee(calculatedDeliveryFee)
     }
   }, [product, feeOfLocation])
 
@@ -144,8 +148,40 @@ export default function Checkout() {
       stateCode: selectedState,
       city_name: selectedCity,
     })
-
     setFeeOfLocation(shippingFee?.data?.delivery_fee)
+
+    let calculatedDeliveryFee = 0
+    product.forEach(item => {
+      calculatedDeliveryFee +=
+        parseInt(item.quantity) * parseInt(shippingFee?.data?.delivery_fee)
+    })
+
+    const orderData = {
+      userId,
+      orderItems: product,
+      phoneNumber: shippingAddress.phoneNumber,
+      email: currentlyLoggedIn?.email,
+      shippingAddress: {
+        country: selectedCountry,
+        state: selectedState,
+        city: selectedCity,
+        zipCode: shippingAddress.zipCode,
+        address_line: shippingAddress.address_line,
+      },
+      currency: toCurrency,
+      subTotal: convertCurrencyForCalculation(
+        fromCurrency,
+        toCurrency,
+        totalPrice
+      ),
+      deliveryFee: convertCurrencyForCalculation(
+        fromCurrency,
+        toCurrency,
+        calculatedDeliveryFee
+      ),
+    }
+
+    console.log(orderData)
   }
 
   if (loader) return <h1>Loading...</h1>
@@ -218,7 +254,11 @@ export default function Checkout() {
                           Sub Total
                         </Typography>
                         <Typography variant="subtitle2">
-                          {totalPrice}
+                          {convertCurrencyForCalculation(
+                            fromCurrency,
+                            toCurrency,
+                            totalPrice
+                          )}
                         </Typography>
                       </Stack>
 
@@ -240,7 +280,11 @@ export default function Checkout() {
                           Shipping
                         </Typography>
                         <Typography variant="subtitle2">
-                          {totalDeliveryFee}
+                          {convertCurrencyForCalculation(
+                            fromCurrency,
+                            toCurrency,
+                            totalDeliveryFee
+                          )}
                         </Typography>
                       </Stack>
 
@@ -253,7 +297,11 @@ export default function Checkout() {
                             variant="subtitle1"
                             sx={{ color: 'error.main' }}
                           >
-                            {totalPrice + totalDeliveryFee}
+                            {convertCurrencyForCalculation(
+                              fromCurrency,
+                              toCurrency,
+                              (totalPrice + totalDeliveryFee)
+                            )}
                           </Typography>
                           <Typography
                             variant="caption"

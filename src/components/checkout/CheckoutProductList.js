@@ -17,8 +17,10 @@ import {
   Typography,
   TableContainer,
 } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { MIconButton } from '../@material-extend'
+import { convertCurrencyForCalculation } from 'helpers/currencyHandler'
+import { ContextData } from 'context/dataProviderContext'
 //
 
 // ----------------------------------------------------------------------
@@ -109,6 +111,7 @@ ProductList.propTypes = {
 }
 
 export default function ProductList({ item, setProduct, product }) {
+  const { toCurrency, fromCurrency } = useContext(ContextData)
   const [quantity, setQuantity] = useState(item.quantity)
   const [available, setAvailable] = useState(item.productId.quantity)
   const [selectedProduct, setSelectedProduct] = useState(null)
@@ -193,7 +196,9 @@ export default function ProductList({ item, setProduct, product }) {
         </Box>
       </TableCell>
 
-      <TableCell align="left">{sellingPrice}</TableCell>
+      <TableCell align="left">
+        {convertCurrencyForCalculation(fromCurrency, toCurrency, sellingPrice)}
+      </TableCell>
 
       <TableCell align="left">
         <Incrementer
@@ -206,7 +211,13 @@ export default function ProductList({ item, setProduct, product }) {
         />
       </TableCell>
 
-      <TableCell align="right">{sellingPrice * quantity}</TableCell>
+      <TableCell align="right">
+        {convertCurrencyForCalculation(
+          fromCurrency,
+          toCurrency,
+          sellingPrice * quantity
+        )}
+      </TableCell>
 
       <TableCell align="right">
         <MIconButton>
