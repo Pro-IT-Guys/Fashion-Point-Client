@@ -119,13 +119,12 @@ export default function Checkout() {
         console.log(item)
         totalPrice +=
           parseInt(item.quantity) * parseInt(item.productId.sellingPrice)
-        totalDeliveryFee +=
-          parseInt(item.quantity) * parseInt(item.productId.deliveryFee)
+        totalDeliveryFee += parseInt(item.quantity) * parseInt(feeOfLocation)
       })
       setTotalPrice(totalPrice)
       setTotalDeliveryFee(totalDeliveryFee)
     }
-  }, [product])
+  }, [product, feeOfLocation])
 
   const handleCountryChange = e => {
     const countryId = e.target.value
@@ -148,8 +147,6 @@ export default function Checkout() {
 
     setFeeOfLocation(shippingFee?.data?.delivery_fee)
   }
-
-  console.log(feeOfLocation)
 
   if (loader) return <h1>Loading...</h1>
 
@@ -220,7 +217,9 @@ export default function Checkout() {
                         >
                           Sub Total
                         </Typography>
-                        <Typography variant="subtitle2">3424</Typography>
+                        <Typography variant="subtitle2">
+                          {totalPrice}
+                        </Typography>
                       </Stack>
 
                       <Stack direction="row" justifyContent="space-between">
@@ -230,7 +229,7 @@ export default function Checkout() {
                         >
                           Discount
                         </Typography>
-                        <Typography variant="subtitle2">34</Typography>
+                        <Typography variant="subtitle2">0</Typography>
                       </Stack>
 
                       <Stack direction="row" justifyContent="space-between">
@@ -240,7 +239,9 @@ export default function Checkout() {
                         >
                           Shipping
                         </Typography>
-                        <Typography variant="subtitle2">34</Typography>
+                        <Typography variant="subtitle2">
+                          {totalDeliveryFee}
+                        </Typography>
                       </Stack>
 
                       <Divider />
@@ -252,7 +253,7 @@ export default function Checkout() {
                             variant="subtitle1"
                             sx={{ color: 'error.main' }}
                           >
-                            32113
+                            {totalPrice + totalDeliveryFee}
                           </Typography>
                           <Typography
                             variant="caption"

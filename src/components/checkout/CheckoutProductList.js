@@ -52,7 +52,7 @@ function Incrementer({
   quantity,
 }) {
   const decreaseQuantity = () => {
-    let newQuantity = quantity - 1
+    let newQuantity = parseInt(quantity) - 1
     if (newQuantity < 1) {
       newQuantity = 1
     }
@@ -60,7 +60,7 @@ function Incrementer({
   }
 
   const increaseQuantity = () => {
-    let newQuantity = quantity + 1
+    let newQuantity = parseInt(quantity) + 1
     if (newQuantity > available) {
       newQuantity = available
     }
