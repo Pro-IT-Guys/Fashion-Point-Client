@@ -31,6 +31,8 @@ import DashboardLayout from 'src/layouts/dashboard'
 import Image from 'next/image'
 import UserMoreMenu from 'src/components/list/UserMoreMenu'
 import ProductMoreMenu from 'src/components/list/ProductMoreMenu'
+import { BASE_URL } from 'apis/url'
+import ProductTableRowItem from 'src/components/Products/ProductTableRowItem'
 
 // ----------------------------------------------------------------------
 
@@ -85,28 +87,18 @@ export default function ProductList() {
   const [filterName, setFilterName] = useState('')
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [productList, setProductList] = useState([])
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+  const [update, setUpdate] = useState('')
 
-  const handleClickOpen = () => {
-    setDeleteModalOpen(true)
-  }
-
-  const handleClose = () => {
-    setDeleteModalOpen(false)
-  }
 
   useEffect(() => {
     fetch(
-      `http://localhost:8000/api/v1/product?searchTerm=${filterName}&page=${page}&limit=${rowsPerPage}`
+      `${BASE_URL}/product?searchTerm=${filterName}&page=${page}&limit=${rowsPerPage}`
     )
       .then(res => res.json())
       .then(data => setProductList(data?.data))
-  }, [page, rowsPerPage, filterName])
+  }, [page, rowsPerPage, filterName, update])
 
-  const handleDeleteProduct = userId => {
-    console.log('Delete Product')
-    setDeleteModalOpen(false)
-  }
+
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
@@ -163,7 +155,7 @@ export default function ProductList() {
                     // onSelectAllClick={handleSelectAllClick}
                   />
                   <TableBody>
-                    {productList.map(row => {
+                    {/* {productList.map(row => {
                       const {
                         _id,
                         frontImage,
@@ -234,13 +226,17 @@ export default function ProductList() {
                               handleClickOpen={handleClickOpen}
                               handleClose={handleClose}
                               deleteModalOpen={deleteModalOpen}
-                              onDelete={() => handleDeleteProduct(_id)}
+                              onDelete={handleDeleteProduct}
+                              id= {_id}
                               // userName={row?.name?.firstName}
                             />
                           </TableCell>
                         </TableRow>
                       )
-                    })}
+                    })} */}
+                    {
+                      productList?.map((product) => <ProductTableRowItem key={product?._id} row={product} setUpdate={setUpdate}  />)
+                    }
                   </TableBody>
                 </Table>
               </TableContainer>

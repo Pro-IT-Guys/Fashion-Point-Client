@@ -12,16 +12,15 @@ DeleteModal.propTypes = {
   onCreateBilling: PropTypes.func,
 }
 
-export default function DeleteModal({ open, onClose, onDelete }) {
+export default function DeleteModal({ open, onClose, onDelete, id }) {
   return (
     <DialogAnimate maxWidth="sm" open={open} onClose={onClose}>
       <DialogTitle className="  text-center ">
         Are you sure, You want to Delete this Product?
       </DialogTitle>
-
       <div className='pt-5 flex justify-center gap-2 md:pb-10 pb-5 '>
         <button 
-        onClick={onDelete}
+        onClick={() => onDelete(id)}
         className="bg-red-500 hover:bg-red-700 text-sm text-white font-bold py-2 px-4 rounded-full">
           Delete
         </button>

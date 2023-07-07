@@ -27,7 +27,7 @@ ProductMoreMenu.propTypes = {
   // userName: PropTypes.string
 }
 
-export default function ProductMoreMenu({ id, onDelete, deleteModalOpen, setDeleteModalOpen, handleClickOpen, handleClose }) {
+export default function ProductMoreMenu({ id, onDelete, deleteModalOpen, setDeleteModalOpen, handleClickOpen, handleClose,}) {
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -81,7 +81,7 @@ export default function ProductMoreMenu({ id, onDelete, deleteModalOpen, setDele
         </MenuItem>
       </Menu>
 
-      <DeleteModal open={deleteModalOpen} onClose={handleClose} onDelete={onDelete}/>
+      <DeleteModal open={deleteModalOpen} onClose={handleClose} onDelete={onDelete} id={id}/>
     </>
   )
 }
