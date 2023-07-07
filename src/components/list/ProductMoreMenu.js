@@ -17,18 +17,20 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material'
+import DeleteModal from '../Modal/DeleteModal'
 // routes
 
 // ----------------------------------------------------------------------
 
-UserMoreMenu.propTypes = {
+ProductMoreMenu.propTypes = {
   onDelete: PropTypes.func,
   // userName: PropTypes.string
 }
 
-export default function UserMoreMenu({ id, handleUpdateOrder }) {
+export default function ProductMoreMenu({ id, onDelete, deleteModalOpen, setDeleteModalOpen, handleClickOpen, handleClose,}) {
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
+
 
   return (
     <>
@@ -65,10 +67,7 @@ export default function UserMoreMenu({ id, handleUpdateOrder }) {
         </MenuItem>
 
         <MenuItem
-        //   onClick={() => {
-        //     handleUpdateOrder(id, 'Cancelled')
-        //     setIsOpen(false)
-        //   }}
+          onClick={handleClickOpen}
           sx={{ color: 'text.secondary' }}
         >
           <ListItemIcon>
@@ -81,6 +80,8 @@ export default function UserMoreMenu({ id, handleUpdateOrder }) {
           />
         </MenuItem>
       </Menu>
+
+      <DeleteModal open={deleteModalOpen} onClose={handleClose} onDelete={onDelete} id={id}/>
     </>
   )
 }

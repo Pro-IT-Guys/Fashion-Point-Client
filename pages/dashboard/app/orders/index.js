@@ -35,6 +35,7 @@ import DashboardLayout from 'src/layouts/dashboard'
 import { ContextData } from 'context/dataProviderContext'
 import { convertCurrency } from 'helpers/currencyHandler'
 import { useRouter } from 'next/router'
+import OrderMoreMenu from 'src/components/list/OrderMoreMenu'
 
 // ----------------------------------------------------------------------
 
@@ -258,7 +259,7 @@ export default function AllOrders() {
                           </TableCell>
 
                           <TableCell align="right">
-                            <UserMoreMenu
+                            <OrderMoreMenu
                               handleUpdateOrder={handleUpdateOrder}
                               id={_id}
                             />
