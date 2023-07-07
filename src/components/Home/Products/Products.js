@@ -18,6 +18,7 @@ import ColorManyPicker from '../common/ColorManyPicker'
 import ShopProductSort from '../shop/ShopProductSort'
 import ProductCard from './ProductCard'
 import PopularProducts from './PopularProducts'
+import DeleteSweepOutlinedIcon from '@mui/icons-material/DeleteSweepOutlined';
 import {
   BRAND_OPTION,
   CATEGORY_OPTION,
@@ -48,7 +49,7 @@ const Products = () => {
     setFabric,
     value,
     setValue,
-    handleClearFilter
+    handleClearFilter,
   } = useContext(ContextData)
   const [openFilter, setOpenFilter] = useState(false)
   const [products, setProducts] = useState([])
@@ -111,7 +112,6 @@ const Products = () => {
     return false
   }
 
-
   return (
     <div className="bg-[#f7f7ff9c] md:pt-10 pt-10">
       <Container maxWidth="lg" className="pb-20 ">
@@ -120,37 +120,53 @@ const Products = () => {
             <div className="w-[20%] ">
               <h2 className="font-semibold text-xl w-40">Just For You</h2>
             </div>
-            <div className="flex justify-start w-[80%]">
-              <div className="flex gap-2 ml-2">
-                {category && (
+            <div className="flex md:justify-start justify-end w-[80%]">
+              <div className='md:block hidden'>
+                <div className="flex gap-2 ml-2 ">
+                  {category && (
+                    <div className="flex items-center bg-white border rounded-full text-sm py-1 px-3">
+                      {category}
+                    </div>
+                  )}
+                  {fabric && (
+                    <div className="flex items-center bg-white border rounded-full text-sm py-1 px-3">
+                      {fabric}
+                    </div>
+                  )}
+                  {style && (
+                    <div className="flex items-center bg-white border rounded-full text-sm py-1 px-3">
+                      {style}
+                    </div>
+                  )}
+                  {type && (
+                    <div className="flex items-center bg-white border rounded-full text-sm py-1 px-3">
+                      {type}
+                    </div>
+                  )}
+                  {/* {value[0] > 0 && (
                   <div className="flex items-center bg-white border rounded-full text-sm py-1 px-3">
-                    {category}
+                    Min: {value[0]}
                   </div>
                 )}
-                {fabric && (
+                {value[1] < 20000 && (
                   <div className="flex items-center bg-white border rounded-full text-sm py-1 px-3">
-                    {fabric}
+                    Max: {value[1]}
                   </div>
-                )}
-                {style && (
-                  <div className="flex items-center bg-white border rounded-full text-sm py-1 px-3">
-                    {style}
-                  </div>
-                )}
-                {type && (
-                  <div className="flex items-center bg-white border rounded-full text-sm py-1 px-3">
-                    {type}
-                  </div>
-                )}
+                )} */}
+                </div>
               </div>
               {(searchTerm ||
                 category ||
                 type ||
                 style ||
                 fabric ||
-                (value.length && value[0] !== 0 && value[0] !== 20000)) && (
-                <div onClick={handleClearFilter} className="text-sm cursor-pointer bg-orange-600 text-white py-1 px-3 ml-3 rounded-full">
-                  Clear All
+                value[0] !== 0 ||
+                value[1] !== 20000) && (
+                <div
+                  onClick={handleClearFilter}
+                  className="text-sm flex items-center justify-center gap-1 cursor-pointer bg-orange-600 text-white py-1 px-3 ml-3 rounded-full"
+                >
+                 <DeleteSweepOutlinedIcon/> Clear Filter
                 </div>
               )}
             </div>
