@@ -58,12 +58,12 @@ export default function AddProductForm() {
     acceptedFiles => {
       setImagesArray([...imagesArray, ...acceptedFiles])
       setFieldValue(
-        acceptedFiles.map((file) =>
+        acceptedFiles.map(file =>
           Object.assign(file, {
-            preview: URL.createObjectURL(file)
+            preview: URL.createObjectURL(file),
           })
         )
-      );
+      )
     },
     [setFieldValue]
   )
@@ -121,7 +121,6 @@ export default function AddProductForm() {
     formData.append('style', data.style)
     formData.append('fabric', data.fabric)
 
-
     fetch(`${BASE_URL}/product`, {
       method: 'POST',
 
@@ -129,16 +128,18 @@ export default function AddProductForm() {
     })
       .then(res => res.json())
       .then(data => {
-        router.push('/dashboard/app/product/all-products')
-        reset()
-        Swal.fire({
-          icon: 'success',
-          title: 'Product Created Successfully',
-        })
+        if (data?.statusCode === 200) {
+          router.push('/dashboard/app/product/all-products')
+          reset()
+          Swal.fire({
+            icon: 'success',
+            title: 'Product Created Successfully',
+          })
+        }
       })
   }
 
-  console.log(imagesArray, 'imagesArray');
+  console.log(imagesArray, 'imagesArray')
 
   return (
     <div className="flex justify-center bg-white rounded-xl shadow mt-5">

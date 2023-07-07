@@ -1,10 +1,11 @@
-import { useState } from 'react'
-import { useSnackbar } from 'notistack'
-import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/router'
-import axios from 'axios'
-import FetchUrls from 'src/utils/FetchUrls'
-import { toast } from 'react-hot-toast'
+import { useContext, useState } from "react";
+import { useSnackbar } from "notistack";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import axios from "axios";
+import FetchUrls from "src/utils/FetchUrls";
+import { toast } from "react-hot-toast";
+import { ContextData } from "context/dataProviderContext";
 
 // ----------------------------------------------------------------------
 
@@ -15,10 +16,11 @@ export default function LoginForm({ onClose }) {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm()
+  } = useForm();
+  const { setUpdate } = useContext(ContextData)
 
-  const onSubmit = data => {
-    const { email, password } = data
+  const onSubmit = (data) => {
+    const {email, password } = data
 
     const body = {
       email,
@@ -32,6 +34,7 @@ export default function LoginForm({ onClose }) {
         if (res.status === 200) {
           // navigate(from, { replace: true })
           onClose()
+          setUpdate(Math.random() )
           toast.success('Login Successfully!')
           localStorage.setItem('token', res.headers.authorization.split(' ')[1])
 

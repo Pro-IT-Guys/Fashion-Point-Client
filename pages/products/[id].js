@@ -43,6 +43,7 @@ import { addToCart, updateCart } from 'apis/cart.api'
 import { convertCurrency } from 'helpers/currencyHandler'
 import { toast } from 'react-hot-toast'
 import Loader from 'src/components/Loader/Loader'
+import Swal from 'sweetalert2'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -70,6 +71,9 @@ export default function ProductDetails() {
     usersCart,
     setUsersCart,
     setCartSimplified,
+    update,
+    cartUpdate,
+    setCartUpdate,
     fromCurrency,
     toCurrency,
   } = useContext(ContextData)
@@ -86,7 +90,11 @@ export default function ProductDetails() {
   useEffect(() => {
     const retriveChat = async () => {
       setLoader(true)
-      if (currentlyLoggedIn?.role === 'admin') return
+      if (currentlyLoggedIn?.role === 'admin') {
+        setLoader(false)
+        return
+      }
+
       let data
 
       data = await createChat({
@@ -104,7 +112,7 @@ export default function ProductDetails() {
       setLoader(false)
     }
     retriveChat()
-  }, [currentlyLoggedIn])
+  }, [update])
 
   // Get chat of sender and receiver
   useEffect(() => {
@@ -113,6 +121,7 @@ export default function ProductDetails() {
       if (chat?._id) {
         const messages = await getMessageOfChatId(chat?._id)
         setMessage(messages?.data)
+        setLoader(false)
       }
       setLoader(false)
     }
@@ -129,14 +138,11 @@ export default function ProductDetails() {
         setOnlineUsers(users)
       })
     }
-  }, [currentlyLoggedIn])
+  }, [update])
 
   useEffect(() => {
     socket.current?.on('getCartData', data => {
-      if (
-        data?.product?.length !== 0 &&
-        retriveCartState
-      ) {
+      if (data?.product?.length !== 0 && retriveCartState) {
         setUsersCart(data)
         setCartSimplified(data?.product)
       }
@@ -191,6 +197,7 @@ export default function ProductDetails() {
         })
         setRetriveCartState(!retriveCartState)
         toast.success('Product added to cart')
+        setCartUpdate(Math.random())
       }
     } else {
       const res = await addToCart(data)
@@ -397,7 +404,7 @@ export default function ProductDetails() {
         </div>
       </MainLayout>
 
-      {currentlyLoggedIn?.role !== 'admin' && (
+      {currentlyLoggedIn?.role && currentlyLoggedIn?.role !== 'admin' && (
         <>
           <ChatButton
             ref={anchorRef}

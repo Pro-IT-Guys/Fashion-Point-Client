@@ -29,7 +29,6 @@ import SignUpModal from 'src/components/AuthModal/SignUpModal'
 import CartDrawer from '../../components/cart/CartDrawer'
 import TopNavbar from './TopNavbar'
 import { ContextData } from 'context/dataProviderContext'
-import { loggedInUser } from 'apis/auth.api'
 import AccountPopover from '../dashboard/AccountPopover'
 import CategoryNav from './CategoryNav'
 
@@ -94,9 +93,11 @@ export default function MainNavbar() {
   const [signupOpen, setSignupOpen] = useState(false)
   const isOffset = useOffSetTop(100)
   const { pathname } = useRouter()
-  const { currentlyLoggedIn, setSearchTerm } = useContext(ContextData)
+  const { currentlyLoggedIn, setSearchTerm, setUpdate } =
+    useContext(ContextData)
   const { role, name, image } = currentlyLoggedIn || {}
   const isHome = pathname === '/'
+  const router = useRouter()
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -109,6 +110,12 @@ export default function MainNavbar() {
   const handleClose = () => {
     setOpen(false)
     setSignupOpen(false)
+  }
+
+  const handleLogOut = () => {
+    localStorage.removeItem('token')
+    router.push('/')
+    setUpdate(Math.random())
   }
 
   return (
@@ -171,12 +178,8 @@ export default function MainNavbar() {
                   }
                   sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
                 />
-                {/* <Button variant="contained" onClick={handleClose}>
-              Search
-            </Button> */}
               </SearchbarStyle>
             </div>
-            {/* <Box sx={{ flexGrow: 1 }} /> */}
 
             <div className="flex items-center ">
               <CartDrawer />
@@ -186,20 +189,26 @@ export default function MainNavbar() {
                   <HiOutlineUser className="text-black md:text-3xl text-2xl" />
                 </div>
                 <div className="text-black ">
-                  <h1 className="cursor-pointer  md:text-sm text-[10px] uppercase hover:text-secondary duration-200 font-bold ">
+                  <h1
+                    onClick={() =>
+                      currentlyLoggedIn?.name &&
+                      router.push('/dashboard/app/my-profile')
+                    }
+                    className="cursor-pointer  md:text-sm text-[10px] uppercase hover:text-secondary duration-200 font-bold "
+                  >
                     Accounts
                   </h1>
-                  {loggedInUser ? (
+                  {currentlyLoggedIn?.name ? (
                     <div className="text-[10px] flex gap-1 justify-center">
                       <h1
-                        onClick={handleClickOpen}
+                        onClick={() => router.push('/dashboard/app/my-profile')}
                         className="hover:text-secondary duration-200 cursor-pointer"
                       >
                         Edit
                       </h1>
                       <span> / </span>
                       <h1
-                        onClick={handleSignUpOpen}
+                        onClick={handleLogOut}
                         className="hover:text-secondary duration-200 cursor-pointer"
                       >
                         Logout
