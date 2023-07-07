@@ -106,6 +106,7 @@ export default function ProductDetailsCarousel({product}) {
     setSelectedImage(selectedImage);
   };
 
+
   const settings1 = {
     dots: false,
     arrows: false,
@@ -152,8 +153,8 @@ export default function ProductDetailsCarousel({product}) {
           }}
         >
           <Slider {...settings1} asNavFor={nav2} ref={slider1}>
-            {product?.restImage?.map((item) => (
-              <LargeItem key={item} item={item} onOpenLightbox={handleOpenLightbox} />
+            {product?.restImage?.map((item, index) => (
+              <LargeItem key={index} item={item} onOpenLightbox={handleOpenLightbox} />
             ))}
           </Slider>
           <CarouselControlsArrowsIndex
@@ -200,13 +201,13 @@ export default function ProductDetailsCarousel({product}) {
         </Slider>
       </Box>
 
-      {/* <LightboxModal
+      <LightboxModal
         images={imagesLightbox}
         photoIndex={selectedImage}
         setPhotoIndex={setSelectedImage}
         isOpen={openLightbox}
         onClose={() => setOpenLightbox(false)}
-      /> */}
+      />
     </RootStyle>
   );
 }

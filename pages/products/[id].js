@@ -132,7 +132,7 @@ export default function ProductDetails() {
   }
 
   useEffect(() => {
-    setLoader(true)
+    setLoader(false)
     fetch(`http://localhost:8000/api/v1/product/path/${params}`)
       .then(res => res.json())
       .then(data => setProductDetails(data?.data))
