@@ -65,8 +65,14 @@ export default function ProductDetails() {
 
   const [openChat, setOpenChat] = useState(false)
   const anchorRef = useRef(null)
-  const { currentlyLoggedIn, usersCart, fromCurrency, toCurrency } =
-    useContext(ContextData)
+  const {
+    currentlyLoggedIn,
+    usersCart,
+    setUsersCart,
+    setCartSimplified,
+    fromCurrency,
+    toCurrency,
+  } = useContext(ContextData)
   const [productSize, setProductSize] = useState('XL')
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
@@ -74,6 +80,7 @@ export default function ProductDetails() {
   const router = useRouter()
   const params = router.query.id
   const [loader, setLoader] = useState(false)
+  const [retriveCartState, setRetriveCartState] = useState(false)
 
   // Create chat with admin / get chat if already exist
   useEffect(() => {
@@ -124,6 +131,18 @@ export default function ProductDetails() {
     }
   }, [currentlyLoggedIn])
 
+  useEffect(() => {
+    socket.current?.on('getCartData', data => {
+      if (
+        data?.product?.length !== 0 &&
+        retriveCartState
+      ) {
+        setUsersCart(data)
+        setCartSimplified(data?.product)
+      }
+    })
+  }, [retriveCartState])
+
   // Create chat with admin / get chat if already exist
   const handleChatClick = async () => {
     if (currentlyLoggedIn?.role === 'admin') return
@@ -166,10 +185,20 @@ export default function ProductDetails() {
     if (usersCart) {
       const res = await updateCart({ ...data, cartId: usersCart?._id })
       if (res?.statusCode === 200) {
+        // Send the data in the socket to update the cart
+        socket.current.emit('cartData', {
+          data: res?.data,
+        })
+        setRetriveCartState(!retriveCartState)
         toast.success('Product added to cart')
       }
     } else {
       const res = await addToCart(data)
+      socket.current.emit('cartData', {
+        data: res?.data,
+      })
+      setRetriveCartState(!retriveCartState)
+
       if (res?.statusCode === 200) alert('Product added to cart')
     }
     // window.location.reload()

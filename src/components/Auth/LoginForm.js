@@ -1,46 +1,49 @@
-import { useState } from "react";
-import { useSnackbar } from "notistack";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
-import axios from "axios";
-import FetchUrls from "src/utils/FetchUrls";
-import { toast } from "react-hot-toast";
+import { useState } from 'react'
+import { useSnackbar } from 'notistack'
+import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
+import axios from 'axios'
+import FetchUrls from 'src/utils/FetchUrls'
+import { toast } from 'react-hot-toast'
 
 // ----------------------------------------------------------------------
 
-export default function LoginForm({ onClose}) {
-  const router = useRouter();
+export default function LoginForm({ onClose }) {
+  const router = useRouter()
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm()
 
-
-  const onSubmit = (data) => {
-    const {email, password } = data
+  const onSubmit = data => {
+    const { email, password } = data
 
     const body = {
-      email, 
-      password
+      email,
+      password,
     }
 
     axios
       .post(FetchUrls('auth/login'), body)
       .then(res => {
-        console.log(res);
+        console.log(res)
         if (res.status === 200) {
           // navigate(from, { replace: true })
           onClose()
           toast.success('Login Successfully!')
-          localStorage.setItem('token', (res.headers.authorization.split(' ')[1]))
+          localStorage.setItem('token', res.headers.authorization.split(' ')[1])
+
+          setTimeout(() => {
+            window.location.reload()
+          }, 1500)
         } else {
           toast.error('Something Went Wrong!')
         }
       })
       .catch(err => {
-        console.log(err);
+        console.log(err)
         toast.error('Something Went Wrong!')
       })
   }
@@ -59,24 +62,24 @@ export default function LoginForm({ onClose}) {
                   className="py-3 px-3 text-gray-500 rounded w-full  border-[1px]"
                   type="email"
                   id="email"
-                  {...register("email", {
+                  {...register('email', {
                     required: {
                       value: true,
-                      message: "Email is Required",
+                      message: 'Email is Required',
                     },
                     pattern: {
                       value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                      message: "Provide a valid Email",
+                      message: 'Provide a valid Email',
                     },
                   })}
                 />
                 <label className="label">
-                  {errors.email?.type === "required" && (
+                  {errors.email?.type === 'required' && (
                     <span className="pl-3 text-sm mt-1 text-red-500">
                       {errors.email.message}
                     </span>
                   )}
-                  {errors.email?.type === "pattern" && (
+                  {errors.email?.type === 'pattern' && (
                     <span className="pl-3 text-sm mt-1 text-red-500">
                       {errors.email.message}
                     </span>
@@ -91,24 +94,24 @@ export default function LoginForm({ onClose}) {
                   type="password"
                   className="py-3 px-3 rounded w-full  border-[1px]"
                   id="password"
-                  {...register("password", {
+                  {...register('password', {
                     required: {
                       value: true,
-                      message: "Password is Required",
+                      message: 'Password is Required',
                     },
                     minLength: {
                       value: 6,
-                      message: "Must be 6 characters or longer",
+                      message: 'Must be 6 characters or longer',
                     },
                   })}
                 />
                 <label className="label">
-                  {errors.password?.type === "required" && (
+                  {errors.password?.type === 'required' && (
                     <span className="pl-5 text-sm mt-1 text-red-500">
                       {errors.password.message}
                     </span>
                   )}
-                  {errors.password?.type === "minLength" && (
+                  {errors.password?.type === 'minLength' && (
                     <span className="pl-5  text-sm mt-1 text-red-500">
                       {errors.password.message}
                     </span>
@@ -122,10 +125,10 @@ export default function LoginForm({ onClose}) {
               </div>
               <div className="flex justify-end">
                 <span
-                  onClick={() => navigate("/forgot-password")}
+                  onClick={() => navigate('/forgot-password')}
                   className="text-sm text-end pr-2 pt-1 cursor-pointer font-semibold"
                 >
-                  Forgot password?{" "}
+                  Forgot password?{' '}
                 </span>
               </div>
 
@@ -149,11 +152,10 @@ export default function LoginForm({ onClose}) {
                   </span>
                 </p>
               </div> */}
-
             </div>
           </form>
         </div>
       </div>
     </div>
-  );
+  )
 }

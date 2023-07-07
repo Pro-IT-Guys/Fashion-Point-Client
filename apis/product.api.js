@@ -43,7 +43,6 @@ export const multiFilterProduct = async data => {
     const queryString = new URLSearchParams(filteredParams).toString()
     const url = `${BASE_URL}/product/?${queryString}`
     const res = await axios.get(url)
-    console.log(res.data)
 
     return res?.data
   } catch (error) {

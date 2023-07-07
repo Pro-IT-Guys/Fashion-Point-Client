@@ -61,8 +61,6 @@ const Products = () => {
   const router = useRouter()
   const params = router.query.id
 
-  console.log(router.pathname);
-
   const handlePriceRange = (event, newValue) => {
     setValue(newValue)
     // console.log(newValue, 'newValue')

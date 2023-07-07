@@ -45,12 +45,15 @@ export const ContextProvider = ({ children }) => {
         const cart = await getCartByUserId({ token, userId: user?.data?._id })
         if (cart?.statusCode === 200) {
           setUsersCart(cart?.data)
+          console.log(cart?.data)
           setCartSimplified(cart?.data?.product)
         }
       }
     }
     retriveUser()
   }, [])
+
+  // console.log('cartSimplified', cartSimplified)
 
   const handleClearFilter = () => {
     setCategory('')
@@ -59,7 +62,6 @@ export const ContextProvider = ({ children }) => {
     setFabric('')
     setValue([0, 20000])
   }
-
 
   const contextValues = {
     token,
@@ -87,7 +89,8 @@ export const ContextProvider = ({ children }) => {
     setType,
     setStyle,
     setFabric,
-    handleClearFilter
+    handleClearFilter,
+    setUsersCart,
   }
 
   return (
