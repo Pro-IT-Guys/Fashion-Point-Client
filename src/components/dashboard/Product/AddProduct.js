@@ -29,6 +29,8 @@ import { UploadMultiFile } from 'src/components/upload'
 import { createProduct } from 'apis/product.api'
 import { async } from 'react-input-emoji'
 import { BASE_URL } from 'apis/url'
+import Swal from 'sweetalert2'
+import { useRouter } from 'next/router'
 
 export default function AddProductForm() {
   const [typeValue, setTypeValue] = useState([])
@@ -38,6 +40,7 @@ export default function AddProductForm() {
   const [description, setDescription] = useState('')
   const [imagesArray, setImagesArray] = useState([])
   const [values, setFieldValue] = useState([])
+  const router = useRouter()
 
   const {
     register,
@@ -118,7 +121,6 @@ export default function AddProductForm() {
     formData.append('style', data.style)
     formData.append('fabric', data.fabric)
 
-    console.log(formData, 'productFormData')
 
     fetch(`${BASE_URL}/product`, {
       method: 'POST',
@@ -127,7 +129,12 @@ export default function AddProductForm() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
+        router.push('/dashboard/app/product/all-products')
+        reset()
+        Swal.fire({
+          icon: 'success',
+          title: 'Product Created Successfully',
+        })
       })
   }
 
@@ -534,13 +541,13 @@ export default function AddProductForm() {
                   onRemoveAll={handleRemoveAll}
                 />
 
-                {imagesArray?.map((image, index) => (
+                {/* {imagesArray?.map((image, index) => (
                   <div key={index} className="flex items-center">
                     <span className="ml-2 mt-5 text-sm text-gray-500">
                       {++index}. {image?.name}
                     </span>
                   </div>
-                ))}
+                ))} */}
               </div>
 
               <div className="relative mt-2">

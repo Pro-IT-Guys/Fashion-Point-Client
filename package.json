@@ -55,6 +55,7 @@
     "socket.io-client": "^4.7.1",
     "stylis": "^4.0.10",
     "stylis-plugin-rtl": "^2.0.2",
+    "sweetalert2": "^11.7.12",
     "swiper": "^9.4.1",
     "yup": "^1.2.0"
   },

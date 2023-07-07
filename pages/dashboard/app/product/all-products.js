@@ -9,11 +9,6 @@ import { useTheme } from '@mui/material/styles'
 import {
   Card,
   Table,
-  Stack,
-  Avatar,
-  Button,
-  Checkbox,
-  TableRow,
   TableBody,
   TableCell,
   Container,
@@ -28,9 +23,6 @@ import { UserListHead, UserListToolbar } from 'src/components/list'
 import Scrollbar from 'src/components/Scrollbar'
 import Label from 'src/components/Label'
 import DashboardLayout from 'src/layouts/dashboard'
-import Image from 'next/image'
-import UserMoreMenu from 'src/components/list/UserMoreMenu'
-import ProductMoreMenu from 'src/components/list/ProductMoreMenu'
 import { BASE_URL } from 'apis/url'
 import ProductTableRowItem from 'src/components/Products/ProductTableRowItem'
 
@@ -38,9 +30,14 @@ import ProductTableRowItem from 'src/components/Products/ProductTableRowItem'
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Product', alignRight: false },
+  { id: 'category', label: 'Category', alignRight: false },
+  { id: 'style', label: 'Style', alignRight: false },
+  { id: 'fabric', label: 'Fabric', alignRight: false },
+  { id: 'type', label: 'Type', alignRight: false },
+  { id: 'color', label: 'Color', alignRight: false },
+  { id: 'size', label: 'Size', alignRight: false },
   { id: 'quantity', label: 'Quantity', alignRight: false },
   { id: 'price', label: 'Price', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
   { id: 'action', label: 'Action', alignRight: true },
 ]
 
@@ -81,11 +78,10 @@ function applySortFilter(array, comparator, query) {
 export default function ProductList() {
   const theme = useTheme()
   const [page, setPage] = useState(0)
-  const [order, setOrder] = useState('asc')
   const [selected, setSelected] = useState([])
   const [orderBy, setOrderBy] = useState('name')
   const [filterName, setFilterName] = useState('')
-  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
   const [productList, setProductList] = useState([])
   const [update, setUpdate] = useState('')
 
@@ -127,8 +123,7 @@ export default function ProductList() {
 
   return (
     <DashboardLayout>
-      <Page title="User: List | Minimal-UI">
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <h1 className="font-bold text-2xl">Product List</h1>
           <div className="flex gap-2 text-sm mt-3 text-[#636262]">
             <p>Home - </p>
@@ -144,7 +139,7 @@ export default function ProductList() {
             />
 
             <Scrollbar>
-              <TableContainer sx={{ minWidth: 800 }}>
+              <TableContainer >
                 <Table>
                   <UserListHead
                     // order={order}
@@ -253,7 +248,6 @@ export default function ProductList() {
             />
           </Card>
         </Container>
-      </Page>
     </DashboardLayout>
   )
 }

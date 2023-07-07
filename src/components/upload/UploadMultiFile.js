@@ -209,14 +209,14 @@ export default function UploadMultiFile({ error, showPreview = false, files, onR
         </AnimatePresence>
       </List>
 
-      {hasFile && (
+      {/* {hasFile && (
         <Stack direction="row" justifyContent="flex-end">
           <Button onClick={onRemoveAll} sx={{ mr: 1.5 }}>
             Remove all
           </Button>
           <Button variant="contained">Upload files</Button>
         </Stack>
-      )}
+      )} */}
     </Box>
   );
 }
