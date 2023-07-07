@@ -30,6 +30,7 @@ import {
 import Image from 'next/image'
 import { multiFilterProduct } from 'apis/product.api'
 import { ContextData } from 'context/dataProviderContext'
+import ProductLoader from './ProductLoader'
 
 function valuetext(value) {
   return `${value}°C`
@@ -51,6 +52,7 @@ const Products = () => {
   const [openFilter, setOpenFilter] = useState(false)
   const [products, setProducts] = useState([])
   const [color, setColor] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const handlePriceRange = (event, newValue) => {
     setValue(newValue)
@@ -58,6 +60,7 @@ const Products = () => {
   }
 
   useEffect(() => {
+    setLoading(true)
     const queryParams = {
       searchTerm,
       category,
@@ -72,6 +75,7 @@ const Products = () => {
       const response = await multiFilterProduct(queryParams)
       if (response?.statusCode === 200) {
         setProducts(response?.data)
+        setLoading(false)
       }
     }
     retriveProduct()
@@ -168,7 +172,7 @@ const Products = () => {
           <div className=" md:flex w-full gap-5">
             <div className="md:w-[20%] md:block hidden">
               <div className="space-y-4">
-                <div className='bg-white shadow rounded'>
+                <div className="bg-white shadow rounded">
                   <div className=" py-2 px-3 border-b">
                     <h1 className="font-semibold "> Filter by Price</h1>
                   </div>
@@ -195,7 +199,7 @@ const Products = () => {
                     </div>
                   </div>
                 </div>
-                <div className='bg-white shadow rounded'>
+                <div className="bg-white shadow rounded">
                   <div className="  py-2 px-3 border-b">
                     <h1 className="font-semibold "> Filter by Fabrics</h1>
                   </div>
@@ -217,7 +221,7 @@ const Products = () => {
                     </RadioGroup>
                   </div>
                 </div>
-                <div className='bg-white shadow rounded'>
+                <div className="bg-white shadow rounded">
                   <div className="  py-2 px-3 border-b">
                     <h1 className="font-semibold "> Filter by Style</h1>
                   </div>
@@ -240,7 +244,7 @@ const Products = () => {
                   </div>
                 </div>
 
-                <div className='bg-white shadow rounded'>
+                <div className="bg-white shadow rounded">
                   <div className="  py-2 px-3 border-b">
                     <h1 className="font-semibold "> Filter by Type</h1>
                   </div>
@@ -314,17 +318,37 @@ const Products = () => {
             </div>
 
             <div className=" md:w-[80%]">
-              <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5">
-                {products?.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-
               <div>
-                <h1 className="font-bold text-xl mt-7">Popular Products</h1>
-                <PopularProducts products={products} />
-                <h1 className="font-bold text-xl mt-7">Latest Collection</h1>
-                <PopularProducts products={products} />
+                {loading ? (
+                  <ProductLoader />
+                ) : (
+                  <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5">
+                    {products?.map(product => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                  </div>
+                )}
+
+                {products?.length ? (
+                  <>
+                    <div>
+                      <h1 className="font-bold text-xl mt-7">
+                        Popular Products
+                      </h1>
+                      <PopularProducts products={products} />
+                      <h1 className="font-bold text-xl mt-7">
+                        Latest Collection
+                      </h1>
+                      <PopularProducts products={products} />
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex justify-center items-center h-[50vh]">
+                    <h1 className="text-xl font-semibold text-error">
+                      No Product Found!
+                    </h1>
+                  </div>
+                )}
               </div>
             </div>
           </div>
