@@ -14,7 +14,7 @@ export const ContextProvider = ({ children }) => {
   const [toCurrency, setToCurrency] = useState(null)
   const [usersCart, setUsersCart] = useState(null)
   const [cartSimplified, setCartSimplified] = useState(null)
-
+  const [update, setUpdate] = useState('')
   // Search Term amd Filter
   const [searchTerm, setSearchTerm] = useState('')
   const [category, setCategory] = useState('')
@@ -22,6 +22,7 @@ export const ContextProvider = ({ children }) => {
   const [style, setStyle] = useState('')
   const [fabric, setFabric] = useState('')
   const [value, setValue] = useState([0, 20000])
+  const [cartUpdate, setCartUpdate] = useState('')
 
   useEffect(() => {
     const retriveUser = async () => {
@@ -47,10 +48,13 @@ export const ContextProvider = ({ children }) => {
           setUsersCart(cart?.data)
           setCartSimplified(cart?.data?.product)
         }
+      }else{
+        setcurrentlyLoggedIn(null)
+        setCartSimplified(null)
       }
     }
     retriveUser()
-  }, [])
+  }, [update, cartUpdate])
 
   const handleClearFilter = () => {
     setCategory('')
@@ -59,7 +63,6 @@ export const ContextProvider = ({ children }) => {
     setFabric('')
     setValue([0, 20000])
   }
-
 
   const contextValues = {
     token,
@@ -87,7 +90,11 @@ export const ContextProvider = ({ children }) => {
     setType,
     setStyle,
     setFabric,
-    handleClearFilter
+    handleClearFilter,
+    setUpdate,
+    update,
+    cartUpdate,
+    setCartUpdate,
   }
 
   return (

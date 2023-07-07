@@ -43,6 +43,7 @@ import { addToCart, updateCart } from 'apis/cart.api'
 import { convertCurrency } from 'helpers/currencyHandler'
 import { toast } from 'react-hot-toast'
 import Loader from 'src/components/Loader/Loader'
+import Swal from 'sweetalert2'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -65,8 +66,15 @@ export default function ProductDetails() {
 
   const [openChat, setOpenChat] = useState(false)
   const anchorRef = useRef(null)
-  const { currentlyLoggedIn, usersCart, fromCurrency, toCurrency } =
-    useContext(ContextData)
+  const {
+    currentlyLoggedIn,
+    update,
+    cartUpdate,
+    setCartUpdate,
+    usersCart,
+    fromCurrency,
+    toCurrency,
+  } = useContext(ContextData)
   const [productSize, setProductSize] = useState('XL')
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
@@ -79,7 +87,11 @@ export default function ProductDetails() {
   useEffect(() => {
     const retriveChat = async () => {
       setLoader(true)
-      if (currentlyLoggedIn?.role === 'admin') return
+      if (currentlyLoggedIn?.role === 'admin') {
+        setLoader(false)
+        return
+      }
+
       let data
 
       data = await createChat({
@@ -97,7 +109,7 @@ export default function ProductDetails() {
       setLoader(false)
     }
     retriveChat()
-  }, [currentlyLoggedIn])
+  }, [ update])
 
   // Get chat of sender and receiver
   useEffect(() => {
@@ -106,6 +118,7 @@ export default function ProductDetails() {
       if (chat?._id) {
         const messages = await getMessageOfChatId(chat?._id)
         setMessage(messages?.data)
+        setLoader(false)
       }
       setLoader(false)
     }
@@ -122,7 +135,7 @@ export default function ProductDetails() {
         setOnlineUsers(users)
       })
     }
-  }, [currentlyLoggedIn])
+  }, [ update])
 
   // Create chat with admin / get chat if already exist
   const handleChatClick = async () => {
@@ -166,7 +179,14 @@ export default function ProductDetails() {
     if (usersCart) {
       const res = await updateCart({ ...data, cartId: usersCart?._id })
       if (res?.statusCode === 200) {
+        // Swal.fire({
+        //   icon: 'success',
+        //   title: 'Product added to cart',
+        //   showConfirmButton: false,
+        //   timer: 1000,
+        // })
         toast.success('Product added to cart')
+        setCartUpdate(Math.random())
       }
     } else {
       const res = await addToCart(data)
@@ -368,7 +388,7 @@ export default function ProductDetails() {
         </div>
       </MainLayout>
 
-      {currentlyLoggedIn?.role !== 'admin' && (
+      {currentlyLoggedIn?.role && currentlyLoggedIn?.role !== 'admin' && (
         <>
           <ChatButton
             ref={anchorRef}
