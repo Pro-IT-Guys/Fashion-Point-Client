@@ -21,12 +21,12 @@ import {
 
 // ----------------------------------------------------------------------
 
-UserMoreMenu.propTypes = {
+OrderMoreMenu.propTypes = {
   onDelete: PropTypes.func,
   // userName: PropTypes.string
 }
 
-export default function UserMoreMenu({ id, handleUpdateOrder }) {
+export default function OrderMoreMenu({ id, handleUpdateOrder }) {
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
 
@@ -46,12 +46,28 @@ export default function UserMoreMenu({ id, handleUpdateOrder }) {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
+        <MenuItem
+          onClick={() => {
+            handleUpdateOrder(id, 'Pending')
+            setIsOpen(false)
+          }}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <AutorenewOutlinedIcon />
+            {/* <Icon icon={trash2Outline} width={24} height={24} /> */}
+          </ListItemIcon>
+          <ListItemText
+            primary="Pending"
+            primaryTypographyProps={{ variant: 'body2' }}
+          />
+        </MenuItem>
 
         <MenuItem
-        //   onClick={() => {
-        //     handleUpdateOrder(id, 'Processing')
-        //     setIsOpen(false)
-        //   }}
+          onClick={() => {
+            handleUpdateOrder(id, 'Processing')
+            setIsOpen(false)
+          }}
           sx={{ color: 'text.secondary' }}
         >
           <ListItemIcon>
@@ -59,16 +75,33 @@ export default function UserMoreMenu({ id, handleUpdateOrder }) {
             {/* <Icon icon={editFill} width={24} height={24} /> */}
           </ListItemIcon>
           <ListItemText
-            primary="Edit"
+            primary="Processing"
             primaryTypographyProps={{ variant: 'body2' }}
           />
         </MenuItem>
 
         <MenuItem
-        //   onClick={() => {
-        //     handleUpdateOrder(id, 'Cancelled')
-        //     setIsOpen(false)
-        //   }}
+          onClick={() => {
+            handleUpdateOrder(id, 'Delivered')
+            setIsOpen(false)
+          }}
+          sx={{ color: 'text.secondary' }}
+        >
+          <ListItemIcon>
+            <DeliveryDiningOutlinedIcon />
+            {/* <Icon icon={editFill} width={24} height={24} /> */}
+          </ListItemIcon>
+          <ListItemText
+            primary="Delivered"
+            primaryTypographyProps={{ variant: 'body2' }}
+          />
+        </MenuItem>
+
+        <MenuItem
+          onClick={() => {
+            handleUpdateOrder(id, 'Cancelled')
+            setIsOpen(false)
+          }}
           sx={{ color: 'text.secondary' }}
         >
           <ListItemIcon>
@@ -76,7 +109,7 @@ export default function UserMoreMenu({ id, handleUpdateOrder }) {
             {/* <Icon icon={CancelOutlinedIcon} width={24} height={24} /> */}
           </ListItemIcon>
           <ListItemText
-            primary="Delete"
+            primary="Cancelled"
             primaryTypographyProps={{ variant: 'body2' }}
           />
         </MenuItem>
