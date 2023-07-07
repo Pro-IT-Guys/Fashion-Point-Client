@@ -29,7 +29,7 @@ const Banner = () => {
   }))
 
   return (
-    <div className="bg-[#f7f7ff9c] pt-5">
+    <div className="bg-[#f7f7ff9c] pt-5 pb-10">
       <RootStyle>
         {/* <CategoryNav/> */}
         <Container maxWidth="lg">

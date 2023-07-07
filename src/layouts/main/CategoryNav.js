@@ -18,12 +18,14 @@ import { CATEGORY_OPTION } from 'constant/product'
 import CategoryIcon from '@mui/icons-material/Category'
 import Searchbar from '../dashboard/Searchbar'
 import ProductFilterDrawer from 'src/components/Home/Products/ProductFilterDrawer'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { ContextData } from 'context/dataProviderContext'
 
 // ----------------------------------------------------------------------
 
 export default function CategoryNav() {
   const [openFilter, setOpenFilter] = useState(false)
+  const { setCategory } = useContext(ContextData)
 
   const handleOpenFilter = () => {
     setOpenFilter(true)
@@ -52,7 +54,10 @@ export default function CategoryNav() {
                 {CATEGORY_OPTION.map((item, index) =>
                   item?.classify.map((category, index) => (
                     <NextLink key={index} href={`/category/${category}`}>
-                      <a className="text-black hover:text-[#ff4d4f] hover:underline uppercase font-bold ">
+                      <a
+                        onClick={() => setCategory(category)}
+                        className="text-black hover:text-[#ff4d4f] hover:underline uppercase font-bold "
+                      >
                         {category}
                       </a>
                     </NextLink>

@@ -32,6 +32,7 @@ import Image from 'next/image'
 import { multiFilterProduct } from 'apis/product.api'
 import { ContextData } from 'context/dataProviderContext'
 import ProductLoader from './ProductLoader'
+import { useRouter } from 'next/router'
 
 function valuetext(value) {
   return `${value}°C`
@@ -41,6 +42,7 @@ const Products = () => {
   const {
     searchTerm,
     category,
+    setCategory,
     type,
     style,
     fabric,
@@ -55,6 +57,11 @@ const Products = () => {
   const [products, setProducts] = useState([])
   const [color, setColor] = useState([])
   const [loading, setLoading] = useState(false)
+
+  const router = useRouter()
+  const params = router.query.id
+
+  console.log(router.pathname);
 
   const handlePriceRange = (event, newValue) => {
     setValue(newValue)
@@ -113,12 +120,16 @@ const Products = () => {
   }
 
   return (
-    <div className="bg-[#f7f7ff9c] md:pt-10 pt-10">
+    <div className="bg-[#f7f7ff9c] ">
       <Container maxWidth="lg" className="pb-20 ">
         <Grid container>
           <div className="flex justify-between w-full mb-5">
             <div className="w-[20%] ">
-              <h2 className="font-semibold text-xl w-40">Just For You</h2>
+              {
+                router.pathname === '/' && (
+                  <h2 className="font-semibold text-xl  w-40">Just For You</h2>
+                )
+              }
             </div>
             <div className="flex md:justify-start justify-end w-[80%]">
               <div className='md:block hidden'>
@@ -251,6 +262,33 @@ const Products = () => {
                     </div>
                   </div>
                 </div>
+                {
+                  router.pathname.includes('category') && (
+                    <div className="bg-white shadow rounded">
+                  <div className="  py-2 px-3 border-b">
+                    <h1 className="font-semibold "> Filter by Category</h1>
+                  </div>
+                  <div className=" py-3 pl-4 pr-3">
+                    <RadioGroup
+                      value={category}
+                      onChange={e => handleSelectFilterOption(e, setCategory)}
+                    >
+                      {CATEGORY_OPTION.map(item =>
+                        item?.classify?.map(item => (
+                          <FormControlLabel
+                          onClick={() => setCategory(item)}
+                            key={item}
+                            value={item}
+                            control={<Radio />}
+                            label={item}
+                          />
+                        ))
+                      )}
+                    </RadioGroup>
+                  </div>
+                </div>
+                  )
+                }
                 <div className="bg-white shadow rounded">
                   <div className="  py-2 px-3 border-b">
                     <h1 className="font-semibold "> Filter by Fabrics</h1>
