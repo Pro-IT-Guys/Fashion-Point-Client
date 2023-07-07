@@ -52,6 +52,15 @@ export const ContextProvider = ({ children }) => {
     retriveUser()
   }, [])
 
+  const handleClearFilter = () => {
+    setCategory('')
+    setType('')
+    setStyle('')
+    setFabric('')
+    setValue([0, 20000])
+  }
+
+
   const contextValues = {
     token,
     currentlyLoggedIn,
@@ -75,6 +84,10 @@ export const ContextProvider = ({ children }) => {
     setFabric,
     value,
     setValue,
+    setType,
+    setStyle,
+    setFabric,
+    handleClearFilter
   }
 
   return (
