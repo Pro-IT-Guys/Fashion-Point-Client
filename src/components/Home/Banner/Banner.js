@@ -29,12 +29,12 @@ const Banner = () => {
   }))
 
   return (
-    <div className="bg-[#f7f7ff9c]">
+    <div className="bg-[#f7f7ff9c] pt-5">
       <RootStyle>
         {/* <CategoryNav/> */}
         <Container maxWidth="lg">
-          <div className="flex md:gap-5 gap-2">
-            <div className="md:w-[73%] w-[73%]">
+          <div className="flex items-center md:gap-5 gap-2">
+            <div className="md:w-[73%] w-[73%] ">
               <Swiper
                 spaceBetween={30}
                 pagination={{
@@ -50,7 +50,7 @@ const Banner = () => {
                     <img
                       alt="banner"
                       src="https://i.ibb.co/k6bPwrY/Delivery-within-48-Hours-Banner-AYMI-Fashion-1200x600.png"
-                      className="w-full h-full object-cover rounded-b-lg"
+                      className="w-full h-full object-cover md:rounded-lg rounded"
                     />
                   </div>
                 </SwiperSlide>
@@ -59,18 +59,18 @@ const Banner = () => {
                     <img
                       alt="banner"
                       src="https://i.ibb.co/p3H86Hs/Free-Delivery-Banner-AYMI-Fashion-1200x600.png"
-                      className="w-full h-full object-cover rounded-b-lg"
+                      className="w-full h-full object-cover md:rounded-lg rounded"
                     />
                   </div>
                 </SwiperSlide>
               </Swiper>
             </div>
-            <div className="md:w-[27%] w-[27%]">
+            <div className="md:w-[27%] w-[27%] ">
               <div className=" ">
                 <img
                   alt="banner"
                   src="https://i.ibb.co/8BbchCg/Save-Upto-80-AED-Side-Banner-AYMI-Fashion-custom-415x600.jpg"
-                  className="w-full h-full rounded-b-lg"
+                  className="w-full h-full md:rounded-lg rounded"
                 />
               </div>
             </div>

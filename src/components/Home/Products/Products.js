@@ -110,9 +110,9 @@ const Products = () => {
     <div className="bg-[#f7f7ff9c] md:pt-10 pt-10">
       <Container maxWidth="lg" className="pb-20 ">
         <Grid container>
-          <div className="flex  w-full mb-5">
-            <div className="w-[20%]">
-              <h2 className="font-semibold text-xl w-40">Filter Product</h2>
+          <div className="flex w-full mb-5">
+            <div className="w-[20%] ">
+              <h2 className="font-semibold text-xl w-40">Just For You</h2>
             </div>
             <div className="  w-[80%] hidden">
               <div className="flex justify-between items-center">
