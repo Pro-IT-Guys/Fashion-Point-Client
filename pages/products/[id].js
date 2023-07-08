@@ -169,7 +169,7 @@ export default function ProductDetails() {
       .finally(() => setLoader(false))
   }, [params])
 
-  const { name, sellingPrice, quantity, rating, metaDescription } =
+  const { name, sellingPrice, quantity, rating, metaDescription, frontImage } =
     productDetails || {}
 
   if (loader || !productUrl) return <Loader />
@@ -218,7 +218,11 @@ export default function ProductDetails() {
   return (
     <>
       <MainLayout>
-        <Page title={`AYMi | ${name}`} metaDescription={metaDescription}>
+        <Page
+          title={`AYMi | ${name}`}
+          metaDescription={metaDescription}
+          metaImage={frontImage}
+        >
           <div className="bg-[#f7f7ff9c] pb-10  pt-10">
             <Container maxWidth="lg">
               <Card className="mt-28 ">

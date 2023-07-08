@@ -7,10 +7,14 @@ import { Box } from '@mui/material'
 // ----------------------------------------------------------------------
 
 const Page = forwardRef(
-  ({ children, title = '', metaDescription = '', ...other }, ref) => (
+  (
+    { children, title = '', metaDescription = '', metaImage = '', ...other },
+    ref
+  ) => (
     <Box ref={ref} {...other}>
       <Head>
         <title>{title}</title>
+        <meta property="og:image" content={metaImage} />
         <meta name="description" content={metaDescription} />
       </Head>
       {children}
