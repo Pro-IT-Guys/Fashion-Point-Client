@@ -439,7 +439,7 @@ export default function ProductDetails() {
           </ChatButton>
 
           <ChatPopup
-            productUrl={productDetails}
+            productUrl={productUrl}
             socket={socket.current}
             chat={chat}
             openChat={openChat}
