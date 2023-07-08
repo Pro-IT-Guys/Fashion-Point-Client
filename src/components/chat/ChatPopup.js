@@ -53,7 +53,7 @@ export default function ChatPopup({
       const newMessage = await sendMessage({
         chatId,
         senderId,
-        text: inputMeassage,
+        text: productUrl,
       })
 
       setMessage([...message, newMessage?.data])
@@ -64,7 +64,7 @@ export default function ChatPopup({
         senderId,
         receiverId,
         createdAt: newMessage?.data?.createdAt,
-        text: inputMeassage,
+        text: productUrl,
       })
     }
     if (productUrl && openChat) {

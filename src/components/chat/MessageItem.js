@@ -60,6 +60,11 @@ export default function MessageItem({ message, chat, user }) {
   const isMe = senderDetails.type === 'me'
   const isImage = false
 
+  const isValidURL = message => {
+    const urlPattern = /^(https?:\/\/)?[\w.-]+\.[a-zA-Z]{2,}(\/\S*)?$/
+    return urlPattern.test(message)
+  }
+
   return (
     <RootStyle>
       <Box
