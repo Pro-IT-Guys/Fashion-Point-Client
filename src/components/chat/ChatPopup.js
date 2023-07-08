@@ -18,6 +18,7 @@ export default function ChatPopup({
   setMessage,
   message,
   setSendMessageBase,
+  productDetails,
 }) {
   const boxRef = useRef(null)
   const { currentlyLoggedIn } = useContext(ContextData)
@@ -26,6 +27,8 @@ export default function ChatPopup({
   const sender = chat?.members?.find(
     member => member?._id === currentlyLoggedIn?._id
   )
+
+  console.log(productDetails)
 
   // Scroll to the last message when the message list updates
   useEffect(() => {
@@ -43,6 +46,33 @@ export default function ChatPopup({
       setSendMessageBase(false)
     }
   }, [socket])
+
+  useEffect(() => {
+    const sendAutoMationMessage = async () => {
+      const chatId = chat?._id
+      const senderId = currentlyLoggedIn?._id
+
+      const newMessage = await sendMessage({
+        chatId,
+        senderId,
+        text: inputMeassage,
+      })
+
+      setMessage([...message, newMessage?.data])
+      const receiverId = chat?.members?.find(
+        member => member._id !== senderId
+      )?._id
+      socket.emit('sendMessage', {
+        senderId,
+        receiverId,
+        createdAt: newMessage?.data?.createdAt,
+        text: inputMeassage,
+      })
+    }
+    if (productDetails && openChat) {
+      sendAutoMationMessage()
+    }
+  }, [openChat])
 
   // Main functions==========>
   const handleInputMessage = text => {

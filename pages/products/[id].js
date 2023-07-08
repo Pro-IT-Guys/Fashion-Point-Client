@@ -85,45 +85,49 @@ export default function ProductDetails() {
   const params = router.query.id
   const [loader, setLoader] = useState(false)
   const [retriveCartState, setRetriveCartState] = useState(false)
+  const [productUrl, setProductUrl] = useState('')
+
+  useEffect(() => {
+    setProductUrl(window.location.href)
+  }, [params])
 
   // Create chat with admin / get chat if already exist
   useEffect(() => {
     const retriveChat = async () => {
       setLoader(true)
-      if (currentlyLoggedIn?.role === 'admin') {
-        setLoader(false)
-        return
-      }
+      if (currentlyLoggedIn?._id) {
+        if (currentlyLoggedIn?.role === 'admin') {
+          setLoader(false)
+          return
+        }
 
-      let data
+        let data
 
-      data = await createChat({
-        senderId: currentlyLoggedIn?._id,
-        receiverId: adminId,
-      })
-
-      if (!data) {
-        data = await getChatOfSenderAndReceiver({
+        data = await createChat({
           senderId: currentlyLoggedIn?._id,
           receiverId: adminId,
         })
+
+        if (!data) {
+          data = await getChatOfSenderAndReceiver({
+            senderId: currentlyLoggedIn?._id,
+            receiverId: adminId,
+          })
+        }
+        setChat(data?.data)
       }
-      setChat(data?.data)
       setLoader(false)
     }
     retriveChat()
-  }, [update])
+  }, [update, currentlyLoggedIn])
 
   // Get chat of sender and receiver
   useEffect(() => {
     const retriveMessage = async () => {
-      setLoader(true)
       if (chat?._id) {
         const messages = await getMessageOfChatId(chat?._id)
         setMessage(messages?.data)
-        setLoader(false)
       }
-      setLoader(false)
     }
     retriveMessage()
   }, [chat])
@@ -138,7 +142,7 @@ export default function ProductDetails() {
         setOnlineUsers(users)
       })
     }
-  }, [update])
+  }, [currentlyLoggedIn])
 
   useEffect(() => {
     socket.current?.on('getCartData', data => {
@@ -164,10 +168,9 @@ export default function ProductDetails() {
       .finally(() => setLoader(false))
   }, [params])
 
-  const { name, sellingPrice, quantity, rating, description, images } =
-    productDetails || {}
+  const { name, sellingPrice, quantity, rating, sku } = productDetails || {}
 
-  if (loader) return <Loader />
+  if (loader || !productUrl) return <Loader />
 
   // Cart Logics===============>
   const handleAddToCart = async () => {
@@ -208,59 +211,62 @@ export default function ProductDetails() {
 
       if (res?.statusCode === 200) alert('Product added to cart')
     }
-    // window.location.reload()
   }
 
   return (
     <>
       <MainLayout>
-        <div className="bg-[#f7f7ff9c] pb-20  pt-10">
-          <Container maxWidth="lg">
-            <Card className="mt-28  pb-10">
-              <Grid container>
-                <Grid
-                  item
-                  xs={12}
-                  md={6}
-                  lg={7}
-                  p={3}
-                  className="overflow-hidden"
-                >
-                  <ProductDetailsCarousel product={productDetails} />
-                </Grid>
-                <Grid item xs={12} md={6} lg={5} p={5}>
-                  <Label
-                    // variant={theme.palette.mode === "light" ? "ghost" : "filled"}
-                    color={quantity > 0 ? 'success' : 'error'}
-                    sx={{ textTransform: 'uppercase' }}
+        <Page title={`AYMi | ${name}`}>
+          <div className="bg-[#f7f7ff9c] pb-20  pt-10">
+            <Container maxWidth="lg">
+              <Card className="mt-28  pb-10">
+                <Grid container>
+                  <Grid
+                    item
+                    xs={12}
+                    md={6}
+                    lg={7}
+                    p={3}
+                    className="overflow-hidden"
                   >
-                    {quantity > 0 ? 'In-Stock' : 'Stock-Out'}
-                  </Label>
+                    <ProductDetailsCarousel product={productDetails} />
+                  </Grid>
+                  <Grid item xs={12} md={6} lg={5} p={5}>
+                    <Label
+                      // variant={theme.palette.mode === "light" ? "ghost" : "filled"}
+                      color={quantity > 0 ? 'success' : 'error'}
+                      sx={{ textTransform: 'uppercase' }}
+                    >
+                      {quantity > 0 ? 'In-Stock' : 'Stock-Out'}
+                    </Label>
 
-                  <h1 className="text-xl font-semibold mt-3">{name}</h1>
+                    <h1 className="text-xl font-semibold mt-3">{name}</h1>
 
-                  <Stack
-                    spacing={0.5}
-                    direction="row"
-                    alignItems="center"
-                    sx={{ mb: 2, mt: 1 }}
-                  >
-                    <Rating value={`${rating}.5`} precision={0.1} readOnly />
-                    <Typography variant="body2" sx={{ color: 'text.primary' }}>
-                      {rating} Ratings
-                    </Typography>
-                  </Stack>
-                  <p className="text-sm">
-                    Brand: {productDetails?.brand?.name}
-                  </p>
-                  <p className="text-xl font-semibold mt-3 text-secondary">
-                    {convertCurrency(fromCurrency, toCurrency, sellingPrice)}
-                  </p>
-                  {/* <strike className="text-[#7a7a7a] text-xs">
+                    <Stack
+                      spacing={0.5}
+                      direction="row"
+                      alignItems="center"
+                      sx={{ mb: 2, mt: 1 }}
+                    >
+                      <Rating value={`${rating}.5`} precision={0.1} readOnly />
+                      <Typography
+                        variant="body2"
+                        sx={{ color: 'text.primary' }}
+                      >
+                        {rating} Ratings
+                      </Typography>
+                    </Stack>
+                    <p className="text-sm">
+                      Brand: {productDetails?.brand?.name}
+                    </p>
+                    <p className="text-xl font-semibold mt-3 text-secondary">
+                      {convertCurrency(fromCurrency, toCurrency, sellingPrice)}
+                    </p>
+                    {/* <strike className="text-[#7a7a7a] text-xs">
                     ৳ {sellingPrice}
                   </strike> */}
 
-                  {/* <div className="mt-4">
+                    {/* <div className="mt-4">
                     <div className="flex items-center gap-5">
                       <p className="text-sm">Size</p>
                       <div className="flex items-center ">
@@ -276,47 +282,47 @@ export default function ProductDetails() {
                     </div>
                   </div> */}
 
-                  <Grid container spacing={2} sx={{ mt: 1 }}>
-                    <Grid item xs={6}>
-                      <FormControl fullWidth>
-                        <InputLabel id="size-label">Size</InputLabel>
-                        <Select
-                          labelId="size-label"
-                          id="demo-simple-select"
-                          value={productSize || ''}
-                          label="Size"
-                          onChange={e => setProductSize(e.target.value)}
-                        >
-                          {productDetails?.size?.map(size => (
-                            <MenuItem key={size} value={size}>
-                              {size}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
+                    <Grid container spacing={2} sx={{ mt: 1 }}>
+                      <Grid item xs={6}>
+                        <FormControl fullWidth>
+                          <InputLabel id="size-label">Size</InputLabel>
+                          <Select
+                            labelId="size-label"
+                            id="demo-simple-select"
+                            value={productSize || ''}
+                            label="Size"
+                            onChange={e => setProductSize(e.target.value)}
+                          >
+                            {productDetails?.size?.map(size => (
+                              <MenuItem key={size} value={size}>
+                                {size}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Grid>
+
+                      <Grid item xs={6}>
+                        <FormControl fullWidth>
+                          <InputLabel id="color-label">Color</InputLabel>
+                          <Select
+                            labelId="color-label"
+                            id="demo-simple-select"
+                            value={productColor || ''}
+                            label="Color"
+                            onChange={e => setProductColor(e.target.value)}
+                          >
+                            {productDetails?.color?.map(color => (
+                              <MenuItem key={color} value={color}>
+                                {color}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      </Grid>
                     </Grid>
 
-                    <Grid item xs={6}>
-                      <FormControl fullWidth>
-                        <InputLabel id="color-label">Color</InputLabel>
-                        <Select
-                          labelId="color-label"
-                          id="demo-simple-select"
-                          value={productColor || ''}
-                          label="Color"
-                          onChange={e => setProductColor(e.target.value)}
-                        >
-                          {productDetails?.color?.map(color => (
-                            <MenuItem key={color} value={color}>
-                              {color}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-
-                  {/* <div className="mt-4">
+                    {/* <div className="mt-4">
                     <div className="flex items-center gap-5">
                       <p className="text-sm">Color</p>
                       <div className="flex items-center ">
@@ -332,76 +338,93 @@ export default function ProductDetails() {
                     </div>
                   </div> */}
 
-                  <div className="mt-10 pb-20 gap-4 relative items-center flex">
-                    <p className="text-sm">Quantity :</p>
+                    <div className="mt-10 pb-20 gap-4 relative items-center flex">
+                      <p className="text-sm">Quantity :</p>
 
-                    <div className="flex  gap-2">
-                      <div
-                        className="cursor-pointer select-none rounded text-center flex items-center justify-center bg-[#ecebff] h-8 w-8"
-                        onClick={() =>
-                          setProductQuantity(
-                            productQuantity > 1 ? productQuantity - 1 : 1
-                          )
-                        }
-                      >
-                        -
-                      </div>
-                      <p className="w-8 h-8 flex items-center justify-center">
-                        {productQuantity}
-                      </p>
-                      <div
-                        className="cursor-pointer select-none rounded text-center flex items-center justify-center bg-[#ecebff] h-8 w-8"
-                        onClick={() =>
-                          setProductQuantity(
-                            productQuantity < quantity
-                              ? productQuantity + 1
-                              : quantity
-                          )
-                        }
-                      >
-                        +
+                      <div className="flex  gap-2">
+                        <div
+                          className="cursor-pointer select-none rounded text-center flex items-center justify-center bg-[#ecebff] h-8 w-8"
+                          onClick={() =>
+                            setProductQuantity(
+                              productQuantity > 1 ? productQuantity - 1 : 1
+                            )
+                          }
+                        >
+                          -
+                        </div>
+                        <p className="w-8 h-8 flex items-center justify-center">
+                          {productQuantity}
+                        </p>
+                        <div
+                          className="cursor-pointer select-none rounded text-center flex items-center justify-center bg-[#ecebff] h-8 w-8"
+                          onClick={() =>
+                            setProductQuantity(
+                              productQuantity < quantity
+                                ? productQuantity + 1
+                                : quantity
+                            )
+                          }
+                        >
+                          +
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <Divider sx={{ borderStyle: 'dashed' }} />
+                    <Divider sx={{ borderStyle: 'dashed' }} />
 
-                  <Stack
-                    spacing={2}
-                    direction={{ xs: 'column', sm: 'row' }}
-                    sx={{ mt: 5 }}
-                  >
-                    <Button
-                      fullWidth
-                      // disabled={isMaxQuantity}
-                      size="large"
-                      type="button"
-                      color="warning"
-                      variant="contained"
-                      startIcon={<Icon icon={roundAddShoppingCart} />}
-                      onClick={handleAddToCart}
-                      sx={{ whiteSpace: 'nowrap' }}
-                    >
-                      Add to Cart
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        router.push(
-                          `/checkout/product/sku=${productDetails.sku}&quantity=${productQuantity}&size=${productSize}&color=${productColor}`
-                        )
-                      }
-                      fullWidth
-                      size="large"
-                      type="submit"
-                      variant="contained"
-                    >
-                      Buy Now
-                    </Button>
-                  </Stack>
+                    <Stack spacing={2} direction={{ sm: 'row' }} sx={{ m: 5 }}>
+                      <Button
+                        fullWidth
+                        // disabled={isMaxQuantity}
+                        size="medium"
+                        type="button"
+                        color="warning"
+                        variant="contained"
+                        onClick={handleAddToCart}
+                        sx={{ whiteSpace: 'nowrap' }}
+                      >
+                        Add to Cart
+                      </Button>
+                      <Button
+                        onClick={() =>
+                          router.push(
+                            `/checkout/product/sku=${productDetails.sku}&quantity=${productQuantity}&size=${productSize}&color=${productColor}`
+                          )
+                        }
+                        fullWidth
+                        size="medium"
+                        type="submit"
+                        variant="contained"
+                        sx={{
+                          marginTop: {
+                            xs: 1,
+                            sm: 0,
+                          },
+                          marginBottom: {
+                            xs: 1,
+                            sm: 0,
+                          },
+                        }}
+                      >
+                        Buy Now
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          setOpenChat(!openChat)
+                        }}
+                        fullWidth
+                        size="medium"
+                        type="submit"
+                        variant="contained"
+                      >
+                        Message
+                      </Button>
+                    </Stack>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Card>
-          </Container>
-        </div>
+              </Card>
+            </Container>
+          </div>
+        </Page>
       </MainLayout>
 
       {currentlyLoggedIn?.role && currentlyLoggedIn?.role !== 'admin' && (
@@ -416,6 +439,7 @@ export default function ProductDetails() {
           </ChatButton>
 
           <ChatPopup
+            productUrl={productDetails}
             socket={socket.current}
             chat={chat}
             openChat={openChat}
