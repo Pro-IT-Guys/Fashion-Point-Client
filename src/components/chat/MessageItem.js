@@ -61,7 +61,8 @@ export default function MessageItem({ message, chat, user }) {
   const isImage = false
 
   const isValidURL = message => {
-    const urlPattern = /^(https?:\/\/)?[\w.-]+\.[a-zA-Z]{2,}(\/\S*)?$/
+    const urlPattern =
+      /^(https?:\/\/)?([\w.-]+\.[a-zA-Z]{2,}|localhost)(\/\S*)?$/
     return urlPattern.test(message)
   }
 
@@ -103,7 +104,20 @@ export default function MessageItem({ message, chat, user }) {
             {isImage ? (
               <MessageImgStyle alt="attachment" src={message.body} />
             ) : (
-              <Typography variant="body2">{message.text}</Typography>
+              // <Typography variant="body2">{message.text}</Typography>
+              <>
+                {isValidURL(message.text) ? (
+                  <Typography
+                    onClick={() => window.open(message.text, '_blank')}
+                    variant="body2"
+                    sx={{ color: 'blue', cursor: 'pointer', fontWeight: 600 }}
+                  >
+                    {message.text}
+                  </Typography>
+                ) : (
+                  <Typography variant="body2">{message.text}</Typography>
+                )}
+              </>
             )}
           </ContentStyle>
         </div>

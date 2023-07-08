@@ -45,7 +45,6 @@ const ChatSideBar = () => {
 
   // Socket part end============================>
 
-
   let chatUser = []
   // get all chats user without admin
   const userChat = chats?.map(chat => {
