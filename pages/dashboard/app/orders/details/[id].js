@@ -19,7 +19,7 @@ import PhoneInTalkOutlinedIcon from '@mui/icons-material/PhoneInTalkOutlined'
 import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined'
 import Scrollbar from 'src/components/Scrollbar'
 import { UserListHead } from 'src/components/list'
-import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined'
 
 const TABLE_HEAD = [
   { id: 'sr', label: 'SR', alignRight: false },
@@ -69,7 +69,7 @@ export default function OrderDetails() {
   }
 
   const handleChangeRowsPerPage = event => {
-    setRowsPerPage(parseInt(event.target.value, 10))
+    setRowsPerPage(Number(event.target.value, 10))
     setPage(0)
   }
 
@@ -259,9 +259,10 @@ export default function OrderDetails() {
         </Card>
 
         <div className="flex mt-10  ">
-          <div 
-          onClick={() => router.back()}
-          className='bg-primary px-2 py-1 text-sm rounded text-white cursor-pointer'>
+          <div
+            onClick={() => router.back()}
+            className="bg-primary px-2 py-1 text-sm rounded text-white cursor-pointer"
+          >
             <KeyboardBackspaceOutlinedIcon /> Back
           </div>
         </div>

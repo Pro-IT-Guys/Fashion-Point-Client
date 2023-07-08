@@ -54,7 +54,7 @@ function Incrementer({
   quantity,
 }) {
   const decreaseQuantity = () => {
-    let newQuantity = parseInt(quantity) - 1
+    let newQuantity = Number(quantity) - 1
     if (newQuantity < 1) {
       newQuantity = 1
     }
@@ -62,7 +62,7 @@ function Incrementer({
   }
 
   const increaseQuantity = () => {
-    let newQuantity = parseInt(quantity) + 1
+    let newQuantity = Number(quantity) + 1
     if (newQuantity > available) {
       newQuantity = available
     }
@@ -144,6 +144,8 @@ export default function ProductList({
     }
   }, [quantity, selectedProduct])
 
+  console.log(sellingPrice, quantity)
+
   return (
     <TableRow>
       <TableCell>
@@ -203,7 +205,9 @@ export default function ProductList({
       </TableCell>
 
       <TableCell align="left">
+        {toCurrency === 'USD' && '$ '}
         {convertCurrencyForCalculation(fromCurrency, toCurrency, sellingPrice)}
+        {toCurrency === 'AED' && ' AED'}
       </TableCell>
 
       <TableCell align="left">
@@ -218,11 +222,13 @@ export default function ProductList({
       </TableCell>
 
       <TableCell align="right">
+        {toCurrency === 'USD' && '$ '}
         {convertCurrencyForCalculation(
           fromCurrency,
           toCurrency,
-          sellingPrice * quantity
-        )}
+          Number(sellingPrice) * Number(quantity)
+        )}{' '}
+        {toCurrency === 'AED' && 'AED'}
       </TableCell>
 
       <TableCell align="right">

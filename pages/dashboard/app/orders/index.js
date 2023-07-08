@@ -126,7 +126,7 @@ export default function AllOrders() {
   }
 
   const handleChangeRowsPerPage = event => {
-    setRowsPerPage(parseInt(event.target.value, 10))
+    setRowsPerPage(Number(event.target.value, 10))
     setPage(0)
   }
 

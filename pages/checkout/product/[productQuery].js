@@ -148,9 +148,8 @@ export default function Checkout() {
       let calculatedDeliveryFee = 0
       product.forEach(item => {
         totalPrice +=
-          parseInt(item.quantity) * parseInt(item.productId.sellingPrice)
-        calculatedDeliveryFee +=
-          parseInt(item.quantity) * parseInt(feeOfLocation)
+          Number(item.quantity) * Number(item.productId.sellingPrice)
+        calculatedDeliveryFee += Number(item.quantity) * Number(feeOfLocation)
       })
       setTotalPrice(totalPrice)
       setTotalDeliveryFee(calculatedDeliveryFee)
@@ -208,7 +207,7 @@ export default function Checkout() {
     let calculatedDeliveryFee = 0
     product.forEach(item => {
       calculatedDeliveryFee +=
-        parseInt(item.quantity) * parseInt(shippingFee?.data?.delivery_fee)
+        Number(item.quantity) * Number(shippingFee?.data?.delivery_fee)
     })
 
     const orderData = {
@@ -255,8 +254,6 @@ export default function Checkout() {
   }
 
   if (loader) return <Loader />
-
-  console.log('product', product)
 
   return (
     <>
@@ -359,11 +356,13 @@ export default function Checkout() {
                             Sub Total
                           </Typography>
                           <Typography variant="subtitle2">
+                            {toCurrency === 'USD' && '$ '}
                             {convertCurrencyForCalculation(
                               fromCurrency,
                               toCurrency,
                               totalPrice
                             )}
+                            {toCurrency === 'AED' && 'AED'}
                           </Typography>
                         </Stack>
 
@@ -385,11 +384,13 @@ export default function Checkout() {
                             Shipping
                           </Typography>
                           <Typography variant="subtitle2">
+                            {toCurrency === 'USD' && '$ '}
                             {convertCurrencyForCalculation(
                               fromCurrency,
                               toCurrency,
                               totalDeliveryFee
                             )}
+                            {toCurrency === 'AED' && 'AED'}
                           </Typography>
                         </Stack>
 
@@ -402,11 +403,13 @@ export default function Checkout() {
                               variant="subtitle1"
                               sx={{ color: 'error.main' }}
                             >
+                              {toCurrency === 'USD' && '$ '}
                               {convertCurrencyForCalculation(
                                 fromCurrency,
                                 toCurrency,
-                                totalPrice + totalDeliveryFee
+                                Number(totalPrice) + Number(totalDeliveryFee)
                               )}
+                              {toCurrency === 'AED' && 'AED'}
                             </Typography>
                             <Typography
                               variant="caption"
