@@ -150,7 +150,7 @@ export default function AllOrders() {
 
   return (
     <DashboardLayout>
-      <Page title="Order: List | Aymi">
+      <Page title="AYMi | Order List">
         <Container maxWidth="xl">
           <h1 className="font-bold text-2xl">Order List</h1>
           <div className="flex gap-2 text-sm mt-3 text-[#636262]">
@@ -232,11 +232,14 @@ export default function AllOrders() {
                           </TableCell>
                           <TableCell align="left"> {paymentMethod}</TableCell>
                           <TableCell align="left">
-                            <RemoveRedEyeOutlinedIcon onClick={() =>
+                            <RemoveRedEyeOutlinedIcon
+                              onClick={() =>
                                 router.push(
                                   `/dashboard/app/orders/details/${_id}`
                                 )
-                              } className='cursor-pointer'/>
+                              }
+                              className="cursor-pointer"
+                            />
                           </TableCell>
                           <TableCell align="left">
                             {' '}

@@ -85,7 +85,6 @@ export default function ProductList() {
   const [productList, setProductList] = useState([])
   const [update, setUpdate] = useState('')
 
-
   useEffect(() => {
     fetch(
       `${BASE_URL}/product?searchTerm=${filterName}&page=${page}&limit=${rowsPerPage}`
@@ -93,8 +92,6 @@ export default function ProductList() {
       .then(res => res.json())
       .then(data => setProductList(data?.data))
   }, [page, rowsPerPage, filterName, update])
-
-
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
@@ -123,6 +120,7 @@ export default function ProductList() {
 
   return (
     <DashboardLayout>
+      <Page title="AYMi | All Products">
         <Container maxWidth="xl">
           <h1 className="font-bold text-2xl">Product List</h1>
           <div className="flex gap-2 text-sm mt-3 text-[#636262]">
@@ -139,7 +137,7 @@ export default function ProductList() {
             />
 
             <Scrollbar>
-              <TableContainer >
+              <TableContainer>
                 <Table>
                   <UserListHead
                     // order={order}
@@ -229,9 +227,13 @@ export default function ProductList() {
                         </TableRow>
                       )
                     })} */}
-                    {
-                      productList?.map((product) => <ProductTableRowItem key={product?._id} row={product} setUpdate={setUpdate}  />)
-                    }
+                    {productList?.map(product => (
+                      <ProductTableRowItem
+                        key={product?._id}
+                        row={product}
+                        setUpdate={setUpdate}
+                      />
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -248,6 +250,7 @@ export default function ProductList() {
             />
           </Card>
         </Container>
+      </Page>
     </DashboardLayout>
   )
 }
