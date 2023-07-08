@@ -18,14 +18,20 @@ import {
   RadioGroup,
   FormControlLabel,
   Slider,
+  FormControl,
+  Autocomplete,
+  TextField,
+  Chip,
 } from '@mui/material'
 import {
   BRAND_OPTION,
   CATEGORY_OPTION,
   COLOR_OPTION,
   FABRIC_OPTION,
+  FABRIC_OPTION_ARRAY,
   SIZE_OPTION,
   STYLE_OPTION,
+  STYLE_OPTION_ARRAY,
   TYPE_OPTION,
 } from 'constant/product'
 import { MIconButton } from 'src/components/@material-extend'
@@ -33,6 +39,7 @@ import { useContext, useState } from 'react'
 import ColorManyPicker from '../common/ColorManyPicker'
 import Scrollbar from '../common/Scrollbar'
 import { ContextData } from 'context/dataProviderContext'
+import CloseIcon from '@mui/icons-material/Close'
 
 // ----------------------------------------------------------------------
 
@@ -62,6 +69,8 @@ export default function ProductFilterDrawer({
     value,
     setValue,
     setCategory,
+    fromCurrency,
+    toCurrency,
   } = useContext(ContextData)
 
   const handleSelectFilterOption = (e, callback) => {
@@ -145,7 +154,7 @@ export default function ProductFilterDrawer({
             </div>
             <div>
               <Typography variant="subtitle1" gutterBottom>
-                Price (AED)
+                Price ({toCurrency})
               </Typography>
               <Box>
                 <Slider
@@ -153,7 +162,7 @@ export default function ProductFilterDrawer({
                   value={value}
                   onChange={handlePriceRange}
                   min={0}
-                  max={500}
+                  max={2000}
                   valueLabelDisplay="auto"
                   // getAriaValueText={valuetext}
                 />
@@ -180,7 +189,7 @@ export default function ProductFilterDrawer({
               <Typography variant="subtitle1" gutterBottom>
                 Fabric
               </Typography>
-              <RadioGroup
+              {/* <RadioGroup
                 value={fabric}
                 onChange={e => handleSelectFilterOption(e, setFabric)}
               >
@@ -194,13 +203,53 @@ export default function ProductFilterDrawer({
                     />
                   ))
                 )}
-              </RadioGroup>
+              </RadioGroup> */}
+
+              <FormControl fullWidth>
+                <div>
+                  <Autocomplete
+                    className="w-full"
+                    multiple
+                    freeSolo
+                    value={fabric}
+                    onChange={(event, newValue) => {
+                      setFabric(newValue)
+                    }}
+                    options={FABRIC_OPTION_ARRAY}
+                    getOptionLabel={option => option}
+                    renderTags={() => null}
+                    renderInput={params => (
+                      <TextField label="Fabric" {...params} />
+                    )}
+                  ></Autocomplete>
+
+                  <div style={{ marginTop: '8px' }}>
+                    {fabric.map((option, index) => (
+                      <Chip
+                        key={option}
+                        size="small"
+                        label={option}
+                        onDelete={() => {
+                          setFabric(prevValue =>
+                            prevValue.filter(val => val !== option)
+                          )
+                        }}
+                        deleteIcon={<CloseIcon />}
+                        style={{
+                          marginRight: '8px',
+                          marginBottom: '8px',
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </FormControl>
             </div>
             <div>
               <Typography variant="subtitle1" gutterBottom>
                 Style
               </Typography>
-              <RadioGroup
+              {/* <RadioGroup
                 value={style}
                 onChange={e => handleSelectFilterOption(e, setStyle)}
               >
@@ -214,7 +263,47 @@ export default function ProductFilterDrawer({
                     />
                   ))
                 )}
-              </RadioGroup>
+              </RadioGroup> */}
+
+              <FormControl fullWidth>
+                <div>
+                  <Autocomplete
+                    className="w-full"
+                    multiple
+                    freeSolo
+                    value={style}
+                    onChange={(event, newValue) => {
+                      setStyle(newValue)
+                    }}
+                    options={STYLE_OPTION_ARRAY}
+                    getOptionLabel={option => option}
+                    renderTags={() => null}
+                    renderInput={params => (
+                      <TextField label="Style" {...params} />
+                    )}
+                  ></Autocomplete>
+
+                  <div style={{ marginTop: '8px' }}>
+                    {style.map((option, index) => (
+                      <Chip
+                        key={option}
+                        size="small"
+                        label={option}
+                        onDelete={() => {
+                          setStyle(prevValue =>
+                            prevValue.filter(val => val !== option)
+                          )
+                        }}
+                        deleteIcon={<CloseIcon />}
+                        style={{
+                          marginRight: '8px',
+                          marginBottom: '8px',
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </FormControl>
             </div>
 
             {/* <div>
@@ -235,7 +324,7 @@ export default function ProductFilterDrawer({
               <Typography variant="subtitle1" gutterBottom>
                 Type
               </Typography>
-              <RadioGroup
+              {/* <RadioGroup
                 className="text-xs"
                 value={type}
                 onChange={e => handleSelectFilterOption(e, setType)}
@@ -249,7 +338,47 @@ export default function ProductFilterDrawer({
                     label={item}
                   />
                 ))}
-              </RadioGroup>
+              </RadioGroup> */}
+
+              <FormControl fullWidth>
+                <div>
+                  <Autocomplete
+                    className="w-full"
+                    multiple
+                    freeSolo
+                    value={type}
+                    onChange={(event, newValue) => {
+                      setType(newValue)
+                    }}
+                    options={TYPE_OPTION}
+                    getOptionLabel={option => option}
+                    renderTags={() => null}
+                    renderInput={params => (
+                      <TextField label="Type" {...params} />
+                    )}
+                  ></Autocomplete>
+
+                  <div style={{ marginTop: '8px' }}>
+                    {type.map((option, index) => (
+                      <Chip
+                        key={option}
+                        size="small"
+                        label={option}
+                        onDelete={() => {
+                          setType(prevValue =>
+                            prevValue.filter(val => val !== option)
+                          )
+                        }}
+                        deleteIcon={<CloseIcon />}
+                        style={{
+                          marginRight: '8px',
+                          marginBottom: '8px',
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </FormControl>
             </div>
 
             {/* <div>

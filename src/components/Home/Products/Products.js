@@ -252,7 +252,7 @@ const Products = () => {
               <div className="space-y-4">
                 <div className="bg-white shadow rounded">
                   <div className=" py-2 px-3 border-b">
-                    <h1 className="font-semibold "> Filter by Price</h1>
+                    <h1 className="font-semibold "> Filter by Price ({toCurrency})</h1>
                   </div>
                   <div className=" py-3 pl-4 pr-3 bg-white ">
                     <Box>
