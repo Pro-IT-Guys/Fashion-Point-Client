@@ -41,7 +41,10 @@ import { multiFilterProduct } from 'apis/product.api'
 import { ContextData } from 'context/dataProviderContext'
 import ProductLoader from './ProductLoader'
 import { useRouter } from 'next/router'
-import { convertCurrencyForCalculation } from 'helpers/currencyHandler'
+import {
+  convertCurrency,
+  convertCurrencyForCalculation,
+} from 'helpers/currencyHandler'
 
 function valuetext(value) {
   return `${value}°C`
@@ -252,7 +255,10 @@ const Products = () => {
               <div className="space-y-4">
                 <div className="bg-white shadow rounded">
                   <div className=" py-2 px-3 border-b">
-                    <h1 className="font-semibold "> Filter by Price ({toCurrency})</h1>
+                    <h1 className="font-semibold ">
+                      {' '}
+                      Filter by Price ({toCurrency})
+                    </h1>
                   </div>
                   <div className=" py-3 pl-4 pr-3 bg-white ">
                     <Box>
@@ -326,6 +332,7 @@ const Products = () => {
                     <FormControl fullWidth>
                       <div>
                         <Autocomplete
+                          size="small"
                           className="w-full"
                           multiple
                           freeSolo
@@ -388,6 +395,7 @@ const Products = () => {
                     <FormControl fullWidth>
                       <div>
                         <Autocomplete
+                          size="small"
                           className="w-full"
                           multiple
                           freeSolo
@@ -451,6 +459,7 @@ const Products = () => {
                     <FormControl fullWidth>
                       <div>
                         <Autocomplete
+                          size="small"
                           className="w-full"
                           multiple
                           freeSolo
@@ -530,7 +539,11 @@ const Products = () => {
                             {product?.name?.slice(0, 40)}
                           </h1>
                           <p className="text-xs text-secondary font-semibold mt-1">
-                            ৳ {product?.sellingPrice}
+                            {convertCurrency(
+                              fromCurrency,
+                              toCurrency,
+                              product?.sellingPrice
+                            )}
                           </p>
                         </div>
                       </div>
