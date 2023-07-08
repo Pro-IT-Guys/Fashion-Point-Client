@@ -28,8 +28,6 @@ export default function ChatPopup({
     member => member?._id === currentlyLoggedIn?._id
   )
 
-  console.log(productUrl)
-
   // Scroll to the last message when the message list updates
   useEffect(() => {
     if (boxRef.current) {
@@ -69,7 +67,7 @@ export default function ChatPopup({
         text: inputMeassage,
       })
     }
-    if (productDetails && openChat) {
+    if (productUrl && openChat) {
       sendAutoMationMessage()
     }
   }, [openChat])
