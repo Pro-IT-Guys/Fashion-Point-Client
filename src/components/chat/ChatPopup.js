@@ -18,7 +18,7 @@ export default function ChatPopup({
   setMessage,
   message,
   setSendMessageBase,
-  productDetails,
+  productUrl,
 }) {
   const boxRef = useRef(null)
   const { currentlyLoggedIn } = useContext(ContextData)
@@ -28,7 +28,7 @@ export default function ChatPopup({
     member => member?._id === currentlyLoggedIn?._id
   )
 
-  console.log(productDetails)
+  console.log(productUrl)
 
   // Scroll to the last message when the message list updates
   useEffect(() => {
