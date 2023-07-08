@@ -88,8 +88,6 @@ export default function MyProfile() {
       zipCode: data.zipCode,
     }
 
-    console.log(userData)
-
     fetch(`${BASE_URL}/users/${_id}`, {
       method: 'PATCH',
       headers: {

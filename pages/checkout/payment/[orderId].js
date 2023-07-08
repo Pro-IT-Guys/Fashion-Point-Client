@@ -29,6 +29,7 @@ import { ButtonAnimate } from 'src/components/animate'
 import Loader from 'src/components/Loader/Loader'
 import ShippingAddressPopup from 'src/components/checkout/ShippingAddressPopup'
 import { getAllCountriesWithFees } from 'apis/fee.api'
+import Page from 'src/components/Page'
 
 const stripePromise = loadStripe(
   'pk_test_51L3PqJCnJiLLpGIeL4Uixr7K4bJ183L3tSUyFg2ENBX5ovRQKSQhaYTR8kG7WbcfvkvyuLa5RfB9eZlBJfohfpYd00PM7gqopw'
@@ -191,175 +192,177 @@ const CheckoutPayment = () => {
 
   return (
     <>
-      <MainLayout>
-        <RootStyle>
-          <Container>
-            <h1 className="font-bold text-2xl">Checkout</h1>
-            <div className="flex gap-2 text-sm mt-3 text-[#636262]">
-              <p>Home - </p>
-              <p>Checkout - </p>
-              <p>Shipping Address</p>
-            </div>
+      <Page title="AYMi | Billing">
+        <MainLayout>
+          <RootStyle>
+            <Container>
+              <h1 className="font-bold text-2xl">Checkout</h1>
+              <div className="flex gap-2 text-sm mt-3 text-[#636262]">
+                <p>Home - </p>
+                <p>Checkout - </p>
+                <p>Billing</p>
+              </div>
 
-            <Grid container spacing={3} mt={3}>
-              <Grid item xs={12} md={8}>
-                <Card sx={{ mb: 3 }}>
-                  <CardHeader title="Billing Address" />
-                  <CardContent>
-                    <Typography variant="subtitle2" gutterBottom>
-                      Billing address:
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        sx={{ color: 'text.secondary', ml: 1 }}
-                      >
-                        {existingOrder?.shippingAddress?.address_line}
-                      </Typography>
-                    </Typography>
-
-                    <Typography variant="body2" gutterBottom>
-                      {`${existingOrder?.shippingAddress?.zipCode}, ${existingOrder?.shippingAddress?.city}, ${existingOrder?.shippingAddress?.state}, ${existingOrder?.shippingAddress?.country}`}
-                    </Typography>
-                    <Typography variant="body2" gutterBottom>
-                      Phone: {existingOrder?.phoneNumber}
-                    </Typography>
-
-                    <Box
-                      sx={{
-                        mt: 3,
-                        display: 'flex',
-                        position: { sm: 'absolute' },
-                        right: { sm: 24 },
-                        bottom: { sm: 24 },
-                      }}
-                    >
-                      <Box sx={{ mx: 0.5 }} />
-                      <ButtonAnimate mediumClick={true}>
-                        <Button
-                          variant="outlined"
-                          size="small"
-                          onClick={() => setAddressPopup(true)}
+              <Grid container spacing={3} mt={3}>
+                <Grid item xs={12} md={8}>
+                  <Card sx={{ mb: 3 }}>
+                    <CardHeader title="Billing Address" />
+                    <CardContent>
+                      <Typography variant="subtitle2" gutterBottom>
+                        Billing address:
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          sx={{ color: 'text.secondary', ml: 1 }}
                         >
-                          Update Address
-                        </Button>
-                      </ButtonAnimate>
-                    </Box>
-                  </CardContent>
-                </Card>
+                          {existingOrder?.shippingAddress?.address_line}
+                        </Typography>
+                      </Typography>
 
-                <Button color="inherit">Continue Shopping</Button>
+                      <Typography variant="body2" gutterBottom>
+                        {`${existingOrder?.shippingAddress?.zipCode}, ${existingOrder?.shippingAddress?.city}, ${existingOrder?.shippingAddress?.state}, ${existingOrder?.shippingAddress?.country}`}
+                      </Typography>
+                      <Typography variant="body2" gutterBottom>
+                        Phone: {existingOrder?.phoneNumber}
+                      </Typography>
+
+                      <Box
+                        sx={{
+                          mt: 3,
+                          display: 'flex',
+                          position: { sm: 'absolute' },
+                          right: { sm: 24 },
+                          bottom: { sm: 24 },
+                        }}
+                      >
+                        <Box sx={{ mx: 0.5 }} />
+                        <ButtonAnimate mediumClick={true}>
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            onClick={() => setAddressPopup(true)}
+                          >
+                            Update Address
+                          </Button>
+                        </ButtonAnimate>
+                      </Box>
+                    </CardContent>
+                  </Card>
+
+                  <Button color="inherit">Continue Shopping</Button>
+                </Grid>
+
+                {!paypalPayment && (
+                  <Grid item xs={12} md={4}>
+                    <Card sx={{ mb: 3 }}>
+                      <CardHeader title="Pay with card" />
+                      <CardContent>
+                        <Stack spacing={2}>
+                          <Stack>
+                            <Elements stripe={stripePromise}>
+                              <StripeForm handleSubmit={handleStripePayment} />
+                            </Elements>
+
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginTop: 2,
+                              }}
+                            >
+                              <Typography
+                                variant="body2"
+                                sx={{ fontSize: 16, fontWeight: 'bold' }}
+                              >
+                                Or pay with
+                              </Typography>
+                              <img
+                                onClick={() => setPaypalPayment(true)}
+                                className="w-[100px] cursor-pointer"
+                                src="https://i.ibb.co/WgWs4FC/paypal.png"
+                                alt=""
+                              />
+                            </Box>
+                          </Stack>
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                )}
+                {paypalPayment && (
+                  <Grid item xs={12} md={4}>
+                    <Card sx={{ mb: 3 }}>
+                      <CardHeader title="Pay with PayPal" />
+                      <CardContent>
+                        <Stack spacing={2}>
+                          <Stack>
+                            <TextField
+                              onChange={e => setEmail(e.target.value)}
+                              fullWidth
+                              value={email}
+                              label="Your PayPal Email"
+                            />
+                            {paypalLink ? (
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                sx={{ mt: 2, width: '170px' }}
+                                onClick={handlePaypalPaymentVerify}
+                                disabled={loading}
+                              >
+                                {loading ? (
+                                  <CircularProgress size={24} />
+                                ) : (
+                                  'Complete Payment'
+                                )}
+                              </Button>
+                            ) : (
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                sx={{ mt: 2, width: '90px' }}
+                                onClick={handlePaypalPayment}
+                                disabled={!email || loading}
+                              >
+                                {loading ? (
+                                  <CircularProgress size={24} />
+                                ) : (
+                                  'Confirm'
+                                )}
+                              </Button>
+                            )}
+
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                marginTop: 2,
+                              }}
+                            >
+                              <Typography
+                                variant="body2"
+                                sx={{ fontSize: 16, fontWeight: 'bold' }}
+                              >
+                                Or pay with
+                              </Typography>
+                              <img
+                                onClick={() => setPaypalPayment(false)}
+                                className="w-[50px] cursor-pointer ml-2"
+                                src="https://i.ibb.co/mHLhz9h/stripe-logo-2.png"
+                                alt=""
+                              />
+                            </Box>
+                          </Stack>
+                        </Stack>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                )}
               </Grid>
-
-              {!paypalPayment && (
-                <Grid item xs={12} md={4}>
-                  <Card sx={{ mb: 3 }}>
-                    <CardHeader title="Pay with card" />
-                    <CardContent>
-                      <Stack spacing={2}>
-                        <Stack>
-                          <Elements stripe={stripePromise}>
-                            <StripeForm handleSubmit={handleStripePayment} />
-                          </Elements>
-
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              marginTop: 2,
-                            }}
-                          >
-                            <Typography
-                              variant="body2"
-                              sx={{ fontSize: 16, fontWeight: 'bold' }}
-                            >
-                              Or pay with
-                            </Typography>
-                            <img
-                              onClick={() => setPaypalPayment(true)}
-                              className="w-[100px] cursor-pointer"
-                              src="https://i.ibb.co/WgWs4FC/paypal.png"
-                              alt=""
-                            />
-                          </Box>
-                        </Stack>
-                      </Stack>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              )}
-              {paypalPayment && (
-                <Grid item xs={12} md={4}>
-                  <Card sx={{ mb: 3 }}>
-                    <CardHeader title="Pay with PayPal" />
-                    <CardContent>
-                      <Stack spacing={2}>
-                        <Stack>
-                          <TextField
-                            onChange={e => setEmail(e.target.value)}
-                            fullWidth
-                            value={email}
-                            label="Your PayPal Email"
-                          />
-                          {paypalLink ? (
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              sx={{ mt: 2, width: '170px' }}
-                              onClick={handlePaypalPaymentVerify}
-                              disabled={loading}
-                            >
-                              {loading ? (
-                                <CircularProgress size={24} />
-                              ) : (
-                                'Complete Payment'
-                              )}
-                            </Button>
-                          ) : (
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              sx={{ mt: 2, width: '90px' }}
-                              onClick={handlePaypalPayment}
-                              disabled={!email || loading}
-                            >
-                              {loading ? (
-                                <CircularProgress size={24} />
-                              ) : (
-                                'Confirm'
-                              )}
-                            </Button>
-                          )}
-
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              marginTop: 2,
-                            }}
-                          >
-                            <Typography
-                              variant="body2"
-                              sx={{ fontSize: 16, fontWeight: 'bold' }}
-                            >
-                              Or pay with
-                            </Typography>
-                            <img
-                              onClick={() => setPaypalPayment(false)}
-                              className="w-[50px] cursor-pointer ml-2"
-                              src="https://i.ibb.co/mHLhz9h/stripe-logo-2.png"
-                              alt=""
-                            />
-                          </Box>
-                        </Stack>
-                      </Stack>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              )}
-            </Grid>
-          </Container>
-        </RootStyle>
-      </MainLayout>
+            </Container>
+          </RootStyle>
+        </MainLayout>
+      </Page>
       {addressPopup && (
         <ShippingAddressPopup
           handleCountryChange={handleCountryChange}

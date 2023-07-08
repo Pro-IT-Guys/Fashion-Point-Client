@@ -33,6 +33,7 @@ import { useRouter } from 'next/router'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import Loader from 'src/components/Loader/Loader'
+import Page from 'src/components/Page'
 import Scrollbar from 'src/components/Scrollbar'
 import ProductList from 'src/components/checkout/CheckoutProductList'
 import ShippingAddressPopup from 'src/components/checkout/ShippingAddressPopup'
@@ -259,150 +260,180 @@ export default function Checkout() {
 
   return (
     <>
-      <MainLayout>
-        <RootStyle>
-          <Container>
-            <h1 className="font-bold text-2xl">Checkout</h1>
-            <div className="flex gap-2 text-sm mt-3 text-[#636262]">
-              <p>Home - </p>
-              <p>Cart - </p>
-              <p>Checkout</p>
-            </div>
+      <Page title="AYMi | Checkout">
+        <MainLayout>
+          <RootStyle>
+            <Container>
+              <h1 className="font-bold text-2xl">Checkout</h1>
+              <div className="flex gap-2 text-sm mt-3 text-[#636262]">
+                <p>Home - </p>
+                <p>Cart - </p>
+                <p>Checkout</p>
+              </div>
 
-            <Grid container spacing={3} mt={3}>
-              <Grid item xs={12} md={8}>
-                <Card className="p-2">
-                  <h1 className="p-5 text-xl font-bold">
-                    Cart{' '}
-                    <span className="text-[#4e4e4e] font-medium text-sm">
-                      {product?.length} items
-                    </span>
-                  </h1>
+              <Grid container spacing={3} mt={3}>
+                <Grid item xs={12} md={8}>
+                  <Card className="p-2">
+                    <h1 className="p-5 text-xl font-bold">
+                      Cart{' '}
+                      <span className="text-[#4e4e4e] font-medium text-sm">
+                        {product?.length} items
+                      </span>
+                    </h1>
 
-                  <Scrollbar>
-                    <TableContainer sx={{ minWidth: 720 }}>
-                      <Table>
-                        <TableHead>
-                          <TableRow>
-                            <TableCell>Product</TableCell>
-                            <TableCell align="left">Price</TableCell>
-                            <TableCell align="left">Quantity</TableCell>
-                            <TableCell align="right">Total Price</TableCell>
-                            <TableCell align="right" />
-                          </TableRow>
-                        </TableHead>
+                    <Scrollbar>
+                      <TableContainer sx={{ minWidth: 720 }}>
+                        <Table>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>Product</TableCell>
+                              <TableCell align="left">Price</TableCell>
+                              <TableCell align="left">Quantity</TableCell>
+                              <TableCell align="right">Total Price</TableCell>
+                              <TableCell align="right" />
+                            </TableRow>
+                          </TableHead>
 
-                        <TableBody>
-                          {product?.map((item, index) => {
-                            return (
-                              <ProductList
-                                setProduct={setProduct}
-                                handleProductRemove={handleProductRemove}
-                                product={product}
-                                key={index}
-                                item={item}
-                              />
-                            )
-                          })}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </Scrollbar>
-                </Card>
+                          <TableBody>
+                            {product?.map((item, index) => {
+                              return (
+                                <ProductList
+                                  setProduct={setProduct}
+                                  handleProductRemove={handleProductRemove}
+                                  product={product}
+                                  key={index}
+                                  item={item}
+                                />
+                              )
+                            })}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </Scrollbar>
+                  </Card>
 
-                <Button color="inherit">Continue Shopping</Button>
-              </Grid>
+                  <Button color="inherit">Continue Shopping</Button>
+                </Grid>
 
-              <Grid item xs={12} md={4}>
-                <Card sx={{ mb: 3 }}>
-                  <TextField fullWidth label="Enter Coupon" />
-                </Card>
-                <Card sx={{ mb: 3 }}>
-                  <CardHeader title="Order Summary" />
-                  <CardContent>
-                    <Stack spacing={2}>
-                      <Stack direction="row" justifyContent="space-between">
-                        <Typography
-                          variant="body2"
-                          sx={{ color: 'text.secondary' }}
-                        >
-                          Sub Total
-                        </Typography>
-                        <Typography variant="subtitle2">
-                          {convertCurrencyForCalculation(
-                            fromCurrency,
-                            toCurrency,
-                            totalPrice
-                          )}
-                        </Typography>
-                      </Stack>
-
-                      <Stack direction="row" justifyContent="space-between">
-                        <Typography
-                          variant="body2"
-                          sx={{ color: 'text.secondary' }}
-                        >
-                          Discount
-                        </Typography>
-                        <Typography variant="subtitle2">0</Typography>
-                      </Stack>
-
-                      <Stack direction="row" justifyContent="space-between">
-                        <Typography
-                          variant="body2"
-                          sx={{ color: 'text.secondary' }}
-                        >
-                          Shipping
-                        </Typography>
-                        <Typography variant="subtitle2">
-                          {convertCurrencyForCalculation(
-                            fromCurrency,
-                            toCurrency,
-                            totalDeliveryFee
-                          )}
-                        </Typography>
-                      </Stack>
-
-                      <Divider />
-
-                      <Stack direction="row" justifyContent="space-between">
-                        <Typography variant="subtitle1">Total</Typography>
-                        <Box sx={{ textAlign: 'right' }}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={8}
+                  md={4}
+                  sx={{
+                    marginLeft: {
+                      xs: '0px',
+                      sm: 'auto',
+                      md: 'auto',
+                    },
+                    marginRight: {
+                      xs: '0px',
+                      sm: 'auto',
+                      md: 'auto',
+                    },
+                  }}
+                >
+                  <Card sx={{ mb: 3 }}>
+                    <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
+                      <TextField
+                        sx={{ width: '70%' }}
+                        label="Enter Coupon Code"
+                      />
+                      <Button
+                        sx={{ ml: 1, width: '30%', height: '54px' }}
+                        variant="contained"
+                      >
+                        Apply
+                      </Button>
+                    </CardContent>
+                  </Card>
+                  <Card sx={{ mb: 3 }}>
+                    <CardHeader title="Order Summary" />
+                    <CardContent>
+                      <Stack spacing={2}>
+                        <Stack direction="row" justifyContent="space-between">
                           <Typography
-                            variant="subtitle1"
-                            sx={{ color: 'error.main' }}
+                            variant="body2"
+                            sx={{ color: 'text.secondary' }}
                           >
+                            Sub Total
+                          </Typography>
+                          <Typography variant="subtitle2">
                             {convertCurrencyForCalculation(
                               fromCurrency,
                               toCurrency,
-                              totalPrice + totalDeliveryFee
+                              totalPrice
                             )}
                           </Typography>
+                        </Stack>
+
+                        <Stack direction="row" justifyContent="space-between">
                           <Typography
-                            variant="caption"
-                            sx={{ fontStyle: 'italic' }}
+                            variant="body2"
+                            sx={{ color: 'text.secondary' }}
                           >
-                            (VAT included if applicable)
+                            Discount
                           </Typography>
-                        </Box>
+                          <Typography variant="subtitle2">0</Typography>
+                        </Stack>
+
+                        <Stack direction="row" justifyContent="space-between">
+                          <Typography
+                            variant="body2"
+                            sx={{ color: 'text.secondary' }}
+                          >
+                            Shipping
+                          </Typography>
+                          <Typography variant="subtitle2">
+                            {convertCurrencyForCalculation(
+                              fromCurrency,
+                              toCurrency,
+                              totalDeliveryFee
+                            )}
+                          </Typography>
+                        </Stack>
+
+                        <Divider />
+
+                        <Stack direction="row" justifyContent="space-between">
+                          <Typography variant="subtitle1">Total</Typography>
+                          <Box sx={{ textAlign: 'right' }}>
+                            <Typography
+                              variant="subtitle1"
+                              sx={{ color: 'error.main' }}
+                            >
+                              {convertCurrencyForCalculation(
+                                fromCurrency,
+                                toCurrency,
+                                totalPrice + totalDeliveryFee
+                              )}
+                            </Typography>
+                            <Typography
+                              variant="caption"
+                              sx={{ fontStyle: 'italic' }}
+                            >
+                              (VAT included if applicable)
+                            </Typography>
+                          </Box>
+                        </Stack>
                       </Stack>
-                    </Stack>
-                  </CardContent>
-                </Card>
-                <Button
-                  onClick={() => setAddressPopup(true)}
-                  fullWidth
-                  size="large"
-                  type="submit"
-                  variant="contained"
-                >
-                  Check Out
-                </Button>
+                    </CardContent>
+                  </Card>
+                  <Button
+                    onClick={() => setAddressPopup(true)}
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                  >
+                    Check Out
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
-          </Container>
-        </RootStyle>
-      </MainLayout>
+            </Container>
+          </RootStyle>
+        </MainLayout>
+      </Page>
       {addressPopup && (
         <ShippingAddressPopup
           handleCountryChange={handleCountryChange}
