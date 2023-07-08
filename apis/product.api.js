@@ -20,32 +20,31 @@ export const getProductBySku = async sku => {
   }
 }
 
-export const multiFilterProduct = async data => {
-  const { searchTerm, category, maxPrice, minPrice, type, style, fabric } = data
+export const multiFilterProduct = async (data) => {
+  const { searchTerm, category, maxPrice, minPrice, type, style, fabric } = data;
 
   const queryParams = {
     searchTerm,
     category,
     maxPrice,
     minPrice,
-    type,
-    style,
-    fabric,
-  }
+    type: Array.isArray(type) ? type.join(',') : type,
+    style: Array.isArray(style) ? style.join(',') : style,
+    fabric: Array.isArray(fabric) ? fabric.join(',') : fabric,
+  };
 
   const filteredParams = Object.fromEntries(
-    Object.entries(queryParams).filter(
-      ([_, value]) => value !== undefined && value !== ''
-    )
-  )
+    Object.entries(queryParams).filter(([_, value]) => value !== undefined && value !== '')
+  );
 
   try {
-    const queryString = new URLSearchParams(filteredParams).toString()
-    const url = `${BASE_URL}/product/?${queryString}`
-    const res = await axios.get(url)
+    const queryString = new URLSearchParams(filteredParams).toString();
+    const url = `${BASE_URL}/product/?${queryString}`;
+    const res = await axios.get(url);
 
-    return res?.data
+    return res?.data;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
+

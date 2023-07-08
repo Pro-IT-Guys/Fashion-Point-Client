@@ -124,8 +124,8 @@ export default function CartDrawer() {
                   }}
                 >
                   <img
-                    src={product.productId.frontImage}
-                    alt={product.productId.metaDescription}
+                    src={product?.productId?.frontImage}
+                    alt={product?.productId?.metaDescription}
                     style={{
                       width: '50px',
                       height: '50px',
@@ -134,18 +134,18 @@ export default function CartDrawer() {
                   />
                   <div>
                     <Typography sx={{ fontSize: 13 }}>
-                      {product.productId.name.length > 20
-                        ? product.productId.name.slice(0, 20) + '...'
-                        : product.productId.name}
+                      {product?.productId?.name.length > 20
+                        ? product?.productId?.name.slice(0, 20) + '...'
+                        : product?.productId?.name}
                     </Typography>
                     <Typography sx={{ fontSize: 13 }}>
-                      Price: ${product.productId.sellingPrice}
+                      Price: ${product?.productId?.sellingPrice}
                     </Typography>
                     <div className="mt-2">
                       <Button
                         variant="outlined"
                         size="small"
-                        onClick={() => handleDecreaseQuantity(product._id)}
+                        onClick={() => handleDecreaseQuantity(product?._id)}
                         style={{
                           fontSize: '10px',
                           padding: '0px',
@@ -158,12 +158,12 @@ export default function CartDrawer() {
                         <CustomIcons.RemoveIcon />
                       </Button>
                       <span style={{ margin: '0 10px' }}>
-                        {product.quantity}
+                        {product?.quantity}
                       </span>
                       <Button
                         variant="outlined"
                         size="small"
-                        onClick={() => handleIncreaseQuantity(product._id)}
+                        onClick={() => handleIncreaseQuantity(product?._id)}
                         style={{
                           fontSize: '10px',
                           padding: '0px',

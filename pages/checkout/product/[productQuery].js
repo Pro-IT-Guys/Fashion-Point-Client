@@ -16,6 +16,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
 } from '@mui/material'
 import {
@@ -313,6 +314,9 @@ export default function Checkout() {
               </Grid>
 
               <Grid item xs={12} md={4}>
+                <Card sx={{ mb: 3 }}>
+                  <TextField fullWidth label="Enter Coupon" />
+                </Card>
                 <Card sx={{ mb: 3 }}>
                   <CardHeader title="Order Summary" />
                   <CardContent>

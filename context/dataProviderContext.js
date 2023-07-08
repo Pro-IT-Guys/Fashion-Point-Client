@@ -18,10 +18,10 @@ export const ContextProvider = ({ children }) => {
   // Search Term amd Filter
   const [searchTerm, setSearchTerm] = useState('')
   const [category, setCategory] = useState('')
-  const [type, setType] = useState('')
-  const [style, setStyle] = useState('')
-  const [fabric, setFabric] = useState('')
-  const [value, setValue] = useState([0, 20000])
+  const [type, setType] = useState([])
+  const [style, setStyle] = useState([])
+  const [fabric, setFabric] = useState([])
+  const [value, setValue] = useState([0, 1000])
   const [cartUpdate, setCartUpdate] = useState('')
 
   useEffect(() => {
@@ -46,10 +46,9 @@ export const ContextProvider = ({ children }) => {
         const cart = await getCartByUserId({ token, userId: user?.data?._id })
         if (cart?.statusCode === 200) {
           setUsersCart(cart?.data)
-          console.log(cart?.data)
           setCartSimplified(cart?.data?.product)
         }
-      }else{
+      } else {
         setcurrentlyLoggedIn(null)
         setCartSimplified(null)
       }
@@ -61,10 +60,10 @@ export const ContextProvider = ({ children }) => {
 
   const handleClearFilter = () => {
     setCategory('')
-    setType('')
-    setStyle('')
-    setFabric('')
-    setValue([0, 20000])
+    setType([])
+    setStyle([])
+    setFabric([])
+    setValue([0, 1000])
   }
 
   const contextValues = {

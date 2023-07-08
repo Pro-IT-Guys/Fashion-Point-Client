@@ -1,7 +1,10 @@
 import {
+  Autocomplete,
   Box,
   Checkbox,
+  Chip,
   Container,
+  FormControl,
   FormControlLabel,
   FormGroup,
   Grid,
@@ -10,6 +13,7 @@ import {
   Rating,
   Slider,
   Stack,
+  TextField,
   Typography,
   styled,
 } from '@mui/material'
@@ -18,14 +22,18 @@ import ColorManyPicker from '../common/ColorManyPicker'
 import ShopProductSort from '../shop/ShopProductSort'
 import ProductCard from './ProductCard'
 import PopularProducts from './PopularProducts'
-import DeleteSweepOutlinedIcon from '@mui/icons-material/DeleteSweepOutlined';
+import DeleteSweepOutlinedIcon from '@mui/icons-material/DeleteSweepOutlined'
+import CloseIcon from '@mui/icons-material/Close'
+
 import {
   BRAND_OPTION,
   CATEGORY_OPTION,
   COLOR_OPTION,
   FABRIC_OPTION,
+  FABRIC_OPTION_ARRAY,
   SIZE_OPTION,
   STYLE_OPTION,
+  STYLE_OPTION_ARRAY,
   TYPE_OPTION,
 } from 'constant/product'
 import Image from 'next/image'
@@ -33,6 +41,7 @@ import { multiFilterProduct } from 'apis/product.api'
 import { ContextData } from 'context/dataProviderContext'
 import ProductLoader from './ProductLoader'
 import { useRouter } from 'next/router'
+import { convertCurrencyForCalculation } from 'helpers/currencyHandler'
 
 function valuetext(value) {
   return `${value}°C`
@@ -52,6 +61,8 @@ const Products = () => {
     value,
     setValue,
     handleClearFilter,
+    fromCurrency,
+    toCurrency,
   } = useContext(ContextData)
   const [openFilter, setOpenFilter] = useState(false)
   const [products, setProducts] = useState([])
@@ -68,11 +79,19 @@ const Products = () => {
 
   useEffect(() => {
     setLoading(true)
+    const maxPrice =
+      toCurrency === 'USD'
+        ? convertCurrencyForCalculation('USD', 'AED', value[1])
+        : value[1]
+    const minPrice =
+      fromCurrency === 'USD'
+        ? convertCurrencyForCalculation('USD', 'AED', value[0])
+        : value[0]
     const queryParams = {
       searchTerm,
       category,
-      maxPrice: value[1],
-      minPrice: value[0],
+      maxPrice,
+      minPrice,
       type,
       style,
       fabric,
@@ -123,16 +142,14 @@ const Products = () => {
         <Grid container>
           <div className="flex justify-between w-full mb-5">
             <div className="w-[20%] ">
-              {
-                router.pathname === '/' && (
-                  <h2 className="font-semibold text-xl  w-40">Just For You</h2>
-                )
-              }
+              {router.pathname === '/' && (
+                <h2 className="font-semibold text-xl  w-40">Just For You</h2>
+              )}
             </div>
             <div className="flex md:justify-start justify-end w-[80%]">
-              <div className='md:block hidden'>
+              <div className="md:block hidden">
                 <div className="flex gap-2 ml-2 ">
-                  {category && (
+                  {/* {category && (
                     <div className="flex items-center bg-white border rounded-full text-sm py-1 px-3">
                       {category}
                     </div>
@@ -151,7 +168,7 @@ const Products = () => {
                     <div className="flex items-center bg-white border rounded-full text-sm py-1 px-3">
                       {type}
                     </div>
-                  )}
+                  )} */}
                   {/* {value[0] > 0 && (
                   <div className="flex items-center bg-white border rounded-full text-sm py-1 px-3">
                     Min: {value[0]}
@@ -164,20 +181,20 @@ const Products = () => {
                 )} */}
                 </div>
               </div>
-              {(searchTerm ||
-                category ||
-                type ||
-                style ||
-                fabric ||
+              {(category.length ||
+                type.length ||
+                style.length ||
+                fabric.length ||
                 value[0] !== 0 ||
-                value[1] !== 20000) && (
-                <div
-                  onClick={handleClearFilter}
-                  className="text-sm flex items-center justify-center gap-1 cursor-pointer bg-orange-600 text-white py-1 px-3 ml-3 rounded-full"
-                >
-                 <DeleteSweepOutlinedIcon/> Clear Filter
-                </div>
-              )}
+                value[1] !== 1000) &&
+                !router.pathname.includes('category') && (
+                  <div
+                    onClick={handleClearFilter}
+                    className="text-sm flex items-center justify-center gap-1 cursor-pointer bg-orange-600 text-white py-1 px-3 ml-3 rounded-full"
+                  >
+                    <DeleteSweepOutlinedIcon /> Clear Filter
+                  </div>
+                )}
             </div>
             <div className="  w-[80%] hidden">
               <div className="flex justify-between items-center">
@@ -244,7 +261,7 @@ const Products = () => {
                         value={value}
                         onChange={handlePriceRange}
                         min={0}
-                        max={20000}
+                        max={2000}
                         valueLabelDisplay="auto"
                         // getAriaValueText={valuetext}
                       />
@@ -260,39 +277,37 @@ const Products = () => {
                     </div>
                   </div>
                 </div>
-                {
-                  router.pathname.includes('category') && (
-                    <div className="bg-white shadow rounded">
-                  <div className="  py-2 px-3 border-b">
-                    <h1 className="font-semibold "> Filter by Category</h1>
+                {router.pathname.includes('category') && (
+                  <div className="bg-white shadow rounded">
+                    <div className="  py-2 px-3 border-b">
+                      <h1 className="font-semibold "> Filter by Category</h1>
+                    </div>
+                    <div className=" py-3 pl-4 pr-3">
+                      <RadioGroup
+                        value={category}
+                        onChange={e => handleSelectFilterOption(e, setCategory)}
+                      >
+                        {CATEGORY_OPTION.map(item =>
+                          item?.classify?.map(item => (
+                            <FormControlLabel
+                              onClick={() => setCategory(item)}
+                              key={item}
+                              value={item}
+                              control={<Radio />}
+                              label={item}
+                            />
+                          ))
+                        )}
+                      </RadioGroup>
+                    </div>
                   </div>
-                  <div className=" py-3 pl-4 pr-3">
-                    <RadioGroup
-                      value={category}
-                      onChange={e => handleSelectFilterOption(e, setCategory)}
-                    >
-                      {CATEGORY_OPTION.map(item =>
-                        item?.classify?.map(item => (
-                          <FormControlLabel
-                          onClick={() => setCategory(item)}
-                            key={item}
-                            value={item}
-                            control={<Radio />}
-                            label={item}
-                          />
-                        ))
-                      )}
-                    </RadioGroup>
-                  </div>
-                </div>
-                  )
-                }
+                )}
                 <div className="bg-white shadow rounded">
                   <div className="  py-2 px-3 border-b">
                     <h1 className="font-semibold "> Filter by Fabrics</h1>
                   </div>
                   <div className=" py-3 pl-4 pr-3">
-                    <RadioGroup
+                    {/* <RadioGroup
                       value={fabric}
                       onChange={e => handleSelectFilterOption(e, setFabric)}
                     >
@@ -306,7 +321,47 @@ const Products = () => {
                           />
                         ))
                       )}
-                    </RadioGroup>
+                    </RadioGroup> */}
+
+                    <FormControl fullWidth>
+                      <div>
+                        <Autocomplete
+                          className="w-full"
+                          multiple
+                          freeSolo
+                          value={fabric}
+                          onChange={(event, newValue) => {
+                            setFabric(newValue)
+                          }}
+                          options={FABRIC_OPTION_ARRAY}
+                          getOptionLabel={option => option}
+                          renderTags={() => null}
+                          renderInput={params => (
+                            <TextField label="Fabric" {...params} />
+                          )}
+                        ></Autocomplete>
+
+                        <div style={{ marginTop: '8px' }}>
+                          {fabric.map((option, index) => (
+                            <Chip
+                              key={option}
+                              size="small"
+                              label={option}
+                              onDelete={() => {
+                                setFabric(prevValue =>
+                                  prevValue.filter(val => val !== option)
+                                )
+                              }}
+                              deleteIcon={<CloseIcon />}
+                              style={{
+                                marginRight: '8px',
+                                marginBottom: '8px',
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </FormControl>
                   </div>
                 </div>
                 <div className="bg-white shadow rounded">
@@ -314,7 +369,7 @@ const Products = () => {
                     <h1 className="font-semibold "> Filter by Style</h1>
                   </div>
                   <div className=" py-3 pl-4 pr-3 ">
-                    <RadioGroup
+                    {/* <RadioGroup
                       value={style}
                       onChange={e => handleSelectFilterOption(e, setStyle)}
                     >
@@ -328,7 +383,47 @@ const Products = () => {
                           />
                         ))
                       )}
-                    </RadioGroup>
+                    </RadioGroup> */}
+
+                    <FormControl fullWidth>
+                      <div>
+                        <Autocomplete
+                          className="w-full"
+                          multiple
+                          freeSolo
+                          value={style}
+                          onChange={(event, newValue) => {
+                            setStyle(newValue)
+                          }}
+                          options={STYLE_OPTION_ARRAY}
+                          getOptionLabel={option => option}
+                          renderTags={() => null}
+                          renderInput={params => (
+                            <TextField label="Style" {...params} />
+                          )}
+                        ></Autocomplete>
+
+                        <div style={{ marginTop: '8px' }}>
+                          {style.map((option, index) => (
+                            <Chip
+                              key={option}
+                              size="small"
+                              label={option}
+                              onDelete={() => {
+                                setStyle(prevValue =>
+                                  prevValue.filter(val => val !== option)
+                                )
+                              }}
+                              deleteIcon={<CloseIcon />}
+                              style={{
+                                marginRight: '8px',
+                                marginBottom: '8px',
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </FormControl>
                   </div>
                 </div>
 
@@ -337,7 +432,7 @@ const Products = () => {
                     <h1 className="font-semibold "> Filter by Type</h1>
                   </div>
                   <div className=" py-3 pl-4 pr-3 ">
-                    <RadioGroup
+                    {/* <RadioGroup
                       className="text-xs"
                       value={type}
                       onChange={e => handleSelectFilterOption(e, setType)}
@@ -351,7 +446,47 @@ const Products = () => {
                           label={item}
                         />
                       ))}
-                    </RadioGroup>
+                    </RadioGroup> */}
+
+                    <FormControl fullWidth>
+                      <div>
+                        <Autocomplete
+                          className="w-full"
+                          multiple
+                          freeSolo
+                          value={type}
+                          onChange={(event, newValue) => {
+                            setType(newValue)
+                          }}
+                          options={TYPE_OPTION}
+                          getOptionLabel={option => option}
+                          renderTags={() => null}
+                          renderInput={params => (
+                            <TextField label="Type" {...params} />
+                          )}
+                        ></Autocomplete>
+
+                        <div style={{ marginTop: '8px' }}>
+                          {type.map((option, index) => (
+                            <Chip
+                              key={option}
+                              size="small"
+                              label={option}
+                              onDelete={() => {
+                                setType(prevValue =>
+                                  prevValue.filter(val => val !== option)
+                                )
+                              }}
+                              deleteIcon={<CloseIcon />}
+                              style={{
+                                marginRight: '8px',
+                                marginBottom: '8px',
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </FormControl>
                   </div>
                 </div>
 

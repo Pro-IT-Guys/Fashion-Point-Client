@@ -26,8 +26,6 @@ import {
 } from '../../../../constant/product'
 import { QuillEditor } from 'src/components/editor'
 import { UploadMultiFile } from 'src/components/upload'
-import { createProduct } from 'apis/product.api'
-import { async } from 'react-input-emoji'
 import { BASE_URL } from 'apis/url'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
