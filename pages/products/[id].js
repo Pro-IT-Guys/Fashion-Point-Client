@@ -44,6 +44,7 @@ import { convertCurrency } from 'helpers/currencyHandler'
 import { toast } from 'react-hot-toast'
 import Loader from 'src/components/Loader/Loader'
 import Swal from 'sweetalert2'
+import ProductDetailsTab from 'src/components/Products/ProductDetailsTab'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -80,7 +81,7 @@ export default function ProductDetails() {
   const [productSize, setProductSize] = useState('XL')
   const [productDetails, setProductDetails] = useState({})
   const [productQuantity, setProductQuantity] = useState(1)
-  const [productColor, setProductColor] = useState('')
+  const [productColor, setProductColor] = useState('Black')
   const router = useRouter()
   const params = router.query.id
   const [loader, setLoader] = useState(false)
@@ -217,9 +218,9 @@ export default function ProductDetails() {
     <>
       <MainLayout>
         <Page title={`AYMi | ${name}`}>
-          <div className="bg-[#f7f7ff9c] pb-20  pt-10">
+          <div className="bg-[#f7f7ff9c] pb-10  pt-10">
             <Container maxWidth="lg">
-              <Card className="mt-28  pb-10">
+              <Card className="mt-28 ">
                 <Grid container>
                   <Grid
                     item
@@ -231,7 +232,7 @@ export default function ProductDetails() {
                   >
                     <ProductDetailsCarousel product={productDetails} />
                   </Grid>
-                  <Grid item xs={12} md={6} lg={5} p={5}>
+                  <Grid item xs={12} md={6} lg={5} p={3}>
                     <Label
                       // variant={theme.palette.mode === "light" ? "ghost" : "filled"}
                       color={quantity > 0 ? 'success' : 'error'}
@@ -287,6 +288,7 @@ export default function ProductDetails() {
                         <FormControl fullWidth>
                           <InputLabel id="size-label">Size</InputLabel>
                           <Select
+                            size='small'
                             labelId="size-label"
                             id="demo-simple-select"
                             value={productSize || ''}
@@ -304,8 +306,9 @@ export default function ProductDetails() {
 
                       <Grid item xs={6}>
                         <FormControl fullWidth>
-                          <InputLabel id="color-label">Color</InputLabel>
+                          <InputLabel id="size-label">Color</InputLabel>
                           <Select
+                          size='small'
                             labelId="color-label"
                             id="demo-simple-select"
                             value={productColor || ''}
@@ -338,7 +341,7 @@ export default function ProductDetails() {
                     </div>
                   </div> */}
 
-                    <div className="mt-10 pb-20 gap-4 relative items-center flex">
+                    <div className="mt-10 md:pb-20 pb-10 gap-4 relative items-center flex">
                       <p className="text-sm">Quantity :</p>
 
                       <div className="flex  gap-2">
@@ -371,7 +374,7 @@ export default function ProductDetails() {
                     </div>
                     <Divider sx={{ borderStyle: 'dashed' }} />
 
-                    <Stack spacing={2} direction={{ sm: 'row' }} sx={{ m: 5 }}>
+                    <Stack spacing={2} direction={'row'} sx={{ m: 5 }}>
                       <Button
                         fullWidth
                         // disabled={isMaxQuantity}
@@ -422,6 +425,8 @@ export default function ProductDetails() {
                   </Grid>
                 </Grid>
               </Card>
+
+              <ProductDetailsTab product={productDetails}/>
             </Container>
           </div>
         </Page>
