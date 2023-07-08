@@ -71,12 +71,38 @@ export default function AddProductForm() {
   }
 
   const handleRemove = file => {
-    const filteredItems = values?.images?.filter(_file => _file !== file)
-    setFieldValue('images', filteredItems)
+    const filteredItems = values?.images?.filter(_file => {
+      return _file?.preview !== file?.preview
+    })
+    setFieldValue(filteredItems)
   }
 
   const onSubmit = data => {
     // console.log(data?.frontImage[0]);
+
+    const updatedRestImage = imagesArray.map(file => {
+      const { name, lastModified, lastModifiedDate, size, type } = file
+      return {
+        name,
+        lastModified,
+        lastModifiedDate,
+        size,
+        type,
+        webkitRelativePath: '',
+      }
+    })
+
+    const convertedRestImages = updatedRestImage.map(image => {
+      const { name, type, lastModified, size } = image
+      const blob = image instanceof Blob ? image : new Blob([image], { type })
+      const file = new File([blob], name, {
+        type,
+        lastModified,
+        lastModifiedDate: new Date(lastModified),
+        size,
+      })
+      return file
+    })
 
     const productData = {
       name: data.name,
@@ -98,13 +124,14 @@ export default function AddProductForm() {
       style: data.style,
       fabric: data.fabric,
     }
+
     const formData = new FormData()
     // const boundary = formData.getBoundary();
     formData.append('name', data.name)
     formData.append('path', data?.name?.replace(/\s+/g, '-').toLowerCase())
     formData.append('frontImage', data.frontImage[0])
     formData.append('backImage', data.backImage[0])
-    formData.append('restImage', imagesArray)
+    formData.append('restImage', data.backImage[0])
     formData.append('buyingPrice', data.buyingPrice)
     formData.append('sellingPrice', data.sellingPrice)
     formData.append('description', description)
@@ -126,6 +153,7 @@ export default function AddProductForm() {
     })
       .then(res => res.json())
       .then(data => {
+        console.log(data, 'data')
         if (data?.statusCode === 200) {
           router.push('/dashboard/app/product/all-products')
           reset()
@@ -135,9 +163,10 @@ export default function AddProductForm() {
           })
         }
       })
+      .catch(err => {
+        console.log(err)
+      })
   }
-
-  console.log(imagesArray, 'imagesArray')
 
   return (
     <div className="flex justify-center bg-white rounded-xl shadow mt-5">
