@@ -76,7 +76,7 @@ const PageOne = () => {
 
   if (loading) return <CustomLoadingScreen />
 
-  console.log('allProduct', allProduct)
+  // console.log('allOrder', allOrder)
 
   return (
     <DashboardLayout>
@@ -140,7 +140,7 @@ const PageOne = () => {
                   }}
                 />
                 <CardContent>
-                  <ChartLine />
+                  <ChartLine allOrder={allOrder} />
                 </CardContent>
               </Card>
             </Grid>

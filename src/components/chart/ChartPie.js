@@ -5,7 +5,7 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 //
 import BaseOptionChart from './BaseOptionChart'
 import { CATEGORY_OPTION_ARRAY } from 'constant/product'
-import { getProductCountByCategory } from 'helpers/productCountByCategory'
+import { getProductCountByCategory } from 'helpers/count'
 
 // ----------------------------------------------------------------------
 
