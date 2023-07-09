@@ -39,7 +39,9 @@ export default function AddProductForm() {
   const [imagesArray, setImagesArray] = useState([])
   const [values, setFieldValue] = useState([])
   const router = useRouter()
+  const [imagesUrl, setImagesUrl] = useState([])
 
+  console.log(imagesUrl, 'imagesUrl')
   const {
     register,
     handleSubmit,
@@ -52,19 +54,48 @@ export default function AddProductForm() {
     setFieldValue('images', [...values?.images, ...files])
   }
 
-  const handleDrop = useCallback(
-    acceptedFiles => {
-      setImagesArray([...imagesArray, ...acceptedFiles])
-      setFieldValue(
-        acceptedFiles.map(file =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        )
-      )
-    },
-    [setFieldValue]
-  )
+  const handleDrop = useCallback(async acceptedFiles => {
+    // console.log(acceptedFiles, 'acceptedFiles')
+
+    const formData = new FormData()
+    acceptedFiles.forEach(file => {
+      console.log(file, 'files')
+      formData.append('image', file)
+    })
+
+    // console.log(img, 'img')
+    try {
+      const response = await fetch(`${BASE_URL}/image/multi-image-upload`, {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        console.log(data)
+        if (data?.status === 'success') {
+          setImagesUrl(data?.imageURLs)
+        }
+      } else {
+        console.error('Image upload failed.')
+      }
+    } catch (error) {
+      console.error('Error occurred while uploading images:', error)
+    }
+  }, [])
+
+  console.log(imagesUrl, 'imagesUrl');
+  //     setImagesArray([...imagesArray, ...acceptedFiles])
+  //     setFieldValue(
+  //       acceptedFiles.map(file =>
+  //         Object.assign(file, {
+  //           preview: URL.createObjectURL(file),
+  //         })
+  //       )
+  //     )
+  //   },
+  //   [setFieldValue]
+  // )
 
   const handleRemoveAll = () => {
     setFieldValue('images', [])
@@ -78,7 +109,6 @@ export default function AddProductForm() {
   }
 
   const onSubmit = data => {
-    // console.log(data?.frontImage[0]);
 
     const updatedRestImage = imagesArray.map(file => {
       const { name, lastModified, lastModifiedDate, size, type } = file
@@ -110,7 +140,7 @@ export default function AddProductForm() {
     formData.append('path', data?.name?.replace(/\s+/g, '-').toLowerCase())
     formData.append('frontImage', data.frontImage[0])
     formData.append('backImage', data.backImage[0])
-    formData.append('restImage', convertedRestImages)
+    formData.append('restImage', imagesUrl)
     formData.append('buyingPrice', data.buyingPrice)
     formData.append('sellingPrice', data.sellingPrice)
     formData.append('description', description)
