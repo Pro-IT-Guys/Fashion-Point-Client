@@ -13,6 +13,7 @@ import { getALlOrders } from 'apis/order.api'
 import CustomLoadingScreen from 'src/components/CustomLoadingScreen'
 import { getALlUsers } from 'apis/user.api'
 import { ContextData } from 'context/dataProviderContext'
+import { getAllProduct } from 'apis/product.api'
 const ChartPie = dynamic(() => import('src/components/chart/ChartPie'), {
   ssr: false,
 })
@@ -30,13 +31,15 @@ const PageOne = () => {
   const { onlineUsers } = useContext(ContextData)
   const [loading, setLoading] = useState(false)
   const [allUser, setAllUser] = useState([])
+  const [allProduct, setAllProduct] = useState([])
   const [allOrder, setAllOrder] = useState([])
   const [totalSellUSD, setTotalSellUSD] = useState(0)
   const [totalSellAED, setTotalSellAED] = useState(0)
 
   useEffect(() => {
     setLoading(true)
-    const retriveOrder = async () => {
+    const retriveData = async () => {
+      // get all orders
       const response = await getALlOrders()
       if (response?.statusCode === 200) {
         setAllOrder(response.data)
@@ -44,15 +47,22 @@ const PageOne = () => {
         setTotalSellAED(getTotalSell(response.data, 'yes', 'AED'))
       }
 
+      // get all users
       const users = await getALlUsers()
       if (users?.statusCode === 200) {
         setAllUser(users.data)
       }
 
+      // get all product
+      const products = await getAllProduct()
+      if (products?.statusCode === 200) {
+        setAllProduct(products.data)
+      }
+
       setLoading(false)
     }
 
-    retriveOrder()
+    retriveData()
   }, [])
 
   const getTotalSell = (orderData, condition, currency) => {
@@ -65,6 +75,8 @@ const PageOne = () => {
   }
 
   if (loading) return <CustomLoadingScreen />
+
+  console.log('allProduct', allProduct)
 
   return (
     <DashboardLayout>
@@ -102,7 +114,7 @@ const PageOne = () => {
                   }}
                 />
                 <CardContent>
-                  <ChartPie />
+                  <ChartPie allProduct={allProduct} />
                 </CardContent>
               </Card>
             </Grid>

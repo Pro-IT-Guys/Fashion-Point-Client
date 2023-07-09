@@ -14,7 +14,6 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import GroupsIcon from '@mui/icons-material/Groups'
 
 const renderStats = SALES_DATA => {
-  console.log('SALES_DATA', SALES_DATA)
   return SALES_DATA.map((item, index) => (
     <Grid item xs={12} sm={4} key={index}>
       <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>

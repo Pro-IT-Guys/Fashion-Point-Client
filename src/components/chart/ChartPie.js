@@ -5,12 +5,15 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 //
 import BaseOptionChart from './BaseOptionChart'
 import { CATEGORY_OPTION_ARRAY } from 'constant/product'
+import { getProductCountByCategory } from 'helpers/productCountByCategory'
 
 // ----------------------------------------------------------------------
 
-const CHART_DATA = [1, 2, 3, 4, 5, 6, 7, 8]
+export default function ChartPie({ allProduct }) {
+  const CHART_DATA = CATEGORY_OPTION_ARRAY.map(category => {
+    return getProductCountByCategory(allProduct, category)
+  })
 
-export default function ChartPie() {
   const chartOptions = merge(BaseOptionChart(), {
     labels: CATEGORY_OPTION_ARRAY,
     legend: {
