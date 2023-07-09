@@ -13,27 +13,6 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
 import GroupsIcon from '@mui/icons-material/Groups'
 
-const salesData = [
-  {
-    stats: '$10k',
-    title: 'Total Sales',
-    color: 'success',
-    icon: <AttachMoneyIcon sx={{ fontSize: '1.75rem' }} />,
-  },
-  {
-    stats: '8.5k',
-    title: 'Total Customer',
-    color: 'primary',
-    icon: <TrendingUpIcon sx={{ fontSize: '1.75rem' }} />,
-  },
-  {
-    stats: '200',
-    color: 'info',
-    title: 'Online Customer',
-    icon: <GroupsIcon sx={{ fontSize: '1.75rem' }} />,
-  },
-]
-
 const renderStats = SALES_DATA => {
   console.log('SALES_DATA', SALES_DATA)
   return SALES_DATA.map((item, index) => (
@@ -94,7 +73,9 @@ const AccountsCard = ({ totalSellUSD, totalSellAED, allUser, onlineUsers }) => {
                   component="span"
                   sx={{ fontWeight: 600, color: 'text.primary' }}
                 >
-                  December 2022
+                  {`${new Date().toLocaleString('default', {
+                    month: 'long',
+                  })} ${new Date().getFullYear()}`}
                 </Box>{' '}
                 summary
               </Typography>
