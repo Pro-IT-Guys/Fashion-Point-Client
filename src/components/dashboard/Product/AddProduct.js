@@ -104,34 +104,13 @@ export default function AddProductForm() {
       return file
     })
 
-    const productData = {
-      name: data.name,
-      path: data?.name?.replace(/\s+/g, '-').toLowerCase(),
-      frontImage: data.frontImage[0],
-      backImage: data.backImage[0],
-      restImage: imagesArray,
-      buyingPrice: data.buyingPrice,
-      sellingPrice: data.sellingPrice,
-      description: description,
-      metaDescription: data.metaDescription,
-      quantity: data.quantity,
-      category: data.category,
-      color: colorValue,
-      size: sizeValue,
-      tag: tagValue,
-      brand: data.brand,
-      type: typeValue,
-      style: data.style,
-      fabric: data.fabric,
-    }
-
     const formData = new FormData()
     // const boundary = formData.getBoundary();
     formData.append('name', data.name)
     formData.append('path', data?.name?.replace(/\s+/g, '-').toLowerCase())
     formData.append('frontImage', data.frontImage[0])
     formData.append('backImage', data.backImage[0])
-    formData.append('restImage', data.backImage[0])
+    formData.append('restImage', convertedRestImages[0])
     formData.append('buyingPrice', data.buyingPrice)
     formData.append('sellingPrice', data.sellingPrice)
     formData.append('description', description)
@@ -153,7 +132,6 @@ export default function AddProductForm() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data, 'data')
         if (data?.statusCode === 200) {
           router.push('/dashboard/app/product/all-products')
           reset()
