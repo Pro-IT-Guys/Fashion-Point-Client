@@ -23,7 +23,7 @@ import NavSection from '../../components/NavSection'
 //
 import { MHidden } from '../../components/@material-extend';
 import sidebarConfig from './SidebarConfig';
-import logoImg from '../../assets/logo/MainWebsiteLogo.jpg'
+import logoImg from '../../assets/logo/aymi-logo.png'
 import Image from 'next/image'
 import { ContextData } from 'context/dataProviderContext'
 
@@ -152,8 +152,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
               <Image
                 src={logoImg}
                 alt="Picture of the logo"
-                width={100}
-                height={40}
+                width={130}
+                height={60}
                 className="cursor-pointer"
               />
             </Box>
