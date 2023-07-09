@@ -169,7 +169,8 @@ export default function ProductDetails() {
       .finally(() => setLoader(false))
   }, [params])
 
-  const { name, sellingPrice, quantity, rating, sku } = productDetails || {}
+  const { name, sellingPrice, quantity, rating, metaDescription, frontImage } =
+    productDetails || {}
 
   if (loader || !productUrl) return <Loader />
 
@@ -217,7 +218,11 @@ export default function ProductDetails() {
   return (
     <>
       <MainLayout>
-        <Page title={`AYMi | ${name}`}>
+        <Page
+          title={`AYMi | ${name}`}
+          metaDescription={metaDescription}
+          metaImage={frontImage}
+        >
           <div className="bg-[#f7f7ff9c] pb-10  pt-10">
             <Container maxWidth="lg">
               <Card className="mt-28 ">
@@ -288,7 +293,7 @@ export default function ProductDetails() {
                         <FormControl fullWidth>
                           <InputLabel id="size-label">Size</InputLabel>
                           <Select
-                            size='small'
+                            size="small"
                             labelId="size-label"
                             id="demo-simple-select"
                             value={productSize || ''}
@@ -308,7 +313,7 @@ export default function ProductDetails() {
                         <FormControl fullWidth>
                           <InputLabel id="size-label">Color</InputLabel>
                           <Select
-                          size='small'
+                            size="small"
                             labelId="color-label"
                             id="demo-simple-select"
                             value={productColor || ''}
@@ -426,7 +431,7 @@ export default function ProductDetails() {
                 </Grid>
               </Card>
 
-              <ProductDetailsTab product={productDetails}/>
+              <ProductDetailsTab product={productDetails} />
             </Container>
           </div>
         </Page>
