@@ -13,13 +13,21 @@ import useSettings from 'src/hooks/useSettings'
 // components
 import Page from 'src/components/Page'
 import AccountsCard from 'src/components/dashboard/AccountAnalytics'
-import ChartPie from 'src/components/chart/ChartPie'
-import ChartLine from 'src/components/chart/ChartLine'
-import ChartBar from 'src/components/chart/ChartBar'
+import useAuthAdmin from 'src/utils/authMiddleware'
+import dynamic from 'next/dynamic'
+const ChartPie = dynamic(() => import('src/components/chart/ChartPie'), {
+  ssr: false,
+})
+const ChartLine = dynamic(() => import('src/components/chart/ChartLine'), {
+  ssr: false,
+})
+const ChartBar = dynamic(() => import('src/components/chart/ChartBar'), {
+  ssr: false,
+})
 
 // ----------------------------------------------------------------------
 
-export default function PageOne() {
+const PageOne = () => {
   const { themeStretch } = useSettings()
 
   return (
@@ -115,3 +123,5 @@ export default function PageOne() {
     </DashboardLayout>
   )
 }
+
+export default useAuthAdmin(PageOne)

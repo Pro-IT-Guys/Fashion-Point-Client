@@ -20,8 +20,9 @@ import MenuPopover from '../../components/MenuPopover'
 import { MIconButton } from '../../components/@material-extend'
 import { ContextData } from 'context/dataProviderContext'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined'
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
+import { useRouter } from 'next/router'
 
 // ----------------------------------------------------------------------
 
@@ -35,9 +36,9 @@ const MENU_OPTIONS = [
 
 export default function AccountPopover() {
   const anchorRef = useRef(null)
-  const { currentlyLoggedIn } = useContext(ContextData)
+  const { currentlyLoggedIn, setUpdate } = useContext(ContextData)
   const { role, email, name, image } = currentlyLoggedIn || {}
-
+  const router = useRouter()
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => {
@@ -45,6 +46,12 @@ export default function AccountPopover() {
   }
   const handleClose = () => {
     setOpen(false)
+  }
+
+  const handleLogOut = () => {
+    localStorage.removeItem('token')
+    router.push('/')
+    setUpdate(Math.random())
   }
 
   return (
@@ -92,71 +99,69 @@ export default function AccountPopover() {
 
         <Divider sx={{ my: 1 }} />
 
-
         <NextLink href={'/'}>
           <MenuItem
             onClick={handleClose}
             sx={{ typography: 'body2', py: 1, px: 2.5 }}
           >
-            <HomeOutlinedIcon className='mr-3'/>
+            <HomeOutlinedIcon className="mr-3" />
             Home
           </MenuItem>
         </NextLink>
 
-        {
-          role === 'admin' && (
-            <NextLink href={'/dashboard'}>
+        {role === 'admin' && (
+          <NextLink href={'/dashboard'}>
             <MenuItem
               onClick={handleClose}
               sx={{ typography: 'body2', py: 1, px: 2.5 }}
             >
-              <ShoppingCartOutlinedIcon className='mr-3'/>
+              <ShoppingCartOutlinedIcon className="mr-3" />
               Dashboard
             </MenuItem>
           </NextLink>
-          )
-        }
+        )}
 
         <NextLink href={'/dashboard/app/my-profile'}>
           <MenuItem
             onClick={handleClose}
             sx={{ typography: 'body2', py: 1, px: 2.5 }}
           >
-            <PersonOutlineOutlinedIcon className='mr-3'/>
+            <PersonOutlineOutlinedIcon className="mr-3" />
             My Account
           </MenuItem>
         </NextLink>
 
-        {
-          role === 'admin' && (
-            <NextLink href={'/dashboard/app/my-profile'}>
+        {role === 'admin' && (
+          <NextLink href={'/dashboard/app/my-profile'}>
             <MenuItem
               onClick={handleClose}
               sx={{ typography: 'body2', py: 1, px: 2.5 }}
             >
-              <ShoppingCartOutlinedIcon className='mr-3'/>
+              <ShoppingCartOutlinedIcon className="mr-3" />
               My Orders
             </MenuItem>
           </NextLink>
-          )
-        }
-     
-        {
-          role === 'admin' && (
-            <NextLink href={'/dashboard/app/orders'}>
+        )}
+
+        {role === 'admin' && (
+          <NextLink href={'/dashboard/app/orders'}>
             <MenuItem
               onClick={handleClose}
               sx={{ typography: 'body2', py: 1, px: 2.5 }}
             >
-              <ShoppingCartOutlinedIcon className='mr-3'/>
+              <ShoppingCartOutlinedIcon className="mr-3" />
               All Orders
             </MenuItem>
           </NextLink>
-          )
-        }
+        )}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
+          <Button
+            onClick={handleLogOut}
+            fullWidth
+            color="inherit"
+            variant="outlined"
+          >
             Logout
           </Button>
         </Box>

@@ -67,7 +67,7 @@ export default function ProductDetailsTab({product}) {
           <ProductDetails product={product}/>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          <ProductReview/>
+          <ProductReview product={product}/>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
          <ProductSizeChart/>

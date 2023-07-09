@@ -37,7 +37,7 @@ export default function LoginForm({ onClose }) {
           setUpdate(Math.random())
           toast.success('Login Successfully!')
           localStorage.setItem('token', res.headers.authorization.split(' ')[1])
-          localStorage.setItem('userRole', res?.data?.data.role)
+          localStorage.setItem('role', res?.data?.data.role)
           setTimeout(() => {
             window.location.reload()
           }, 1500)
