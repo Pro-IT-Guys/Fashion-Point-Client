@@ -4,7 +4,6 @@ import {
   CardHeader,
   Container,
   Grid,
-  Typography,
 } from '@mui/material'
 // layouts
 import DashboardLayout from 'src/layouts/dashboard'
@@ -21,7 +20,7 @@ const ChartPie = dynamic(() => import('src/components/chart/ChartPie'), {
 const ChartLine = dynamic(() => import('src/components/chart/ChartLine'), {
   ssr: false,
 })
-const ChartBar = dynamic(() => import('src/components/chart/ChartBar'), {
+const ChartArea = dynamic(() => import('src/components/chart/ChartArea'), {
   ssr: false,
 })
 
@@ -113,7 +112,7 @@ const PageOne = () => {
                   }}
                 />
                 <CardContent>
-                  <ChartBar />
+                  <ChartArea />
                 </CardContent>
               </Card>
             </Grid>

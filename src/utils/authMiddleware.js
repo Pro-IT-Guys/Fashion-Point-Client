@@ -21,7 +21,6 @@ const useAuthAdmin = WrappedComponent => {
 
     useEffect(() => {
       const userRole = getStorage('role')
-      console.log('userRole', userRole)
 
       // if (isLoading) return <CustomLoadingScreen />
 
