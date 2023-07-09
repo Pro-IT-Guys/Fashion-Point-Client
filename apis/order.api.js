@@ -28,3 +28,12 @@ export const updateOrder = async (orderId, data) => {
     console.log(error)
   }
 }
+
+export const getALlOrders = async () => { 
+  try {
+    const response = await axios.get(`${BASE_URL}/order`)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}

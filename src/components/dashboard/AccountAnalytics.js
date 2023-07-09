@@ -34,8 +34,9 @@ const salesData = [
   },
 ]
 
-const renderStats = () => {
-  return salesData.map((item, index) => (
+const renderStats = SALES_DATA => {
+  console.log('SALES_DATA', SALES_DATA)
+  return SALES_DATA.map((item, index) => (
     <Grid item xs={12} sm={4} key={index}>
       <Box key={index} sx={{ display: 'flex', alignItems: 'center' }}>
         <Avatar
@@ -60,7 +61,27 @@ const renderStats = () => {
   ))
 }
 
-const AccountsCard = () => {
+const AccountsCard = ({ totalSellUSD, totalSellAED, allUser, onlineUsers }) => {
+  const sell = `$${totalSellUSD}, ${totalSellAED} AED`
+  const user = `${allUser?.length}`
+  const online = `${onlineUsers?.length}`
+
+  const STATS = [sell, user, online]
+  const TITLE = ['Total Sales', 'Total Customer', 'Online Customer']
+  const COLOR = ['success', 'primary', 'info']
+  const ICON = [
+    <AttachMoneyIcon sx={{ fontSize: '1.75rem' }} />,
+    <TrendingUpIcon sx={{ fontSize: '1.75rem' }} />,
+    <GroupsIcon sx={{ fontSize: '1.75rem' }} />,
+  ]
+
+  const SALES_DATA = Array.from({ length: 3 }, (_, index) => ({
+    stats: STATS[index],
+    title: TITLE[index],
+    color: COLOR[index],
+    icon: ICON[index],
+  }))
+
   return (
     <>
       <Card>
@@ -89,7 +110,7 @@ const AccountsCard = () => {
         />
         <CardContent sx={{ pt: theme => `${theme.spacing(3)} !important` }}>
           <Grid container spacing={[5, 0]}>
-            {renderStats()}
+            {renderStats(SALES_DATA)}
           </Grid>
         </CardContent>
       </Card>
