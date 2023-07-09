@@ -62,7 +62,6 @@ export default function OrderDetails() {
   const { name, image, role } = userId || {}
   const { country, city, state, address_line } = shippingAddress || {}
 
-  console.log(orderDetails)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
