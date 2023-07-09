@@ -110,7 +110,7 @@ export default function AddProductForm() {
     formData.append('path', data?.name?.replace(/\s+/g, '-').toLowerCase())
     formData.append('frontImage', data.frontImage[0])
     formData.append('backImage', data.backImage[0])
-    formData.append('restImage', convertedRestImages[0])
+    formData.append('restImage', convertedRestImages)
     formData.append('buyingPrice', data.buyingPrice)
     formData.append('sellingPrice', data.sellingPrice)
     formData.append('description', description)
@@ -133,8 +133,8 @@ export default function AddProductForm() {
       .then(res => res.json())
       .then(data => {
         if (data?.statusCode === 200) {
-          router.push('/dashboard/app/product/all-products')
-          reset()
+          // router.push('/dashboard/app/product/all-products')
+          // reset()
           Swal.fire({
             icon: 'success',
             title: 'Product Created Successfully',
