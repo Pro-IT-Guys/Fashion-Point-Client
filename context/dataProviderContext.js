@@ -1,6 +1,6 @@
 import { loggedInUser } from 'apis/auth.api'
 import { getCartByUserId } from 'apis/cart.api'
-import { getStorage, setStorage } from 'apis/loadStorage'
+import { getStorage, removeStorage, setStorage } from 'apis/loadStorage'
 import { getCurrentLocation } from 'apis/location'
 import React, { createContext, useEffect, useState } from 'react'
 
@@ -41,6 +41,8 @@ export const ContextProvider = ({ children }) => {
 
       if (token) {
         const user = await loggedInUser(token)
+        // !user clear local storage
+        if (!user) removeStorage('token')
         setcurrentlyLoggedIn(user?.data)
         // Get the users cart
         const cart = await getCartByUserId({ token, userId: user?.data?._id })

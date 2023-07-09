@@ -27,3 +27,13 @@ export const setStorage = (key, value) => {
     }
   }
 }
+
+export const removeStorage = key => {
+  if (typeof window !== 'undefined') {
+    if (key) {
+      localStorage.removeItem(key)
+    } else {
+      console.log('key is required')
+    }
+  }
+}
