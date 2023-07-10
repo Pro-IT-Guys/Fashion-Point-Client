@@ -15,8 +15,10 @@ export default function TermsCondition() {
 
   return (
     <MainLayout>
-      <Container maxWidth="lg" className='min-h-[80vh]'>
-        <h1 className='mt-40 text-2xl font-semibold mb-5'>Terms and Condition</h1>
+      <Container maxWidth="lg" className="min-h-[80vh]">
+        <h1 className="mt-40 text-2xl font-semibold mb-5">
+          Terms and Condition
+        </h1>
 
         <div className="bg-white p-5 rounded  shadow mb-5">
           <div

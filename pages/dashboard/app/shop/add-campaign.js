@@ -1,15 +1,28 @@
 import { Container, InputAdornment, TextField } from '@mui/material'
 import { BASE_URL } from 'apis/url'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
+import CampaignList from 'src/components/CampaignProducts/CampaignList'
 import CampaignProducts from 'src/components/CampaignProducts/CampaignProducts'
+import CustomLoadingScreen from 'src/components/CustomLoadingScreen'
 import DashboardLayout from 'src/layouts/dashboard'
 import Swal from 'sweetalert2'
 
-export default function AddBanner() {
+export default function AddCampaign() {
   const [imageUrl, setImageUrl] = useState('')
   const [selectedProducts, setSelectedProducts] = useState([])
+  const [campaign, setCampaign] = useState([])
+  const [update, setUpdate] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1000)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   const {
     register,
@@ -17,6 +30,36 @@ export default function AddBanner() {
     formState: { errors },
     reset,
   } = useForm()
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/offer`)
+      .then(res => res.json())
+      .then(data => setCampaign(data.data))
+  }, [update])
+
+  const handleDeleteCampaign = id => {
+    fetch(`${BASE_URL}/offer/${id}`, {
+      method: 'DELETE',
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result?.success) {
+          setUpdate(Math.random())
+          Swal.fire({
+            title: 'Success!',
+            text: 'Campaign deleted successfully!',
+            icon: 'success',
+            confirmButtonText: 'Ok',
+          })
+        } else {
+          toast.error(result?.message)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        toast.error('Something went wrong! please try again later!')
+      })
+  }
 
   const handleImageUpload = e => {
     console.log(e)
@@ -58,6 +101,7 @@ export default function AddBanner() {
           reset()
           setImageUrl('')
           setSelectedProducts([])
+          setUpdate(Math.random())
           Swal.fire({
             title: 'Success!',
             text: 'Campaign added successfully!',
@@ -82,7 +126,7 @@ export default function AddBanner() {
     }
   }
 
-  console.log(selectedProducts)
+  if (isLoading) return <CustomLoadingScreen />
   return (
     <DashboardLayout>
       <Container maxWidth="lg">
@@ -216,6 +260,15 @@ export default function AddBanner() {
             </div>
           </form>
         </div>
+        {campaign && (
+          <div>
+            <h1 className="text-2xl font-semibold mb-8 mt-10">Campaign List</h1>
+            <CampaignList
+              data={campaign}
+              handleDeleteCampaign={handleDeleteCampaign}
+            />
+          </div>
+        )}
       </Container>
     </DashboardLayout>
   )
