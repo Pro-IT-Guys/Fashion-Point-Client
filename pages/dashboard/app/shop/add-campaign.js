@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import CampaignProducts from 'src/components/CampaignProducts/CampaignProducts'
 import DashboardLayout from 'src/layouts/dashboard'
+import Swal from 'sweetalert2'
 
 export default function AddBanner() {
   const [imageUrl, setImageUrl] = useState('')
@@ -39,7 +40,38 @@ export default function AddBanner() {
   }
 
   const onSubmit = async data => {
-    console.log(data)
+    fetch(`${BASE_URL}/offer`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...data,
+        product: selectedProducts,
+        image: imageUrl,
+      }),
+    })
+      .then(res => res.json())
+      .then(result => {
+        console.log(result)
+        if (result?.success) {
+          reset()
+          setImageUrl('')
+          setSelectedProducts([])
+          Swal.fire({
+            title: 'Success!',
+            text: 'Campaign added successfully!',
+            icon: 'success',
+            confirmButtonText: 'Ok',
+          })
+        } else {
+          toast.error(result?.message)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        toast.error('Something went wrong! please try again later!')
+      })
   }
 
   const handleSelectedProducts = id => {
@@ -50,7 +82,7 @@ export default function AddBanner() {
     }
   }
 
-  console.log(selectedProducts);
+  console.log(selectedProducts)
   return (
     <DashboardLayout>
       <Container maxWidth="lg">
@@ -88,17 +120,17 @@ export default function AddBanner() {
                       ),
                       type: 'number',
                     }}
-                    {...register('quantity', {
+                    {...register('discountPrice', {
                       required: {
                         value: true,
-                        message: 'Quantity is Required',
+                        message: 'Discount Price is Required',
                       },
                     })}
                   />
                   <label className="quantity">
-                    {errors.quantity?.type === 'required' && (
+                    {errors.discountPrice?.type === 'required' && (
                       <span className="pl-2 text-xs mt-1 text-red-500">
-                        {errors.quantity.message}
+                        {errors.discountPrice.message}
                       </span>
                     )}
                   </label>
@@ -113,7 +145,7 @@ export default function AddBanner() {
                     InputProps={{
                       type: 'date',
                     }}
-                    {...register('quantity', {
+                    {...register('startFrom', {
                       required: {
                         value: true,
                         message: 'Start Date is Required',
@@ -121,9 +153,9 @@ export default function AddBanner() {
                     })}
                   />
                   <label className="quantity">
-                    {errors.quantity?.type === 'required' && (
+                    {errors.startFrom?.type === 'required' && (
                       <span className="pl-2 text-xs mt-1 text-red-500">
-                        {errors.quantity.message}
+                        {errors.startFrom.message}
                       </span>
                     )}
                   </label>
@@ -136,7 +168,7 @@ export default function AddBanner() {
                     InputProps={{
                       type: 'date',
                     }}
-                    {...register('endDate', {
+                    {...register('endAt', {
                       required: {
                         value: true,
                         message: 'End Date is Required',
@@ -144,9 +176,9 @@ export default function AddBanner() {
                     })}
                   />
                   <label className="quantity">
-                    {errors.endDate?.type === 'required' && (
+                    {errors.endAt?.type === 'required' && (
                       <span className="pl-2 text-xs mt-1 text-red-500">
-                        {errors.endDate.message}
+                        {errors.endAt.message}
                       </span>
                     )}
                   </label>
@@ -170,7 +202,10 @@ export default function AddBanner() {
                 </div>
               </div>
             </div>
-            <CampaignProducts handleSelectedProducts={handleSelectedProducts} selectedProducts={selectedProducts}/>
+            <CampaignProducts
+              handleSelectedProducts={handleSelectedProducts}
+              selectedProducts={selectedProducts}
+            />
             <div className="flex justify-start mt-4 ml-3">
               <button
                 type="submit"
