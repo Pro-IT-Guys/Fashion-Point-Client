@@ -202,7 +202,7 @@
 }
 
 .invoice_footer {
-  margin-top: 15px;
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
 }
@@ -237,7 +237,7 @@
   padding: 4px 10px !important;
   color: #000000dc;
   margin: 3px 0 !important;
-  width: 50%;
+  width: 55%;
   text-align: right;
   font-family: 'Saira Condensed', sans-serif !important;
 }
@@ -254,7 +254,7 @@
 .invoice_header_wrapper {
   background-color: rgb(255, 196, 0);
   margin: 0 40px !important;
-  margin-top: 30px !important;
+  margin-top: 20px !important;
   height: 30px;
   display: flex;
   align-items: center;
@@ -274,7 +274,7 @@
 
 .footer_border_wrapper {
   background-color: rgb(255, 196, 0);
-  margin: 30px 40px !important;
+  margin: 0 40px !important;
   height: 4px;
   display: flex;
   align-items: center;
