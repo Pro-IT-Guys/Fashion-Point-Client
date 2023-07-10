@@ -45,6 +45,7 @@ import { toast } from 'react-hot-toast'
 import Loader from 'src/components/Loader/Loader'
 import Swal from 'sweetalert2'
 import ProductDetailsTab from 'src/components/Products/ProductDetailsTab'
+import RelatedProducts from 'src/components/Products/RelatedProducts'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -432,6 +433,7 @@ export default function ProductDetails() {
               </Card>
 
               <ProductDetailsTab product={productDetails} />
+              <RelatedProducts product={productDetails}/>
             </Container>
           </div>
         </Page>
