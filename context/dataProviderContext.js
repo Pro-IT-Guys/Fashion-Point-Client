@@ -56,7 +56,7 @@ export const ContextProvider = ({ children }) => {
       if (token) {
         const user = await loggedInUser(token)
         // !user clear local storage
-        if (!user) removeStorage('role')
+        // if (!user) removeStorage('role')
         setcurrentlyLoggedIn(user?.data)
         // Get the users cart
         const cart = await getCartByUserId({ token, userId: user?.data?._id })
