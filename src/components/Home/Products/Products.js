@@ -261,9 +261,10 @@ const Products = () => {
                       Filter by Price ({toCurrency})
                     </h1>
                   </div>
-                  <div className=" py-3 pl-4 pr-3 bg-white ">
+                  <div className=" py-3 px-3 bg-white ">
                     <Box>
                       <Slider
+                        size="medium"
                         getAriaLabel={() => 'Price range'}
                         value={value}
                         onChange={handlePriceRange}
@@ -580,7 +581,6 @@ const Products = () => {
                   </RadioGroup>
                 </div> */}
               </div>
-
 
               {/* <div className=" mt-4 shadow">
                 <div className="bg-[#f2f2f2] border py-2 px-3 rounded-t">
