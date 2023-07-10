@@ -36,10 +36,10 @@ export const multiFilterProduct = async data => {
     searchTerm,
     maxPrice,
     minPrice,
+    category: Array.isArray(category) ? category.join(',') : category,
     type: Array.isArray(type) ? type.join(',') : type,
     style: Array.isArray(style) ? style.join(',') : style,
     fabric: Array.isArray(fabric) ? fabric.join(',') : fabric,
-    category: Array.isArray(category) ? category.join(',') : category,
   }
 
   const filteredParams = Object.fromEntries(
