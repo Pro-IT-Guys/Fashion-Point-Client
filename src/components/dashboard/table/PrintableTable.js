@@ -24,6 +24,17 @@ const PrintableTable = ({ orderData }) => {
       let originalContents = document.body.innerHTML
       document.body.innerHTML = printContents
       window.print()
+
+      const tempLink = document.createElement('a')
+      tempLink.href =
+        'data:application/pdf;charset=utf-8,' +
+        encodeURIComponent(printContents)
+
+      const fileName = `invoice-${orderData?.userId?.name?.firstName}.pdf`
+      tempLink.setAttribute('download', fileName)
+
+      tempLink.click()
+
       document.body.innerHTML = originalContents
     }
   }
