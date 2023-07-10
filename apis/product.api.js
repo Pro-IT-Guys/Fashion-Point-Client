@@ -29,17 +29,60 @@ export const getProductBySku = async sku => {
   }
 }
 
+// export const multiFilterProduct = async data => {
+//   const { searchTerm, category, maxPrice, minPrice, type, style, fabric } = data
+
+//   const queryParams = {
+//     searchTerm,
+//     category,
+//     maxPrice,
+//     minPrice,
+//     type: Array.isArray(type) ? type.join(',') : type,
+//     style: Array.isArray(style) ? style.join(',') : style,
+//     fabric: Array.isArray(fabric) ? fabric.join(',') : fabric,
+//   }
+
+//   const filteredParams = Object.fromEntries(
+//     Object.entries(queryParams).filter(
+//       ([_, value]) => value !== undefined && value !== ''
+//     )
+//   )
+
+//   try {
+//     const queryString = new URLSearchParams(filteredParams).toString()
+//     const url = `${BASE_URL}/product/?${queryString}`
+//     console.log(url, 'url')
+//     const res = await axios.get(url)
+
+//     return res?.data
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
+
 export const multiFilterProduct = async data => {
   const { searchTerm, category, maxPrice, minPrice, type, style, fabric } = data
 
   const queryParams = {
     searchTerm,
-    category,
     maxPrice,
     minPrice,
-    type: Array.isArray(type) ? type.join(',') : type,
-    style: Array.isArray(style) ? style.join(',') : style,
-    fabric: Array.isArray(fabric) ? fabric.join(',') : fabric,
+  }
+
+  if (category.length > 0) {
+    queryParams.category = Array.isArray(category) ? category : [category]
+  }
+
+  if (type.length > 0) {
+    queryParams.type = Array.isArray(type) ? type : [type]
+  }
+
+  if (style.length > 0) {
+    queryParams.style = Array.isArray(style) ? style : [style]
+  }
+
+  if (fabric.length > 0) {
+    queryParams.fabric = Array.isArray(fabric) ? fabric : [fabric]
   }
 
   const filteredParams = Object.fromEntries(
@@ -51,6 +94,7 @@ export const multiFilterProduct = async data => {
   try {
     const queryString = new URLSearchParams(filteredParams).toString()
     const url = `${BASE_URL}/product/?${queryString}`
+    console.log(url, 'url')
     const res = await axios.get(url)
 
     return res?.data
