@@ -65,7 +65,7 @@ export default function Terms() {
             />
           </Card>
 
-          <div className="flex justify-start mt-4">
+          <div className="flex justify-start mt-4 ml-3">
             <button
               type="submit"
               className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
