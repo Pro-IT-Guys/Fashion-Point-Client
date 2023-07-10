@@ -43,8 +43,9 @@ const LINKS = [
   {
     headline: 'Legal',
     children: [
-      { name: 'Terms and Condition', href: '#' },
-      { name: 'Privacy Policy', href: '#' },
+      { name: 'Terms and Condition', href: '/shop/terms-and-condition' },
+      { name: 'Privacy Policy', href: '/shop/privacy-policy' },
+      { name: 'Return Policy', href: '/shop/return-and-refund-policy' },
     ],
   },
   {
