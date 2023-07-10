@@ -91,8 +91,8 @@ const sidebarConfig = [
         role: 'admin',
         children: [
           {
-            title: 'Add Banner',
-            path: PATH_DASHBOARD.myShop.addBanner,
+            title: 'Add Campaign',
+            path: PATH_DASHBOARD.myShop.addCampaign,
           },
           {
             title: 'Terms & Conditions',

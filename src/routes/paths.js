@@ -30,7 +30,7 @@ export const PATH_DASHBOARD = {
   },
   myShop: {
     root: path(ROOTS_DASHBOARD, '/app/shop'),
-    addBanner: path(ROOTS_DASHBOARD, '/app/shop/add-banner'),
+    addCampaign: path(ROOTS_DASHBOARD, '/app/shop/add-campaign'),
     terms: path(ROOTS_DASHBOARD, '/app/shop/terms'),
     privacy: path(ROOTS_DASHBOARD, '/app/shop/privacy'),
     return: path(ROOTS_DASHBOARD, '/app/shop/return'),
