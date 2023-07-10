@@ -2,29 +2,47 @@ import { merge } from 'lodash'
 import ReactApexChart from 'react-apexcharts'
 //
 import BaseOptionChart from './BaseOptionChart'
+import { getOrderCountByStatus } from 'helpers/count'
 
 // ----------------------------------------------------------------------
 
-const CHART_DATA = [
-  { name: 'Pending Order', data: [31, 40, 28, 51, 42, 109, 100] },
-  { name: 'Processing Order', data: [11, 32, 45, 32, 34, 52, 30] },
-  { name: 'Delivered Order', data: [20, 32, 60, 32, 14, 50, 80] },
-  { name: 'Canceled Order', data: [1, 50, 0, 20, 41, 12, 5] },
-]
+export default function ChartArea({ allOrder }) {
+  const ORDER_DATE = allOrder.map(order => {
+    const date = new Date(order.createdAt)
+    const dateString = date.toLocaleString('en-US', {
+      day: '2-digit',
+      month: '2-digit',
+      year: '2-digit',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    })
+    return dateString
+  })
 
-export default function ChartArea() {
+  const CHART_DATA = [
+    {
+      name: 'Pending Order',
+      data: getOrderCountByStatus(allOrder, 'Pending'),
+    },
+    {
+      name: 'Processing Order',
+      data: getOrderCountByStatus(allOrder, 'Processing'),
+    },
+    {
+      name: 'Delivered Order',
+      data: getOrderCountByStatus(allOrder, 'Delivered'),
+    },
+    {
+      name: 'Canceled Order',
+      data: getOrderCountByStatus(allOrder, 'Canceled'),
+    },
+  ]
+
   const chartOptions = merge(BaseOptionChart(), {
     xaxis: {
       type: 'datetime',
-      categories: [
-        '2018-09-19T00:00:00.000Z',
-        '2018-09-19T01:30:00.000Z',
-        '2018-09-19T02:30:00.000Z',
-        '2018-09-19T03:30:00.000Z',
-        '2018-09-19T04:30:00.000Z',
-        '2018-09-19T05:30:00.000Z',
-        '2018-09-19T06:30:00.000Z',
-      ],
+      categories: ORDER_DATE,
     },
     tooltip: { x: { format: 'dd/MM/yy HH:mm' } },
   })

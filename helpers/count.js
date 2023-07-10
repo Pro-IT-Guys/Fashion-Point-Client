@@ -14,3 +14,15 @@ export const getOrderCountByCategory = (orders, categoryName) => {
     return count + orderItemCount
   }, 0)
 }
+
+export const getOrderCountByStatus = (orders, status) => {
+  const orderCountPerDay = orders.reduce((countPerDay, order) => {
+    if (order.isPaid === 'yes' && order.deliveryStatus === status) {
+      const orderDate = new Date(order.createdAt).toLocaleDateString()
+      countPerDay[orderDate] = (countPerDay[orderDate] || 0) + 1
+    }
+    return countPerDay
+  }, {})
+  console.log('orderCountPerDay', orderCountPerDay)
+  return Object.values(orderCountPerDay).map(count => parseInt(count))
+}

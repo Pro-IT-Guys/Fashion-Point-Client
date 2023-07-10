@@ -166,7 +166,7 @@ const PageOne = () => {
                   }}
                 />
                 <CardContent>
-                  <ChartArea />
+                  <ChartArea allOrder={allOrder} />
                 </CardContent>
               </Card>
             </Grid>
