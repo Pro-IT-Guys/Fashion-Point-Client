@@ -124,6 +124,7 @@ const CheckoutPayment = () => {
 
     if (response.ok) {
       toast.success('Payment successful')
+      router.push(`/dashboard/app/invoice/${orderId}`)
       setLoading(false)
     } else {
       toast.error('Payment failed')

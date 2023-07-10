@@ -249,6 +249,7 @@ export default function Checkout() {
     const res = await placeOrder(orderData)
     if (res?.statusCode === 200) {
       toast.success('Order placed successfully.')
+      setAddressPopup(false)
       router.push(`/checkout/payment/${res?.data?._id}`)
     }
   }

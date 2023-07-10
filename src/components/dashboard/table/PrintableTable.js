@@ -9,11 +9,13 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { ContextData } from 'context/dataProviderContext'
+import { convertCurrency } from 'helpers/currencyHandler'
+import React, { useContext, useEffect, useState } from 'react'
 
 const PrintableTable = ({ orderData }) => {
+  const { fromCurrency, toCurrency } = useContext(ContextData)
   const [isLoaded, setIsLoaded] = useState(false)
-  console.log('orderData', orderData)
   /**
    * This function prints the contents of a specific HTML element and restores the original contents
    * of the page after printing.
@@ -100,7 +102,7 @@ const PrintableTable = ({ orderData }) => {
         </div>
 
         <Grid
-          sx={{ marginBottom: 8, paddingLeft: 10, paddingRight: 10 }}
+          sx={{ marginBottom: 5, paddingLeft: 10, paddingRight: 10 }}
           container
           spacing={5}
         >
@@ -123,10 +125,10 @@ const PrintableTable = ({ orderData }) => {
                     Quantity
                   </TableCell>
                   <TableCell className="table_cell_no_border" align="center">
-                    Paid With
+                    Payment Method
                   </TableCell>
                   <TableCell className="table_cell_no_border" align="center">
-                    Delivery Fee
+                    Payment Status
                   </TableCell>
                   <TableCell className="table_cell_no_border" align="right">
                     Total
@@ -160,15 +162,16 @@ const PrintableTable = ({ orderData }) => {
                       })`}
                     </TableCell>
                     <TableCell align="center">
-                      {`${orderData?.currency === 'USD' ? '$' : ''} ${
-                        orderData?.deliveryFee
-                      } ${orderData?.currency === 'AED' ? 'AED' : ''}`}
+                      {orderData?.isPaid === 'yes' ? 'Paid' : 'Unpaid'}
                     </TableCell>
                     <TableCell align="right">
                       <Typography>
-                        {`${orderData?.currency === 'USD' ? '$' : ''} ${
-                          orderData?.subTotal
-                        } ${orderData?.currency === 'AED' ? 'AED' : ''}`}
+                        {` ${convertCurrency(
+                          fromCurrency,
+                          toCurrency,
+                          Number(order?.product?.sellingPrice) *
+                            Number(order?.quantity)
+                        )}`}
                       </Typography>
                     </TableCell>
                   </TableRow>
@@ -200,10 +203,12 @@ const PrintableTable = ({ orderData }) => {
                   </h4>
                   <h4 className="sub_total">
                     Subtotal :
-                    {`${orderData?.currency === 'USD' ? '$' : ''} ${
+                    {`${orderData?.currency === 'USD' ? '$' : ''} ${(
                       Number(orderData?.subTotal) +
                       Number(orderData?.deliveryFee)
-                    } ${orderData?.currency === 'AED' ? 'AED' : ''}`}
+                    ).toFixed(2)} ${
+                      orderData?.currency === 'AED' ? 'AED' : ''
+                    }`}
                   </h4>
                 </div>
               </div>
