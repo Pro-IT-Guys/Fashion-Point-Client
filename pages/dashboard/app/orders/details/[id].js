@@ -22,6 +22,7 @@ import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined'
 import Scrollbar from 'src/components/Scrollbar'
 import { UserListHead } from 'src/components/list'
 import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined'
+import { getOrderById } from 'apis/order.api'
 
 const TABLE_HEAD = [
   { id: 'sr', label: 'SR', alignRight: false },
@@ -41,10 +42,13 @@ export default function OrderDetails() {
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
   useEffect(() => {
-    fetch(`${BASE_URL}/order/${params}`)
-      .then(res => res.json())
-      .then(data => setOrderDetails(data.data))
-      .catch(err => console.log(err))
+    const retriveData = async () => {
+      const orderData = await getOrderById({ orderId: params })
+      setOrderDetails(orderData?.data)
+    }
+    if (params) {
+      retriveData()
+    }
   }, [params])
 
   const {

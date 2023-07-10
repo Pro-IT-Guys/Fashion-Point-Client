@@ -4,7 +4,7 @@ import { BASE_URL } from './url'
 export const getOrderById = async data => {
   const { orderId } = data
   try {
-    const response = await axios.get(`${BASE_URL}/order/${orderId}`)
+    const response = await axios.get(`${BASE_URL}/order/single/${orderId}`)
     return response.data
   } catch (error) {
     console.log(error)
@@ -29,7 +29,7 @@ export const updateOrder = async (orderId, data) => {
   }
 }
 
-export const getALlOrders = async () => { 
+export const getALlOrders = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/order`)
     return response.data

@@ -7,13 +7,13 @@ import CustomLoadingScreen from 'src/components/CustomLoadingScreen'
 const OrderId = () => {
   const [orderId, setOrderId] = useState('')
   const [loading, setLoading] = useState(true)
-  const [orderData, setOrderData] = useState([])
+  const [orderData, setOrderData] = useState({})
   const router = useRouter()
 
   //--------------------> Get orderId from URL <---------------
   useEffect(() => {
     const pathname = router.asPath
-    const id = pathname.split('/')[4] // getting the order id here
+    const id = pathname.split('/')[4]
     setOrderId(id)
     setLoading(false)
   }, [router])
@@ -31,13 +31,15 @@ const OrderId = () => {
     fetchData()
   }, [orderId])
 
-  if (loading) return <CustomLoadingScreen />
-
-  return (
-    <>
-      <PrintableTable orderData={orderData} />
-    </>
-  )
+  if (loading || !orderData || Object.keys(orderData).length === 0) {
+    return <CustomLoadingScreen />
+  } else {
+    return (
+      <>
+        <PrintableTable orderData={orderData} />
+      </>
+    )
+  }
 }
 
 export default OrderId

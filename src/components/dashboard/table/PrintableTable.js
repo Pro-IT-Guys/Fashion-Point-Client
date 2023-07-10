@@ -46,7 +46,7 @@ const PrintableTable = ({ orderData }) => {
           src="/static/brand/aymi-logo.png"
           alt=""
         />
-        <h6 className="sub_name">Client Management Solutions</h6>
+        <h6 className="sub_name">Top Abaya Brand in UAE - AYMI Fashion</h6>
         <div className="invoice_header_wrapper">
           <h1 class="invoice_header">INVOICE</h1>
         </div>
@@ -60,9 +60,9 @@ const PrintableTable = ({ orderData }) => {
                     </Typography> */}
           <div className="invoice_to_left">
             <h3>Invoice to:</h3>
-            <h3 className="client_name">Ayon Jodder</h3>
+            <h3 className="client_name">{}</h3>
 
-            <h5>Contact: 5654657567</h5>
+            <h5>Contact: orderData?.userId?.email</h5>
 
             <h5>Email: sgdfgdgdhd@</h5>
 
@@ -71,7 +71,7 @@ const PrintableTable = ({ orderData }) => {
           <div className="invoice_id_section_right">
             <div className="invoice_id invoice_id_top">
               <h3 className="invoice_id_header">Invoice ID</h3>
-              <h5>5675675677</h5>
+              <h5>{orderData?._id.slice(0, 10)}</h5>
             </div>
             <div className="invoice_id">
               <h3 className="invoice_id_header">Date</h3>
@@ -100,140 +100,36 @@ const PrintableTable = ({ orderData }) => {
                     Serial
                   </TableCell>
                   <TableCell className="table_cell_no_border" align="center">
-                    Service Name
+                    Product
                   </TableCell>
                   <TableCell className="table_cell_no_border" align="center">
-                    Service Amount
+                    Quantity
                   </TableCell>
                   <TableCell className="table_cell_no_border" align="center">
-                    Paid Amount
+                    Delivery Fee
                   </TableCell>
                   <TableCell className="table_cell_no_border" align="right">
-                    Due Amount
+                    Total
                   </TableCell>
                 </TableRow>
               </TableHead>
-              {/* <TableBody>
-                  {clientData?.wrapper?.formData?.serviceArr?.map(
-                    (service, index) => (
-                      <TableRow>
-                        <TableCell align="left">
-                          <Typography>{index + 1}</Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography>
-                            {service.charAt(0).toUpperCase() + service.slice(1)}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography>
-                            {service === 'visa' &&
-                              clientData?.wrapper?.formData?.visaPaymentAmount}
-                            {service === 'reservation' &&
-                              clientData?.wrapper?.formData
-                                ?.reservationPaymentAmount}
-                            {service === 'insurance' &&
-                              clientData?.wrapper?.formData
-                                ?.healthInsurancePaymentAmount}
-                            {service === 'hotel' &&
-                              clientData?.wrapper?.formData?.hotelPaymentAmount}
-                            {service === 'transport' &&
-                              clientData?.wrapper?.formData
-                                ?.localTransportPaymentAmount}
-                            {service === 'airportMeet' &&
-                              clientData?.wrapper?.formData
-                                ?.airportPaymentAmount}
-                            {service === 'airAmbulance' &&
-                              clientData?.wrapper?.formData
-                                ?.airAmbulancePaymentAmount}
-                            {service === 'doctorOPD' &&
-                              clientData?.wrapper?.formData?.opdPaymentAmount}
-                            {service === 'doctorIPD' &&
-                              clientData?.wrapper?.formData?.ipdPaymentAmount}
-                            {service === 'telemedicine' &&
-                              clientData?.wrapper?.formData
-                                ?.telimedeicinePaymentAmount}
-                            {service === 'treatmentPlan' &&
-                              clientData?.wrapper?.formData
-                                ?.treatmentPlanPaymentAmount}
-                            {service === 'excursion' &&
-                              clientData?.wrapper?.formData
-                                ?.excursionPaymentAmount}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography>
-                            {service === 'visa' &&
-                              clientData?.wrapper?.formData?.visapaidAmount}
-                            {service === 'reservation' &&
-                              clientData?.wrapper?.formData
-                                ?.reservationpaidAmount}
-                            {service === 'insurance' &&
-                              clientData?.wrapper?.formData
-                                ?.healthInsurancepaidAmount}
-                            {service === 'hotel' &&
-                              clientData?.wrapper?.formData?.hotelpaidAmount}
-                            {service === 'transport' &&
-                              clientData?.wrapper?.formData
-                                ?.localTransportpaidAmount}
-                            {service === 'airportMeet' &&
-                              clientData?.wrapper?.formData?.airportpaidAmount}
-                            {service === 'airAmbulance' &&
-                              clientData?.wrapper?.formData
-                                ?.airAmbulancepaidAmount}
-                            {service === 'doctorOPD' &&
-                              clientData?.wrapper?.formData?.opdpaidAmount}
-                            {service === 'doctorIPD' &&
-                              clientData?.wrapper?.formData?.ipdpaidAmount}
-                            {service === 'telemedicine' &&
-                              clientData?.wrapper?.formData
-                                ?.telimedeicinepaidAmount}
-                            {service === 'treatmentPlan' &&
-                              clientData?.wrapper?.formData
-                                ?.treatmentPlanpaidAmount}
-                            {service === 'excursion' &&
-                              clientData?.wrapper?.formData
-                                ?.excursionpaidAmount}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="right">
-                          <Typography>
-                            {service === 'visa' &&
-                              clientData?.wrapper?.formData?.visaDueAmount}
-                            {service === 'reservation' &&
-                              clientData?.wrapper?.formData
-                                ?.reservationDueAmount}
-                            {service === 'insurance' &&
-                              clientData?.wrapper?.formData
-                                ?.healthInsuranceDueAmount}
-                            {service === 'hotel' &&
-                              clientData?.wrapper?.formData?.hotelDueAmount}
-                            {service === 'transport' &&
-                              clientData?.wrapper?.formData
-                                ?.localTransportDueAmount}
-                            {service === 'airportMeet' &&
-                              clientData?.wrapper?.formData?.airportDueAmount}
-                            {service === 'airAmbulance' &&
-                              clientData?.wrapper?.formData
-                                ?.airAmbulanceDueAmount}
-                            {service === 'doctorOPD' &&
-                              clientData?.wrapper?.formData?.opdDueAmount}
-                            {service === 'doctorIPD' &&
-                              clientData?.wrapper?.formData?.ipdDueAmount}
-                            {service === 'telemedicine' &&
-                              clientData?.wrapper?.formData
-                                ?.telimedeicineDueAmount}
-                            {service === 'treatmentPlan' &&
-                              clientData?.wrapper?.formData
-                                ?.treatmentPlanDueAmount}
-                            {service === 'excursion' &&
-                              clientData?.wrapper?.formData?.excursionDueAmount}
-                          </Typography>
-                        </TableCell>
-                      </TableRow>
-                    )
-                  )}
-                </TableBody> */}
+              <TableBody>
+                {orderData?.orderItems?.map((order, index) => (
+                  <TableRow>
+                    <TableCell align="left">
+                      <Typography>{index + 1}</Typography>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Typography>{order.currency}</Typography>
+                    </TableCell>
+                    <TableCell align="center"></TableCell>
+                    <TableCell align="center"></TableCell>
+                    <TableCell align="right">
+                      <Typography></Typography>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
             </Table>
             {/* </TableContainer> */}
             <div className="invoice_footer">
