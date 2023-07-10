@@ -44,6 +44,12 @@
   overflow-y: auto;
 }
 
+.filter-sticky{
+  position: sticky !important;
+  top: 170px !important;
+  z-index: 999 !important;
+}
+
 @media screen and (max-width: 768px) {
   .popup_content {
     width: 90%;

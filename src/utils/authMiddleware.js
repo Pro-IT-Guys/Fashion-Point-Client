@@ -25,7 +25,7 @@ const useAuthAdmin = WrappedComponent => {
       // if (isLoading) return <CustomLoadingScreen />
 
       if (userRole !== 'admin') {
-        router.push('/unauthorized')
+        router.push('/404')
       }
     }, [])
 

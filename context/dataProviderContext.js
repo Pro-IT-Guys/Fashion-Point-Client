@@ -21,7 +21,7 @@ export const ContextProvider = ({ children }) => {
   const [update, setUpdate] = useState('')
   // Search Term amd Filter
   const [searchTerm, setSearchTerm] = useState('')
-  const [category, setCategory] = useState('')
+  const [category, setCategory] = useState([])
   const [type, setType] = useState([])
   const [style, setStyle] = useState([])
   const [fabric, setFabric] = useState([])
@@ -75,7 +75,7 @@ export const ContextProvider = ({ children }) => {
   // console.log('cartSimplified', cartSimplified)
 
   const handleClearFilter = () => {
-    setCategory('')
+    setCategory([])
     setType([])
     setStyle([])
     setFabric([])

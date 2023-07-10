@@ -163,8 +163,8 @@ export default function AddProductForm() {
       .then(res => res.json())
       .then(data => {
         if (data?.statusCode === 200) {
-          // router.push('/dashboard/app/product/all-products')
-          // reset()
+          router.push('/dashboard/app/product/all-products')
+          reset()
           Swal.fire({
             icon: 'success',
             title: 'Product Created Successfully',

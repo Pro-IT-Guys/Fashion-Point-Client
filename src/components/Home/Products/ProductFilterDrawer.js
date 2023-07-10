@@ -26,6 +26,7 @@ import {
 import {
   BRAND_OPTION,
   CATEGORY_OPTION,
+  CATEGORY_OPTION_ARRAY,
   COLOR_OPTION,
   FABRIC_OPTION,
   FABRIC_OPTION_ARRAY,
@@ -130,7 +131,7 @@ export default function ProductFilterDrawer({
 
         <Scrollbar>
           <div className="pt-5 space-y-5 shadow py-5 pl-5 pr-3 bg-white ">
-            <div>
+            {/* <div>
               <Typography variant="subtitle1" gutterBottom>
                 Category
               </Typography>
@@ -139,7 +140,7 @@ export default function ProductFilterDrawer({
                 value={category}
                 onChange={e => handleSelectFilterOption(e, setCategory)}
               >
-                {CATEGORY_OPTION.map(item =>
+                {CATEGORY_OPTION?.map(item =>
                   item?.classify?.map(item => (
                     <FormControlLabel
                       className="text-xs p-0 m-0"
@@ -151,7 +152,7 @@ export default function ProductFilterDrawer({
                   ))
                 )}
               </RadioGroup>
-            </div>
+            </div> */}
             <div>
               <Typography variant="subtitle1" gutterBottom>
                 Price ({toCurrency})
@@ -168,6 +169,70 @@ export default function ProductFilterDrawer({
                 />
               </Box>
             </div>
+
+            <div className="bg-white shadow rounded">
+                  <div className="  py-2 px-3 border-b">
+                    <h1 className="font-semibold "> Filter by Categories</h1>
+                  </div>
+                  <div className=" py-3 pl-4 pr-3">
+                    {/* <RadioGroup
+                      value={fabric}
+                      onChange={e => handleSelectFilterOption(e, setFabric)}
+                    >
+                      {FABRIC_OPTION.map(item =>
+                        item?.classify?.map(item => (
+                          <FormControlLabel
+                            key={item}
+                            value={item}
+                            control={<Radio />}
+                            label={item}
+                          />
+                        ))
+                      )}
+                    </RadioGroup> */}
+
+                    <FormControl fullWidth>
+                      <div>
+                        <Autocomplete
+                          size="small"
+                          className="w-full"
+                          multiple
+                          freeSolo
+                          value={category}
+                          onChange={(event, newValue) => {
+                            setCategory(newValue)
+                          }}
+                          options={CATEGORY_OPTION_ARRAY}
+                          getOptionLabel={option => option}
+                          renderTags={() => null}
+                          renderInput={params => (
+                            <TextField label="Category" {...params} />
+                          )}
+                        ></Autocomplete>
+
+                        <div style={{ marginTop: '8px' }}>
+                          {category?.map((option, index) => (
+                            <Chip
+                              key={option}
+                              size="small"
+                              label={option}
+                              onDelete={() => {
+                                setCategory(prevValue =>
+                                  prevValue?.filter(val => val !== option)
+                                )
+                              }}
+                              deleteIcon={<CloseIcon />}
+                              style={{
+                                marginRight: '8px',
+                                marginBottom: '8px',
+                              }}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </FormControl>
+                  </div>
+                </div>
             {/* <div>
               <Typography variant="subtitle1" gutterBottom>
                 Brand

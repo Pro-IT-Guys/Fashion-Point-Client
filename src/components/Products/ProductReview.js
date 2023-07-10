@@ -85,6 +85,7 @@ export default function ProductReview({ product }) {
         </div>
 
         <div className="w-full lg:px-5 mt-10">
+          <h1 className='font-semibold mb-2'>Leave a Review on this Product</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <textarea
               placeholder="Write your review here..."
