@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   Card,
   Container,
   Stack,
@@ -61,7 +63,6 @@ export default function OrderDetails() {
 
   const { name, image, role } = userId || {}
   const { country, city, state, address_line } = shippingAddress || {}
-
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -161,9 +162,25 @@ export default function OrderDetails() {
             </div>
           </div>
           <div className="shadow-md p-5 rounded-md">
-            <h1 className="text-start font-semibold text-xl mb-3">
-              Payment Info
-            </h1>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                mb: 3,
+              }}
+            >
+              <h1 className="text-start font-semibold text-xl">Payment Info</h1>
+              <span
+                className={
+                  'bg-success cursor-pointer text-white p-2 rounded text-xs'
+                }
+                onClick={() => router.push(`/dashboard/app/invoice/${_id}`)}
+              >
+                Print Invoice
+              </span>
+            </Box>
+
             <div className="space-y-3 mt-3 ">
               <div className="shadow py-1 px-2  text-sm rounded">
                 <span className="font-semibold">Invoice : </span>
