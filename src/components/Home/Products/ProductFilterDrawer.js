@@ -130,338 +130,231 @@ export default function ProductFilterDrawer({
         <Divider />
 
         <Scrollbar>
-          <div className="pt-5 space-y-5 shadow py-5 pl-5 pr-3 bg-white ">
-            {/* <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Category
-              </Typography>
-              <RadioGroup
-                className="text-xs"
-                value={category}
-                onChange={e => handleSelectFilterOption(e, setCategory)}
-              >
-                {CATEGORY_OPTION?.map(item =>
-                  item?.classify?.map(item => (
-                    <FormControlLabel
-                      className="text-xs p-0 m-0"
-                      key={item}
-                      value={item}
-                      control={<Radio />}
-                      label={item}
-                    />
-                  ))
-                )}
-              </RadioGroup>
-            </div> */}
-            <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Price ({toCurrency})
-              </Typography>
-              <Box>
-                <Slider
-                  getAriaLabel={() => 'Price range'}
-                  value={value}
-                  onChange={handlePriceRange}
-                  min={0}
-                  max={2000}
-                  valueLabelDisplay="auto"
-                  // getAriaValueText={valuetext}
-                />
-              </Box>
+          <div className="pt-5 space-y-3 shadow py-5 px-2 bg-white ">
+        
+            <div className="bg-white shadow rounded">
+              <div className=" py-2 px-3 border-b">
+                <h1 className="font-semibold ">
+                  {' '}
+                  Filter by Price ({toCurrency})
+                </h1>
+              </div>
+              <div className=" py-3 pl-4 pr-3 bg-white ">
+                <Box>
+                  <Slider
+                    getAriaLabel={() => 'Price range'}
+                    value={value}
+                    onChange={handlePriceRange}
+                    min={0}
+                    max={2000}
+                    valueLabelDisplay="auto"
+                    // getAriaValueText={valuetext}
+                  />
+                </Box>
+
+                <div className="flex justify-between items-center">
+                  <div className="border px-3 rounded shadow-sm">
+                    <p>{value[0]}</p>
+                  </div>
+                  <div className="border px-3 rounded shadow-sm">
+                    <p>{value[1]}</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="bg-white shadow rounded">
-                  <div className="  py-2 px-3 border-b">
-                    <h1 className="font-semibold "> Filter by Categories</h1>
-                  </div>
-                  <div className=" py-3 pl-4 pr-3">
-                    {/* <RadioGroup
-                      value={fabric}
-                      onChange={e => handleSelectFilterOption(e, setFabric)}
-                    >
-                      {FABRIC_OPTION.map(item =>
-                        item?.classify?.map(item => (
-                          <FormControlLabel
-                            key={item}
-                            value={item}
-                            control={<Radio />}
-                            label={item}
-                          />
-                        ))
+              <div className="  py-2 px-3 border-b">
+                <h1 className="font-semibold "> Filter by Categories</h1>
+              </div>
+              <div className=" py-3 px-2">
+
+                <FormControl fullWidth>
+                  <div>
+                    <Autocomplete
+                      size="small"
+                      className="w-full "
+                      multiple
+                      freeSolo
+                      value={category}
+                      onChange={(event, newValue) => {
+                        setCategory(newValue)
+                      }}
+                      options={CATEGORY_OPTION_ARRAY}
+                      getOptionLabel={option => option}
+                      renderTags={() => null}
+                      renderInput={params => (
+                        <TextField label="Category" {...params} />
                       )}
-                    </RadioGroup> */}
+                    ></Autocomplete>
 
-                    <FormControl fullWidth>
-                      <div>
-                        <Autocomplete
+                    <div style={{ marginTop: '8px' }}>
+                      {category?.map((option, index) => (
+                        <Chip
+                          key={option}
                           size="small"
-                          className="w-full"
-                          multiple
-                          freeSolo
-                          value={category}
-                          onChange={(event, newValue) => {
-                            setCategory(newValue)
+                          label={option}
+                          onDelete={() => {
+                            setCategory(prevValue =>
+                              prevValue?.filter(val => val !== option)
+                            )
                           }}
-                          options={CATEGORY_OPTION_ARRAY}
-                          getOptionLabel={option => option}
-                          renderTags={() => null}
-                          renderInput={params => (
-                            <TextField label="Category" {...params} />
-                          )}
-                        ></Autocomplete>
-
-                        <div style={{ marginTop: '8px' }}>
-                          {category?.map((option, index) => (
-                            <Chip
-                              key={option}
-                              size="small"
-                              label={option}
-                              onDelete={() => {
-                                setCategory(prevValue =>
-                                  prevValue?.filter(val => val !== option)
-                                )
-                              }}
-                              deleteIcon={<CloseIcon />}
-                              style={{
-                                marginRight: '8px',
-                                marginBottom: '8px',
-                              }}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    </FormControl>
+                          deleteIcon={<CloseIcon />}
+                          style={{
+                            marginRight: '8px',
+                            marginBottom: '8px',
+                          }}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
-            {/* <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Brand
-              </Typography>
-              <RadioGroup>
-                {BRAND_OPTION.map(item =>
-                  item?.classify?.map(item => (
-                    <FormControlLabel
-                      key={item}
-                      value={item}
-                      control={<Radio />}
-                      label={item}
-                    />
-                  ))
-                )}
-              </RadioGroup>
-            </div> */}
-            <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Fabric
-              </Typography>
-              {/* <RadioGroup
-                value={fabric}
-                onChange={e => handleSelectFilterOption(e, setFabric)}
-              >
-                {FABRIC_OPTION.map(item =>
-                  item?.classify?.map(item => (
-                    <FormControlLabel
-                      key={item}
-                      value={item}
-                      control={<Radio />}
-                      label={item}
-                    />
-                  ))
-                )}
-              </RadioGroup> */}
-
-              <FormControl fullWidth>
-                <div>
-                  <Autocomplete
-                    className="w-full"
-                    multiple
-                    freeSolo
-                    value={fabric}
-                    onChange={(event, newValue) => {
-                      setFabric(newValue)
-                    }}
-                    options={FABRIC_OPTION_ARRAY}
-                    getOptionLabel={option => option}
-                    renderTags={() => null}
-                    renderInput={params => (
-                      <TextField label="Fabric" {...params} />
-                    )}
-                  ></Autocomplete>
-
-                  <div style={{ marginTop: '8px' }}>
-                    {fabric.map((option, index) => (
-                      <Chip
-                        key={option}
-                        size="small"
-                        label={option}
-                        onDelete={() => {
-                          setFabric(prevValue =>
-                            prevValue.filter(val => val !== option)
-                          )
-                        }}
-                        deleteIcon={<CloseIcon />}
-                        style={{
-                          marginRight: '8px',
-                          marginBottom: '8px',
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </FormControl>
-            </div>
-            <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Style
-              </Typography>
-              {/* <RadioGroup
-                value={style}
-                onChange={e => handleSelectFilterOption(e, setStyle)}
-              >
-                {STYLE_OPTION.map(item =>
-                  item?.classify?.map(item => (
-                    <FormControlLabel
-                      key={item}
-                      value={item}
-                      control={<Radio />}
-                      label={item}
-                    />
-                  ))
-                )}
-              </RadioGroup> */}
-
-              <FormControl fullWidth>
-                <div>
-                  <Autocomplete
-                    className="w-full"
-                    multiple
-                    freeSolo
-                    value={style}
-                    onChange={(event, newValue) => {
-                      setStyle(newValue)
-                    }}
-                    options={STYLE_OPTION_ARRAY}
-                    getOptionLabel={option => option}
-                    renderTags={() => null}
-                    renderInput={params => (
-                      <TextField label="Style" {...params} />
-                    )}
-                  ></Autocomplete>
-
-                  <div style={{ marginTop: '8px' }}>
-                    {style.map((option, index) => (
-                      <Chip
-                        key={option}
-                        size="small"
-                        label={option}
-                        onDelete={() => {
-                          setStyle(prevValue =>
-                            prevValue.filter(val => val !== option)
-                          )
-                        }}
-                        deleteIcon={<CloseIcon />}
-                        style={{
-                          marginRight: '8px',
-                          marginBottom: '8px',
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </FormControl>
+                </FormControl>
+              </div>
             </div>
 
-            {/* <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Colour
-              </Typography>
-              <ColorManyPicker
-                name="colors"
-                colors={COLOR_OPTION}
-                value={color}
-                onChange={handleChange}
-                onChecked={handleChecked}
-                sx={{ maxWidth: 36 * 4 }}
-              />
-            </div> */}
+            <div className="bg-white shadow rounded">
+              <div className="  py-2 px-3 border-b">
+                <h1 className="font-semibold "> Filter by Fabrics</h1>
+              </div>
+              <div className=" py-3 px-2">
 
-            <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Type
-              </Typography>
-              {/* <RadioGroup
-                className="text-xs"
-                value={type}
-                onChange={e => handleSelectFilterOption(e, setType)}
-              >
-                {TYPE_OPTION.map(item => (
-                  <FormControlLabel
-                    className="text-xs p-0 m-0"
-                    key={item}
-                    value={item}
-                    control={<Radio />}
-                    label={item}
-                  />
-                ))}
-              </RadioGroup> */}
+                <FormControl fullWidth>
+                  <div>
+                    <Autocomplete
+                      size="small"
+                      className="w-full"
+                      multiple
+                      freeSolo
+                      value={fabric}
+                      onChange={(event, newValue) => {
+                        setFabric(newValue)
+                      }}
+                      options={FABRIC_OPTION_ARRAY}
+                      getOptionLabel={option => option}
+                      renderTags={() => null}
+                      renderInput={params => (
+                        <TextField label="Fabric" {...params} />
+                      )}
+                    ></Autocomplete>
 
-              <FormControl fullWidth>
-                <div>
-                  <Autocomplete
-                    className="w-full"
-                    multiple
-                    freeSolo
-                    value={type}
-                    onChange={(event, newValue) => {
-                      setType(newValue)
-                    }}
-                    options={TYPE_OPTION}
-                    getOptionLabel={option => option}
-                    renderTags={() => null}
-                    renderInput={params => (
-                      <TextField label="Type" {...params} />
-                    )}
-                  ></Autocomplete>
-
-                  <div style={{ marginTop: '8px' }}>
-                    {type.map((option, index) => (
-                      <Chip
-                        key={option}
-                        size="small"
-                        label={option}
-                        onDelete={() => {
-                          setType(prevValue =>
-                            prevValue.filter(val => val !== option)
-                          )
-                        }}
-                        deleteIcon={<CloseIcon />}
-                        style={{
-                          marginRight: '8px',
-                          marginBottom: '8px',
-                        }}
-                      />
-                    ))}
+                    <div style={{ marginTop: '8px' }}>
+                      {fabric.map((option, index) => (
+                        <Chip
+                          key={option}
+                          size="small"
+                          label={option}
+                          onDelete={() => {
+                            setFabric(prevValue =>
+                              prevValue.filter(val => val !== option)
+                            )
+                          }}
+                          deleteIcon={<CloseIcon />}
+                          style={{
+                            marginRight: '8px',
+                            marginBottom: '8px',
+                          }}
+                        />
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </FormControl>
+                </FormControl>
+              </div>
+            </div>
+            <div className="bg-white shadow rounded">
+              <div className="  py-2 px-3 border-b">
+                <h1 className="font-semibold "> Filter by Style</h1>
+              </div>
+              <div className=" py-3 px-2">
+                <FormControl fullWidth>
+                  <div>
+                    <Autocomplete
+                      size="small"
+                      className="w-full"
+                      multiple
+                      freeSolo
+                      value={style}
+                      onChange={(event, newValue) => {
+                        setStyle(newValue)
+                      }}
+                      options={STYLE_OPTION_ARRAY}
+                      getOptionLabel={option => option}
+                      renderTags={() => null}
+                      renderInput={params => (
+                        <TextField label="Style" {...params} />
+                      )}
+                    ></Autocomplete>
+
+                    <div style={{ marginTop: '8px' }}>
+                      {style.map((option, index) => (
+                        <Chip
+                          key={option}
+                          size="small"
+                          label={option}
+                          onDelete={() => {
+                            setStyle(prevValue =>
+                              prevValue.filter(val => val !== option)
+                            )
+                          }}
+                          deleteIcon={<CloseIcon />}
+                          style={{
+                            marginRight: '8px',
+                            marginBottom: '8px',
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </FormControl>
+              </div>
             </div>
 
-            {/* <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Size
-              </Typography>
-              <RadioGroup className="text-xs">
-                {SIZE_OPTION.map(item => (
-                  <FormControlLabel
-                    className="text-xs p-0 m-0"
-                    key={item}
-                    value={item}
-                    control={<Radio />}
-                    label={item}
-                  />
-                ))}
-              </RadioGroup>
-            </div> */}
+            <div className="bg-white shadow rounded">
+              <div className="  py-2 px-3 border-b">
+                <h1 className="font-semibold "> Filter by Type</h1>
+              </div>
+              <div className=" py-3 px-2">
+                <FormControl fullWidth>
+                  <div>
+                    <Autocomplete
+                      size="small"
+                      className="w-full"
+                      multiple
+                      freeSolo
+                      value={type}
+                      onChange={(event, newValue) => {
+                        setType(newValue)
+                      }}
+                      options={TYPE_OPTION}
+                      getOptionLabel={option => option}
+                      renderTags={() => null}
+                      renderInput={params => (
+                        <TextField label="Type" {...params} />
+                      )}
+                    ></Autocomplete>
+
+                    <div style={{ marginTop: '8px' }}>
+                      {type.map((option, index) => (
+                        <Chip
+                          key={option}
+                          size="small"
+                          label={option}
+                          onDelete={() => {
+                            setType(prevValue =>
+                              prevValue.filter(val => val !== option)
+                            )
+                          }}
+                          deleteIcon={<CloseIcon />}
+                          style={{
+                            marginRight: '8px',
+                            marginBottom: '8px',
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </FormControl>
+              </div>
+            </div>
           </div>
         </Scrollbar>
       </Drawer>
