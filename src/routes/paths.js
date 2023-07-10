@@ -28,6 +28,13 @@ export const PATH_DASHBOARD = {
     createProduct: path(ROOTS_DASHBOARD, '/app/product/create-product'),
     review: path(ROOTS_DASHBOARD, '/app/product/review-product'),
   },
+  myShop: {
+    root: path(ROOTS_DASHBOARD, '/app/shop'),
+    addBanner: path(ROOTS_DASHBOARD, '/app/shop/add-banner'),
+    terms: path(ROOTS_DASHBOARD, '/app/shop/terms'),
+    privacy: path(ROOTS_DASHBOARD, '/app/shop/privacy'),
+    return: path(ROOTS_DASHBOARD, '/app/shop/return'),
+  },
   // category: {
   //   root: path(ROOTS_DASHBOARD, "/app/category"),
   //   addCategory: path(ROOTS_DASHBOARD, "/app/category/add-category"),

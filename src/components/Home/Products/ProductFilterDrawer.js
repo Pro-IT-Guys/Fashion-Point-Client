@@ -142,6 +142,7 @@ export default function ProductFilterDrawer({
               <div className=" py-3 pl-4 pr-3 bg-white ">
                 <Box>
                   <Slider
+                  size='medium'
                     getAriaLabel={() => 'Price range'}
                     value={value}
                     onChange={handlePriceRange}
