@@ -84,16 +84,30 @@ const sidebarConfig = [
         icon: ICONS.user,
         role: 'admin',
       },
-      // {
-      //   title: "My Shop",
-      //   path: PATH_DASHBOARD.settings.root,
-      //   icon: ICONS.analytics,
-      // },
-      // {
-      //   title: "Banner Setting",
-      //   path: PATH_DASHBOARD.banner.root,
-      //   icon: ICONS.dashboard,
-      // },
+      {
+        title: 'my shop',
+        path: PATH_DASHBOARD.myShop.root,
+        icon: ICONS.ecommerce,
+        role: 'admin',
+        children: [
+          {
+            title: 'Add Banner',
+            path: PATH_DASHBOARD.myShop.addBanner,
+          },
+          {
+            title: 'Terms & Conditions',
+            path: PATH_DASHBOARD.myShop.terms,
+          },
+          {
+            title: 'Privacy Policy',
+            path: PATH_DASHBOARD.myShop.privacy,
+          },
+          {
+            title: 'Return & Refund Policy',
+            path: PATH_DASHBOARD.myShop.return,
+          },
+        ],
+      },
       {
         title: 'tickets',
         path: PATH_DASHBOARD.ticket.root,

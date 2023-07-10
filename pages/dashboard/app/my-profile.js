@@ -116,8 +116,8 @@ export default function MyProfile() {
             <div className="w-full  sm:p-10 px-3 py-5">
               <div className=" rounded-lg w-full">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className="flex gap-4">
-                    <div className="w-[30%]">
+                  <div className="md:flex gap-4">
+                    <div className="md:w-[30%]">
                       <Box sx={{ mb: 5 }}>
                         <UploadAvatar
                           accept="image/*"
@@ -142,7 +142,7 @@ export default function MyProfile() {
                         />
                       </Box>
                     </div>
-                    <div className=" w-[70%]">
+                    <div className=" md:w-[70%]">
                       <div className="grid grid-cols-2 sm:gap-5 gap-3 mb-5">
                         <div className="flex flex-col items-start">
                           <TextField
