@@ -28,6 +28,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import {
   BRAND_OPTION,
   CATEGORY_OPTION,
+  CATEGORY_OPTION_ARRAY,
   COLOR_OPTION,
   FABRIC_OPTION,
   FABRIC_OPTION_ARRAY,
@@ -251,8 +252,8 @@ const Products = () => {
           </div>
 
           <div className=" md:flex w-full gap-5">
-            <div className="md:w-[20%] md:block hidden">
-              <div className="space-y-4">
+            <div className="md:w-[20%] md:block hidden ">
+              <div className="space-y-4 filter-sticky sticky top-20">
                 <div className="bg-white shadow rounded">
                   <div className=" py-2 px-3 border-b">
                     <h1 className="font-semibold ">
@@ -308,6 +309,7 @@ const Products = () => {
                     </div>
                   </div>
                 )}
+            
                 <div className="bg-white shadow rounded">
                   <div className="  py-2 px-3 border-b">
                     <h1 className="font-semibold "> Filter by Fabrics</h1>
@@ -516,7 +518,9 @@ const Products = () => {
                   </RadioGroup>
                 </div> */}
               </div>
-              <div className=" mt-4 shadow">
+
+
+              {/* <div className=" mt-4 shadow">
                 <div className="bg-[#f2f2f2] border py-2 px-3 rounded-t">
                   <h1 className="font-semibold text-xl">Best Selling</h1>
                 </div>
@@ -550,7 +554,7 @@ const Products = () => {
                     </>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className=" md:w-[80%]">
