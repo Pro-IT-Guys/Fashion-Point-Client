@@ -2,8 +2,7 @@ import { filter } from 'lodash'
 import { Icon } from '@iconify/react'
 import { sentenceCase } from 'change-case'
 import { useState, useEffect } from 'react'
-import plusFill from '@iconify/icons-eva/plus-fill'
-import { Link as RouterLink } from 'react-router-dom'
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 // material
 import { useTheme } from '@mui/material/styles'
 import {
@@ -187,10 +186,11 @@ export default function UserList() {
                           </TableCell>
 
                           <TableCell align="right">
-                            <UserMoreMenu
+                            {/* <UserMoreMenu
                               onDelete={() => handleDeleteUser(id)}
                               // userName={row?.name?.firstName}
-                            />
+                            /> */}
+                            <MoreVertIcon className='cursor-pointer'/>
                           </TableCell>
                         </TableRow>
                       )

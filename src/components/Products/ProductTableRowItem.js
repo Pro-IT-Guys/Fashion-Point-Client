@@ -89,6 +89,7 @@ export default function ProductTableRowItem({ row, setUpdate }) {
         {type?.map((item, index) => (
           <h1 key={index} className="text-xs w-16">
             {++index}. {item}
+            
           </h1>
         ))}
       </TableCell>

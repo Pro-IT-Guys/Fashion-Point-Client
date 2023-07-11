@@ -77,7 +77,6 @@ export default function AddCampaign() {
         setImageUrl(result?.url)
       })
       .catch(err => {
-        setLoading(false)
         toast.error('Something went wrong! please try again later!')
       })
   }
