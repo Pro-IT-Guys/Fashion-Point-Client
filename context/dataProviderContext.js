@@ -72,6 +72,9 @@ export const ContextProvider = ({ children }) => {
     retriveUser()
   }, [update, cartUpdate])
 
+
+
+
   // console.log('cartSimplified', cartSimplified)
 
   const handleClearFilter = () => {
