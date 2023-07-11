@@ -7,9 +7,9 @@ export const getProductCountByCategory = (products, categoryName) => {
 }
 
 export const getOrderCountByCategory = (orders, categoryName) => {
-  return orders.reduce((count, order) => {
-    const orderItemCount = order.orderItems.filter(
-      item => item.product.category === categoryName
+  return orders?.reduce((count, order) => {
+    const orderItemCount = order?.orderItems?.filter(
+      item => item?.product?.category === categoryName
     ).length
     return count + orderItemCount
   }, 0)
@@ -17,7 +17,7 @@ export const getOrderCountByCategory = (orders, categoryName) => {
 
 export const getOrderCountByStatus = (orders, status) => {
   const orderCountPerDay = orders.reduce((countPerDay, order) => {
-    if (order.isPaid === 'yes' && order.deliveryStatus === status) {
+    if (order?.isPaid === 'yes' && order?.deliveryStatus === status) {
       const orderDate = new Date(order.createdAt).toLocaleDateString()
       countPerDay[orderDate] = (countPerDay[orderDate] || 0) + 1
     }

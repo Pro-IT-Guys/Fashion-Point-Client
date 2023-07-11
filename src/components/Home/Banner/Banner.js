@@ -35,35 +35,46 @@ const Banner = () => {
         <Container maxWidth="lg">
           <div className="flex items-center md:gap-5 gap-2">
             <div className="md:w-[73%] w-[73%] overflow-hidden h-full ">
-              <Swiper
-                spaceBetween={30}
-                pagination={{
-                  clickable: true,
-                }}
-                modules={[Pagination, Autoplay]}
-                // className={styles}
-                autoplay={true}
-                navigation
-              >
-                <SwiperSlide>
-                  <div className=" ">
-                    <img
-                      alt="banner"
-                      src="https://i.ibb.co/k6bPwrY/Delivery-within-48-Hours-Banner-AYMI-Fashion-1200x600.png"
-                      className="w-full h-full object-cover md:rounded-lg rounded"
-                    />
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <div className=" ">
-                    <img
-                      alt="banner"
-                      src="https://i.ibb.co/p3H86Hs/Free-Delivery-Banner-AYMI-Fashion-1200x600.png"
-                      className="w-full h-full object-cover md:rounded-lg rounded"
-                    />
-                  </div>
-                </SwiperSlide>
-              </Swiper>
+              <div>
+                <Swiper
+                  spaceBetween={30}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  modules={[Pagination, Autoplay]}
+                  // className={styles}
+                  autoplay={true}
+                  navigation
+                >
+                  <SwiperSlide>
+                    <div className=" ">
+                      <img
+                        alt="banner"
+                        src="https://i.ibb.co/k6bPwrY/Delivery-within-48-Hours-Banner-AYMI-Fashion-1200x600.png"
+                        className="w-full h-full object-cover md:rounded-lg rounded"
+                      />
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className=" ">
+                      <img
+                        alt="banner"
+                        src="https://i.ibb.co/p3H86Hs/Free-Delivery-Banner-AYMI-Fashion-1200x600.png"
+                        className="w-full h-full object-cover md:rounded-lg rounded"
+                      />
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className=" ">
+                      <img
+                        alt="banner"
+                        src="https://i.ibb.co/k6bPwrY/Delivery-within-48-Hours-Banner-AYMI-Fashion-1200x600.png"
+                        className="w-full h-full object-cover md:rounded-lg rounded"
+                      />
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
+              </div>
             </div>
             <div className="md:w-[27%] w-[27%] overflow-hidden">
               <div className=" ">
