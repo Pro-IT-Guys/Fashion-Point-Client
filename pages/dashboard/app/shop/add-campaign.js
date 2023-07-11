@@ -56,13 +56,11 @@ export default function AddCampaign() {
         }
       })
       .catch(err => {
-        console.log(err)
         toast.error('Something went wrong! please try again later!')
       })
   }
 
   const handleImageUpload = e => {
-    console.log(e)
     const image = e.target.files[0]
     const formData = new FormData()
     formData.append('image', image)
@@ -73,11 +71,9 @@ export default function AddCampaign() {
     })
       .then(res => res.json())
       .then(result => {
-        console.log(result)
         setImageUrl(result?.url)
       })
       .catch(err => {
-        setLoading(false)
         toast.error('Something went wrong! please try again later!')
       })
   }

@@ -12,3 +12,12 @@ export const verifyCupon = async data => {
     console.log(error)
   }
 }
+
+export const getAllCupon = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/cupon`)
+    return response?.data
+  } catch (error) {
+    console.log(error)
+  }
+}

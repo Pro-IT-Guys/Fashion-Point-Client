@@ -34,6 +34,7 @@ export const PATH_DASHBOARD = {
     terms: path(ROOTS_DASHBOARD, '/app/shop/terms'),
     privacy: path(ROOTS_DASHBOARD, '/app/shop/privacy'),
     return: path(ROOTS_DASHBOARD, '/app/shop/return'),
+    cupon: path(ROOTS_DASHBOARD, '/app/shop/cupon'),
   },
   // category: {
   //   root: path(ROOTS_DASHBOARD, "/app/category"),
