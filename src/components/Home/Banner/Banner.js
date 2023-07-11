@@ -34,7 +34,7 @@ const Banner = () => {
         {/* <CategoryNav/> */}
         <Container maxWidth="lg">
           <div className="flex items-center md:gap-5 gap-2">
-            <div className="md:w-[73%] w-[73%] ">
+            <div className="md:w-[73%] w-[73%] overflow-hidden h-full ">
               <Swiper
                 spaceBetween={30}
                 pagination={{
@@ -65,7 +65,7 @@ const Banner = () => {
                 </SwiperSlide>
               </Swiper>
             </div>
-            <div className="md:w-[27%] w-[27%] ">
+            <div className="md:w-[27%] w-[27%] overflow-hidden">
               <div className=" ">
                 <img
                   alt="banner"

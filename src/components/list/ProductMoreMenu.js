@@ -18,6 +18,7 @@ import {
   ListItemText,
 } from '@mui/material'
 import DeleteModal from '../Modal/DeleteModal'
+import { useRouter } from 'next/router'
 // routes
 
 // ----------------------------------------------------------------------
@@ -30,6 +31,7 @@ ProductMoreMenu.propTypes = {
 export default function ProductMoreMenu({ id, onDelete, deleteModalOpen, setDeleteModalOpen, handleClickOpen, handleClose,}) {
   const ref = useRef(null)
   const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
 
 
   return (
@@ -50,10 +52,7 @@ export default function ProductMoreMenu({ id, onDelete, deleteModalOpen, setDele
       >
 
         <MenuItem
-        //   onClick={() => {
-        //     handleUpdateOrder(id, 'Processing')
-        //     setIsOpen(false)
-        //   }}
+          onClick={() => router.push(`/dashboard/app/product/edit/${id}`)}
           sx={{ color: 'text.secondary' }}
         >
           <ListItemIcon>
