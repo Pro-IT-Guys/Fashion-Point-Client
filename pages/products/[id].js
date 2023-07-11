@@ -16,6 +16,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  CardContent,
 } from '@mui/material'
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble'
 import React, { useContext, useEffect, useRef, useState } from 'react'
@@ -46,7 +47,8 @@ import Loader from 'src/components/Loader/Loader'
 import Swal from 'sweetalert2'
 import ProductDetailsTab from 'src/components/Products/ProductDetailsTab'
 import RelatedProducts from 'src/components/Products/RelatedProducts'
-import { ButtonAnimate } from 'src/components/animate'
+import { ButtonAnimate, DialogAnimate } from 'src/components/animate'
+import ClearIcon from '@mui/icons-material/Clear'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -89,6 +91,7 @@ export default function ProductDetails() {
   const [loader, setLoader] = useState(false)
   const [retriveCartState, setRetriveCartState] = useState(false)
   const [productUrl, setProductUrl] = useState('')
+  const [openSizeChartPopup, setOpenSizeChartPopup] = useState(false)
 
   useEffect(() => {
     setProductUrl(window.location.href)
@@ -281,7 +284,10 @@ export default function ProductDetails() {
                         )}
                       </p>
                       <ButtonAnimate mediumClick>
-                        <small className="border-primary border px-2 py-1 rounded-md text-primary cursor-pointer ml-5">
+                        <small
+                          onClick={() => setOpenSizeChartPopup(true)}
+                          className="border-primary border px-2 py-1 rounded-md text-primary cursor-pointer ml-5"
+                        >
                           Size Chart
                         </small>
                       </ButtonAnimate>
@@ -460,6 +466,28 @@ export default function ProductDetails() {
           </div>
         </Page>
       </MainLayout>
+      {openSizeChartPopup && (
+        <DialogAnimate
+          maxWidth="sm"
+          open={openSizeChartPopup}
+          onClose={setOpenSizeChartPopup}
+        >
+          <Card sx={{ width: '100%' }}>
+            <ClearIcon
+              onClick={() => setOpenSizeChartPopup(false)}
+              color="#000"
+              className="cross_icon margin_bottom_16px cursor-pointer"
+            />
+            <CardContent sx={{ mt: 2 }}>
+              <img
+                className="w-full h-full"
+                src="/static/mock-images/sizeChart.png"
+                alt=""
+              />
+            </CardContent>
+          </Card>
+        </DialogAnimate>
+      )}
 
       {currentlyLoggedIn?.role && currentlyLoggedIn?.role !== 'admin' && (
         <>
