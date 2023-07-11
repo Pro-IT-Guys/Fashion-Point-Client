@@ -46,6 +46,7 @@ import Loader from 'src/components/Loader/Loader'
 import Swal from 'sweetalert2'
 import ProductDetailsTab from 'src/components/Products/ProductDetailsTab'
 import RelatedProducts from 'src/components/Products/RelatedProducts'
+import { ButtonAnimate } from 'src/components/animate'
 
 const ChatButton = styled(Fab)(({ theme }) => ({
   position: 'fixed',
@@ -248,6 +249,12 @@ export default function ProductDetails() {
                     </Label>
 
                     <h1 className="text-xl font-semibold mt-3">{name}</h1>
+                    <Typography variant="body2" sx={{ color: 'text.primary' }}>
+                      {productDetails?.metaDescription?.length > 50
+                        ? productDetails?.metaDescription?.slice(0, 50)
+                        : productDetails?.metaDescription}
+                      {productDetails?.metaDescription?.length > 50 && '...'}
+                    </Typography>
 
                     <Stack
                       spacing={0.5}
@@ -263,12 +270,22 @@ export default function ProductDetails() {
                         {rating} Ratings
                       </Typography>
                     </Stack>
-                    <p className="text-sm">
-                      Brand: {productDetails?.brand?.name}
-                    </p>
-                    <p className="text-xl font-semibold mt-3 text-secondary">
-                      {convertCurrency(fromCurrency, toCurrency, sellingPrice)}
-                    </p>
+                    <p className="text-sm">Fabric: {productDetails?.fabric}</p>
+
+                    <div className="flex items-center mt-3">
+                      <p className="text-xl font-semibold  text-secondary">
+                        {convertCurrency(
+                          fromCurrency,
+                          toCurrency,
+                          sellingPrice
+                        )}
+                      </p>
+                      <ButtonAnimate mediumClick>
+                        <small className="border-primary border px-2 py-1 rounded-md text-primary cursor-pointer ml-5">
+                          Size Chart
+                        </small>
+                      </ButtonAnimate>
+                    </div>
                     {/* <strike className="text-[#7a7a7a] text-xs">
                     ৳ {sellingPrice}
                   </strike> */}
@@ -416,24 +433,29 @@ export default function ProductDetails() {
                       >
                         Buy Now
                       </Button>
-                      <Button
-                        onClick={() => {
-                          setOpenChat(!openChat)
-                        }}
-                        fullWidth
-                        size="medium"
-                        type="submit"
-                        variant="contained"
-                      >
-                        Message
-                      </Button>
+                      {currentlyLoggedIn?.role &&
+                        currentlyLoggedIn?.role !== 'admin' && (
+                          <Button
+                            onClick={() => {
+                              setOpenChat(!openChat)
+                            }}
+                            fullWidth
+                            size="medium"
+                            type="submit"
+                            variant="contained"
+                          >
+                            Message
+                          </Button>
+                        )}
                     </Stack>
                   </Grid>
                 </Grid>
               </Card>
 
               <ProductDetailsTab product={productDetails} />
-              <RelatedProducts product={productDetails}/>
+              {productDetails && Object.keys(productDetails).length > 0 && (
+                <RelatedProducts product={productDetails} />
+              )}
             </Container>
           </div>
         </Page>

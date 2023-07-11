@@ -5,6 +5,7 @@ import ProductCard from '../Home/Products/ProductCard'
 export default function RelatedProducts({ product }) {
   const [productList, setProductList] = useState([])
   const [loading, setLoading] = useState(true)
+  console.log(product, 'product')
 
   const { style, fabric, type, category, value } = product
 
@@ -27,19 +28,18 @@ export default function RelatedProducts({ product }) {
     retriveProduct()
   }, [category, value, type, style, fabric])
 
-  console.log(productList)
-
   return (
     <>
-
       {productList?.length > 0 && (
         <>
-        <h1 className='mt-10 font-semibold text-2xl mb-3'>Related Products</h1>
-        <div className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4">
-          {productList.map((item, index) => (
-            <ProductCard key={index} product={item} />
-          ))}
-        </div>
+          <h1 className="mt-10 font-semibold text-2xl mb-3">
+            Related Products
+          </h1>
+          <div className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4">
+            {productList.map((item, index) => (
+              <ProductCard key={index} product={item} />
+            ))}
+          </div>
         </>
       )}
     </>
