@@ -9,11 +9,13 @@ import {
   TableRow,
   Typography,
 } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { ContextData } from 'context/dataProviderContext'
+import { convertCurrency } from 'helpers/currencyHandler'
+import React, { useContext, useEffect, useState } from 'react'
 
 const PrintableTable = ({ orderData }) => {
+  const { fromCurrency, toCurrency } = useContext(ContextData)
   const [isLoaded, setIsLoaded] = useState(false)
-  console.log('orderData', orderData)
   /**
    * This function prints the contents of a specific HTML element and restores the original contents
    * of the page after printing.
@@ -24,6 +26,17 @@ const PrintableTable = ({ orderData }) => {
       let originalContents = document.body.innerHTML
       document.body.innerHTML = printContents
       window.print()
+
+      const tempLink = document.createElement('a')
+      tempLink.href =
+        'data:application/pdf;charset=utf-8,' +
+        encodeURIComponent(printContents)
+
+      const fileName = `invoice-${orderData?.userId?.name?.firstName}.pdf`
+      tempLink.setAttribute('download', fileName)
+
+      tempLink.click()
+
       document.body.innerHTML = originalContents
     }
   }
@@ -52,21 +65,27 @@ const PrintableTable = ({ orderData }) => {
         </div>
 
         <div className="inv_id_section">
-          {/* <Typography variant='body2' sx={{ fontWeight: 600, fontSize: 18, color: '#000' }}>
-                        Invoice ID : {clientData?.wrapper?.uniqueClientId}
-                    </Typography>
-                    <Typography variant='body2' sx={{ fontWeight: 600, fontSize: 18, color: '#000', textAlign: 'right' }}>
-                        Date: {new Date().toLocaleDateString('en-US')}
-                    </Typography> */}
           <div className="invoice_to_left">
             <h3>Invoice to:</h3>
-            <h3 className="client_name">{}</h3>
+            <h3 className="client_name">
+              {orderData?.userId?.name?.firstName}{' '}
+              {orderData?.userId?.name?.lastName}
+            </h3>
+            {orderData?.phoneNumber && (
+              <h5>Contact: {orderData?.phoneNumber}</h5>
+            )}
 
-            <h5>Contact: orderData?.userId?.email</h5>
+            {orderData?.email && <h5>Email: {orderData?.email}</h5>}
 
-            <h5>Email: sgdfgdgdhd@</h5>
-
-            <h5>Address: fghfghfd</h5>
+            {orderData?.shippingAddress && (
+              <h5>
+                Address: {orderData?.shippingAddress?.address_line}{' '}
+                {orderData?.shippingAddress?.zipCode},{' '}
+                {orderData?.shippingAddress?.city},{' '}
+                {orderData?.shippingAddress?.state},{' '}
+                {orderData?.shippingAddress?.country}
+              </h5>
+            )}
           </div>
           <div className="invoice_id_section_right">
             <div className="invoice_id invoice_id_top">
@@ -83,7 +102,7 @@ const PrintableTable = ({ orderData }) => {
         </div>
 
         <Grid
-          sx={{ marginBottom: 15, paddingLeft: 10, paddingRight: 10 }}
+          sx={{ marginBottom: 5, paddingLeft: 10, paddingRight: 10 }}
           container
           spacing={5}
         >
@@ -106,7 +125,10 @@ const PrintableTable = ({ orderData }) => {
                     Quantity
                   </TableCell>
                   <TableCell className="table_cell_no_border" align="center">
-                    Delivery Fee
+                    Payment Method
+                  </TableCell>
+                  <TableCell className="table_cell_no_border" align="center">
+                    Payment Status
                   </TableCell>
                   <TableCell className="table_cell_no_border" align="right">
                     Total
@@ -120,12 +142,37 @@ const PrintableTable = ({ orderData }) => {
                       <Typography>{index + 1}</Typography>
                     </TableCell>
                     <TableCell align="center">
-                      <Typography>{order.currency}</Typography>
+                      <Typography>
+                        {`${
+                          order?.product?.name.length > 20
+                            ? order?.product?.name?.slice(0, 20)
+                            : order?.product?.name
+                        }`}
+                        {order?.product?.name.length > 20 && '...'}
+                      </Typography>
                     </TableCell>
-                    <TableCell align="center"></TableCell>
-                    <TableCell align="center"></TableCell>
+                    <TableCell align="center">
+                      {order?.quantity} pices
+                    </TableCell>
+                    <TableCell align="center">
+                      {`${orderData?.paymentMethod
+                        ?.charAt(0)
+                        .toUpperCase()}${orderData?.paymentMethod?.slice(1)}(${
+                        orderData?.currency
+                      })`}
+                    </TableCell>
+                    <TableCell align="center">
+                      {orderData?.isPaid === 'yes' ? 'Paid' : 'Unpaid'}
+                    </TableCell>
                     <TableCell align="right">
-                      <Typography></Typography>
+                      <Typography>
+                        {` ${convertCurrency(
+                          fromCurrency,
+                          toCurrency,
+                          Number(order?.product?.sellingPrice) *
+                            Number(order?.quantity)
+                        )}`}
+                      </Typography>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -137,17 +184,32 @@ const PrintableTable = ({ orderData }) => {
                 <h5 className="footer_header">Thank you for your business</h5>
                 <div>
                   <h5 className="footer_header">Terms & Conditions</h5>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Veniam, corporis.
-                  </p>
+                  <p>By purchasing, you agree to our terms and conditions.</p>
                 </div>
               </div>
               <div className="right_footer_section">
                 <div className="sub_total_wrapper">
-                  <h4 className="sub_total">Total : 100</h4>
-                  <h4 className="sub_total">Delivery Fee : 100</h4>
-                  <h4 className="sub_total">Subtotal : 100</h4>
+                  <h4 className="sub_total">
+                    Total :
+                    {`${orderData?.currency === 'USD' ? '$' : ''} ${
+                      orderData?.subTotal
+                    } ${orderData?.currency === 'AED' ? 'AED' : ''}`}
+                  </h4>
+                  <h4 className="sub_total">
+                    Delivery Fee :
+                    {`${orderData?.currency === 'USD' ? '$' : ''} ${
+                      orderData?.deliveryFee
+                    } ${orderData?.currency === 'AED' ? 'AED' : ''}`}
+                  </h4>
+                  <h4 className="sub_total">
+                    Subtotal :
+                    {`${orderData?.currency === 'USD' ? '$' : ''} ${(
+                      Number(orderData?.subTotal) +
+                      Number(orderData?.deliveryFee)
+                    ).toFixed(2)} ${
+                      orderData?.currency === 'AED' ? 'AED' : ''
+                    }`}
+                  </h4>
                 </div>
               </div>
             </div>

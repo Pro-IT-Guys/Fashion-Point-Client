@@ -106,6 +106,10 @@ const sidebarConfig = [
             title: 'Return & Refund Policy',
             path: PATH_DASHBOARD.myShop.return,
           },
+          {
+            title: 'Cupon & Discount',
+            path: PATH_DASHBOARD.myShop.cupon,
+          },
         ],
       },
       {
