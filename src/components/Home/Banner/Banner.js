@@ -1,15 +1,10 @@
 import {
   Checkbox,
   Container,
-  FormControlLabel,
-  FormGroup,
-  Grid,
-  RadioGroup,
-  Stack,
-  Typography,
+
   styled,
 } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import CategoryNav from 'src/layouts/main/CategoryNav'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -18,6 +13,7 @@ import 'swiper/css/pagination'
 // import styles from "./Sidebar.module.css";
 import 'swiper/css/autoplay'
 import SwiperCore, { Pagination, Autoplay } from 'swiper'
+import { BASE_URL } from 'apis/url'
 
 const Banner = () => {
   const RootStyle = styled('div')(({ theme }) => ({
@@ -28,13 +24,29 @@ const Banner = () => {
     // paddingBottom: theme.spacing(5),
   }))
 
+  const [offer, setOffer] = useState('')
+
+  const { image, title, startFrom, endAt, isVisible } = offer || {}
+
+  useEffect(() => {
+    fetch(`${BASE_URL}/Offer `)
+      .then(res => res.json())
+      .then(data => setOffer(data.data))
+  }, [])
+
   return (
     <div className="bg-[#f7f7ff9c] pt-5 pb-10">
-      <RootStyle>
+      <div className="pt-32">
         {/* <CategoryNav/> */}
         <Container maxWidth="lg">
-          <div className="flex items-center md:gap-5 gap-2">
-            <div className="md:w-[73%] w-[73%] overflow-hidden h-full ">
+          <div
+            className={`${isVisible && 'flex'} items-center md:gap-5 gap-2`}
+          >
+            <div
+              className={`${
+                isVisible && 'md:w-[73%] w-[73%]'
+              } w-full h-full`}
+            >
               <div>
                 <Swiper
                   spaceBetween={30}
@@ -76,18 +88,20 @@ const Banner = () => {
                 </Swiper>
               </div>
             </div>
-            <div className="md:w-[27%] w-[27%] overflow-hidden">
-              <div className=" ">
-                <img
-                  alt="banner"
-                  src="https://i.ibb.co/8BbchCg/Save-Upto-80-AED-Side-Banner-AYMI-Fashion-custom-415x600.jpg"
-                  className="w-full h-full md:rounded-lg rounded"
-                />
+            {isVisible && (
+              <div className="md:w-[27%] w-[27%] overflow-hidden">
+                <div className=" ">
+                  <img
+                    alt="offer"
+                    src={image}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </Container>
-      </RootStyle>
+      </div>
     </div>
   )
 }
