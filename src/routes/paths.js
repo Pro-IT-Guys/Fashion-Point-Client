@@ -45,6 +45,9 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/app/orders'),
     // getOrders: path(ROOTS_DASHBOARD, "/app/category/all-orders"),
   },
+  currency: {
+    root: path(ROOTS_DASHBOARD, '/app/currency'),
+  },
   // settings: {
   //   root: path(ROOTS_DASHBOARD, "/app/settings/my-shop"),
   // },

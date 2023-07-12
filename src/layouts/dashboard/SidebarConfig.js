@@ -95,6 +95,10 @@ const sidebarConfig = [
             path: PATH_DASHBOARD.myShop.addCampaign,
           },
           {
+            title: 'Cupon & Discount',
+            path: PATH_DASHBOARD.myShop.cupon,
+          },
+          {
             title: 'Terms & Conditions',
             path: PATH_DASHBOARD.myShop.terms,
           },
@@ -106,11 +110,13 @@ const sidebarConfig = [
             title: 'Return & Refund Policy',
             path: PATH_DASHBOARD.myShop.return,
           },
-          {
-            title: 'Cupon & Discount',
-            path: PATH_DASHBOARD.myShop.cupon,
-          },
         ],
+      },
+      {
+        title: 'currency ',
+        path: PATH_DASHBOARD.currency.root,
+        icon: ICONS.user,
+        role: 'admin',
       },
       {
         title: 'tickets',
