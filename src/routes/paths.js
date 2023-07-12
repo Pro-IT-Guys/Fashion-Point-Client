@@ -48,12 +48,9 @@ export const PATH_DASHBOARD = {
   currency: {
     root: path(ROOTS_DASHBOARD, '/app/currency'),
   },
-  // settings: {
-  //   root: path(ROOTS_DASHBOARD, "/app/settings/my-shop"),
-  // },
-  // banner: {
-  //   root: path(ROOTS_DASHBOARD, "/app/settings/banner"),
-  // },
+  delivery: {
+    root: path(ROOTS_DASHBOARD, '/app/delivery-fee'),
+  },
   ticket: {
     root: path(ROOTS_DASHBOARD, '/app/tickets/chat'),
   },

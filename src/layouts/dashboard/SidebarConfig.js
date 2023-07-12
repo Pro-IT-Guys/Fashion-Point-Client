@@ -119,6 +119,12 @@ const sidebarConfig = [
         role: 'admin',
       },
       {
+        title: 'Delivery Fee ',
+        path: PATH_DASHBOARD.delivery.root,
+        icon: ICONS.user,
+        role: 'admin',
+      },
+      {
         title: 'tickets',
         path: PATH_DASHBOARD.ticket.root,
         icon: ICONS.user,
