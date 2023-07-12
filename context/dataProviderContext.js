@@ -1,4 +1,4 @@
-import { io } from 'socket.io-client'
+import io from 'socket.io-client'
 import { loggedInUser } from 'apis/auth.api'
 import { getCartByUserId } from 'apis/cart.api'
 import { getStorage, removeStorage, setStorage } from 'apis/loadStorage'
@@ -30,7 +30,7 @@ export const ContextProvider = ({ children }) => {
 
   // Initialize socket..Make useEffect if only the currentlyLoggedIn exist
   useEffect(() => {
-    socket.current = io('http://localhost:8080')
+    socket.current = io('https://aymifashion.com/')
     socket.current.emit('join', generateUniqueId(10))
 
     socket.current.on('activeUsers', users => {
@@ -71,9 +71,6 @@ export const ContextProvider = ({ children }) => {
     }
     retriveUser()
   }, [update, cartUpdate])
-
-
-
 
   // console.log('cartSimplified', cartSimplified)
 

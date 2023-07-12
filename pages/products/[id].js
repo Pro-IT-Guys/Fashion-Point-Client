@@ -141,7 +141,7 @@ export default function ProductDetails() {
   // Initialize socket..Make useEffect if only the currentlyLoggedIn exist
   useEffect(() => {
     if (currentlyLoggedIn) {
-      socket.current = io('http://localhost:8080')
+      socket.current = io('https://aymifashion.com')
       socket.current.emit('join', currentlyLoggedIn._id)
 
       socket.current.on('activeUsers', users => {
@@ -168,7 +168,7 @@ export default function ProductDetails() {
 
   useEffect(() => {
     setLoader(false)
-    fetch(`http://localhost:8000/api/v1/product/path/${params}`)
+    fetch(`https://aymifashion.com/api/v1/product/path/${params}`)
       .then(res => res.json())
       .then(data => setProductDetails(data?.data))
       .finally(() => setLoader(false))
