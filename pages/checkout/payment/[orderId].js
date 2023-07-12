@@ -108,7 +108,7 @@ const CheckoutPayment = () => {
   const handleStripePayment = async paymentMethodId => {
     setLoading(true)
     const response = await fetch(
-      'http://localhost:8000/api/v1/payment/stripe',
+      'https://aymifashion.com/api/v1/payment/stripe',
       {
         method: 'POST',
         headers: {
