@@ -138,8 +138,9 @@ export default function EditProductForm({ productId }) {
     formData.append('name', productName || productDetails?.name)
     formData.append(
       'path',
-      productName.replace(/\s+/g, '-').toLowerCase() + '-' + Date.now() ||
-        productDetails?.path
+      productName
+        ? productName.replace(/\s+/g, '-').toLowerCase() + '-' + Date.now()
+        : productDetails?.path.replace(/\s+/g, '-').toLowerCase() + '-' + Date.now()
     )
     formData.append(
       'frontImage',
