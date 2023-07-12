@@ -34,7 +34,7 @@ const Banner = () => {
         {/* <CategoryNav/> */}
         <Container maxWidth="lg">
           <div className="flex items-center md:gap-5 gap-2">
-            <div className="md:w-[73%] w-[73%] overflow-hidden h-full ">
+            <div className="md:w-[73%] w-[73%] h-full ">
               <Swiper
                 spaceBetween={30}
                 pagination={{

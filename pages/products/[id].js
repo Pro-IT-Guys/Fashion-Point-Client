@@ -468,7 +468,7 @@ export default function ProductDetails() {
       </MainLayout>
       {openSizeChartPopup && (
         <DialogAnimate
-          maxWidth="sm"
+          maxWidth="md"
           open={openSizeChartPopup}
           onClose={setOpenSizeChartPopup}
         >
