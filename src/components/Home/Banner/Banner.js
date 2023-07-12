@@ -1,10 +1,5 @@
-import {
-  Checkbox,
-  Container,
-
-  styled,
-} from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import { Checkbox, Container, styled } from '@mui/material'
+import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
 import CategoryNav from 'src/layouts/main/CategoryNav'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -14,6 +9,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
 import SwiperCore, { Pagination, Autoplay } from 'swiper'
 import { BASE_URL } from 'apis/url'
+import { ContextData } from 'context/dataProviderContext'
 
 const Banner = () => {
   const RootStyle = styled('div')(({ theme }) => ({
@@ -24,28 +20,33 @@ const Banner = () => {
     // paddingBottom: theme.spacing(5),
   }))
 
-  const [offer, setOffer] = useState('')
-
+  const {currentlyLoggedIn} = useContext(ContextData)
+  const [offer, setOffer] = useState([])
   const { image, title, startFrom, endAt, isVisible } = offer || {}
 
   useEffect(() => {
-    fetch(`${BASE_URL}/Offer `)
+    fetch(`${BASE_URL}/Offer`)
       .then(res => res.json())
-      .then(data => setOffer(data.data))
-  }, [])
+      .then(data => {
+        console.log(data, '=================================================================')
+        setOffer(data.data)
+      })
+      .catch(err => console.log(err))
+  }, [currentlyLoggedIn])
+
+  // console.log(
+  //   offer,
+  //   '==============================================================='
+  // )
 
   return (
     <div className="bg-[#f7f7ff9c] pt-5 pb-10">
       <div className="pt-32">
         {/* <CategoryNav/> */}
         <Container maxWidth="lg">
-          <div
-            className={`${isVisible && 'flex'} items-center md:gap-5 gap-2`}
-          >
+          <div className={`${isVisible && 'flex'} items-center md:gap-5 gap-2`}>
             <div
-              className={`${
-                isVisible && 'md:w-[73%] w-[73%]'
-              } w-full h-full`}
+              className={`${isVisible && 'md:w-[73%] w-[73%]'} w-full h-full`}
             >
               <div>
                 <Swiper
@@ -94,7 +95,7 @@ const Banner = () => {
                   <img
                     alt="offer"
                     src={image}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover rounded"
                   />
                 </div>
               </div>

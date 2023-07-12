@@ -161,7 +161,7 @@ export default function MainFooter() {
                 </span>
               </Link>
             </div>
-            {/* <div className="flex items-center  gap-2">
+            <div className="flex items-center  gap-2">
               <h1 className="text-xs">Design & Developed By ~ </h1>
               <Link
                 href="https://www.facebook.com/ImRanKhan81m/"
@@ -171,7 +171,7 @@ export default function MainFooter() {
                   Pro-IT-Guys
                 </span>
               </Link>
-            </div> */}
+            </div>
           </div>
         </Container>
       </RootStyle>
