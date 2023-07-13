@@ -2,7 +2,7 @@ import { filter } from 'lodash'
 import { Icon } from '@iconify/react'
 import { sentenceCase } from 'change-case'
 import { useState, useEffect } from 'react'
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 // material
 import { useTheme } from '@mui/material/styles'
 import {
@@ -88,7 +88,7 @@ export default function UserList() {
 
   useEffect(() => {
     fetch(
-      `https://aymifashion.com/api/v1/users?searchTerm=${filterName}&page=${page}&limit=${rowsPerPage}`
+      `http://localhost:8000/api/v1/users?searchTerm=${filterName}&page=${page}&limit=${rowsPerPage}`
     )
       .then(res => res.json())
       .then(data => setUserList(data?.data))
@@ -190,7 +190,7 @@ export default function UserList() {
                               onDelete={() => handleDeleteUser(id)}
                               // userName={row?.name?.firstName}
                             /> */}
-                            <MoreVertIcon className='cursor-pointer'/>
+                            <MoreVertIcon className="cursor-pointer" />
                           </TableCell>
                         </TableRow>
                       )
