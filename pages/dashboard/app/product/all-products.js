@@ -31,8 +31,6 @@ import ProductTableRowItem from 'src/components/Products/ProductTableRowItem'
 const TABLE_HEAD = [
   { id: 'name', label: 'Product', alignRight: false },
   { id: 'category', label: 'Category', alignRight: false },
-  { id: 'style', label: 'Style', alignRight: false },
-  { id: 'fabric', label: 'Fabric', alignRight: false },
   { id: 'type', label: 'Type', alignRight: false },
   { id: 'color', label: 'Color', alignRight: false },
   { id: 'size', label: 'Size', alignRight: false },

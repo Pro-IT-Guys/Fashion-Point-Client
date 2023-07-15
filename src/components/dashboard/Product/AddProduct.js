@@ -6,6 +6,7 @@ import {
   FormControl,
   InputAdornment,
   InputLabel,
+  MenuItem,
   Select,
   Stack,
   TextField,
@@ -23,6 +24,7 @@ import {
   TYPE_OPTION,
   COLOR_OPTION,
   SIZE_OPTION,
+  CATEGORY_OPTION_ARRAY,
 } from '../../../../constant/product'
 import { QuillEditor } from 'src/components/editor'
 import { UploadMultiFile } from 'src/components/upload'
@@ -150,10 +152,7 @@ export default function AddProductForm() {
     formData.append('color', colorValue)
     formData.append('size', sizeValue)
     formData.append('tag', tagValue)
-    formData.append('brand', data.brand)
-    formData.append('type', typeValue)
-    formData.append('style', data.style)
-    formData.append('fabric', data.fabric)
+    formData.append('type', data.type)
 
     fetch(`${BASE_URL}/product`, {
       method: 'POST',
@@ -203,11 +202,41 @@ export default function AddProductForm() {
                   </label>
                 </div>
                 <div className="flex flex-col items-start">
+                <FormControl fullWidth>
+                    <InputLabel>Type</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      // value={selectedCategory || ''}
+                      label="Type"
+                      {...register('type', {
+                        required: {
+                          value: true,
+                          message: 'Type is Required',
+                        },
+                      })}
+                    >
+                      {TYPE_OPTION?.map(option => (
+                        <MenuItem
+                          key={option} value={option}
+                        >
+                          <Typography >
+                            {option}
+                          </Typography>
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+
+                <div className="flex flex-col items-start">
                   <FormControl fullWidth>
                     <InputLabel>Category</InputLabel>
                     <Select
-                      label="Category"
-                      native
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      // value={selectedCategory || ''}
+                      label="Country"
                       {...register('category', {
                         required: {
                           value: true,
@@ -215,137 +244,19 @@ export default function AddProductForm() {
                         },
                       })}
                     >
-                      {CATEGORY_OPTION.map(category => (
-                        <optgroup key={category.group} label={category.group}>
-                          {category.classify.map(classify => (
-                            <option key={classify} value={classify}>
-                              {classify}
-                            </option>
-                          ))}
-                        </optgroup>
+                      {CATEGORY_OPTION_ARRAY?.map(option => (
+                        <MenuItem
+                          key={option} value={option}
+                        >
+                          <Typography >
+                            {option}
+                          </Typography>
+                        </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
                 </div>
-                <div className="flex flex-col items-start">
-                  <FormControl fullWidth>
-                    <InputLabel>Brand</InputLabel>
-                    <Select
-                      label="Brand"
-                      native
-                      {...register('brand', {
-                        required: {
-                          value: true,
-                          message: 'Brand is Required',
-                        },
-                      })}
-                    >
-                      {BRAND_OPTION.map(brand => (
-                        <optgroup key={brand.group} label={brand.group}>
-                          {brand.classify.map(classify => (
-                            <option key={classify} value={classify}>
-                              {classify}
-                            </option>
-                          ))}
-                        </optgroup>
-                      ))}
-                    </Select>
-                    <label className="label">
-                      {errors.brand?.type === 'required' && (
-                        <span className="pl-2 text-xs mt-1 text-red-500">
-                          {errors.brand.message}
-                        </span>
-                      )}
-                    </label>
-                  </FormControl>
-                </div>
-                <div className="flex flex-col items-start">
-                  <FormControl fullWidth>
-                    <InputLabel>Style</InputLabel>
-                    <Select
-                      label="Style"
-                      native
-                      {...register('style', {
-                        required: {
-                          value: true,
-                          message: 'Style is Required',
-                        },
-                      })}
-                    >
-                      {STYLE_OPTION.map(style => (
-                        <optgroup key={style.group} label={style.group}>
-                          {style.classify.map(classify => (
-                            <option key={classify} value={classify}>
-                              {classify}
-                            </option>
-                          ))}
-                        </optgroup>
-                      ))}
-                    </Select>
-                    <label className="label">
-                      {errors.style?.type === 'required' && (
-                        <span className="pl-2 text-xs mt-1 text-red-500">
-                          {errors.style.message}
-                        </span>
-                      )}
-                    </label>
-                  </FormControl>
-                </div>
-                <div className="flex flex-col items-start">
-                  <FormControl fullWidth>
-                    <InputLabel>Fabric</InputLabel>
-                    <Select
-                      label="fabric"
-                      native
-                      {...register('fabric', {
-                        required: {
-                          value: true,
-                          message: 'Fabric is Required',
-                        },
-                      })}
-                    >
-                      {FABRIC_OPTION.map(fabric => (
-                        <optgroup key={fabric.group} label={fabric.group}>
-                          {fabric.classify.map(classify => (
-                            <option key={classify} value={classify}>
-                              {classify}
-                            </option>
-                          ))}
-                        </optgroup>
-                      ))}
-                    </Select>
-                    <label className="label">
-                      {errors.style?.type === 'required' && (
-                        <span className="pl-2 text-xs mt-1 text-red-500">
-                          {errors.style.message}
-                        </span>
-                      )}
-                    </label>
-                  </FormControl>
-                </div>
-                <div className="flex flex-col items-start">
-                  <FormControl fullWidth>
-                    <Autocomplete
-                      className="w-full"
-                      multiple
-                      freeSolo
-                      value={typeValue}
-                      onChange={(event, newValue) => {
-                        setTypeValue(newValue)
-                      }}
-                      options={TYPE_OPTION}
-                      getOptionLabel={option => option}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip key={option} size="small" label={option} />
-                        ))
-                      }
-                      renderInput={params => (
-                        <TextField label="Type" {...params} />
-                      )}
-                    ></Autocomplete>
-                  </FormControl>
-                </div>
+       
                 <div className="flex flex-col items-start">
                   <FormControl fullWidth>
                     <Autocomplete

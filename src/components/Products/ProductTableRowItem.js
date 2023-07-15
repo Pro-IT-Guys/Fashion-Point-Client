@@ -15,9 +15,7 @@ export default function ProductTableRowItem({ row, setUpdate }) {
     sellingPrice,
     isVerified,
     type,
-    style,
     category,
-    fabric,
     color,
     size,
   } = row
@@ -80,18 +78,7 @@ export default function ProductTableRowItem({ row, setUpdate }) {
         <h1 className="text-xs">{category}</h1>
       </TableCell>
       <TableCell align="left">
-        <h1 className="text-xs">{style}</h1>
-      </TableCell>
-      <TableCell align="left">
-        <h1 className="text-xs">{fabric}</h1>
-      </TableCell>
-      <TableCell align="left">
-        {type?.map((item, index) => (
-          <h1 key={index} className="text-xs w-16">
-            {++index}. {item}
-            
-          </h1>
-        ))}
+        {type}
       </TableCell>
       <TableCell align="left">
         {color?.map((item, index) => (

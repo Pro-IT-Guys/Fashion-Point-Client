@@ -63,8 +63,8 @@ const Banner = () => {
                     <div className=" ">
                       <img
                         alt="banner"
-                        src="https://i.ibb.co/k6bPwrY/Delivery-within-48-Hours-Banner-AYMI-Fashion-1200x600.png"
-                        className="w-full h-full object-cover md:rounded-lg rounded"
+                        src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                        className="w-full max-h-[500px] object-cover md:rounded-lg rounded"
                       />
                     </div>
                   </SwiperSlide>
@@ -72,8 +72,8 @@ const Banner = () => {
                     <div className=" ">
                       <img
                         alt="banner"
-                        src="https://i.ibb.co/p3H86Hs/Free-Delivery-Banner-AYMI-Fashion-1200x600.png"
-                        className="w-full h-full object-cover md:rounded-lg rounded"
+                        src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                        className="w-full max-h-[500px] object-cover md:rounded-lg rounded"
                       />
                     </div>
                   </SwiperSlide>
@@ -81,8 +81,8 @@ const Banner = () => {
                     <div className=" ">
                       <img
                         alt="banner"
-                        src="https://i.ibb.co/k6bPwrY/Delivery-within-48-Hours-Banner-AYMI-Fashion-1200x600.png"
-                        className="w-full h-full object-cover md:rounded-lg rounded"
+                        src="https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
+                        className="w-full max-h-[500px] object-cover md:rounded-lg rounded"
                       />
                     </div>
                   </SwiperSlide>
