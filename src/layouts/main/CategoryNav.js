@@ -44,18 +44,18 @@ export default function CategoryNav() {
     <>
       <div className="bg-[#fbfbfd] py-2 text-black border-y-[1px] border-gray-200 md:block hidden">
         <Container maxWidth="lg" className="text-black">
-          <div className="flex justify-center items-center">
-            <div className="flex justify-center items-center gap-10">
-              {/* <div className="flex gap-1 items-center">
+          <div className="flex justify-start items-center">
+            <div className="flex justify-start items-center gap-10">
+              <div className="flex gap-1 items-center">
                 <CategoryIcon />
                 <h1 className="uppercase font-semibold text-sm">Category</h1>
-              </div> */}
-              <div className="flex gap-4 justify-center text-[14px]">
+              </div>
+              <div className="flex gap-4 justify-center">
                 {CATEGORY_OPTION_ARRAY?.map((category, index) => (
                   <NextLink key={index} href={`/category/${category}`}>
                     <a
                       // onClick={() => setCategory(category)}
-                      className="text-black hover:text-[#ff4d4f] hover:underline uppercase font-bold "
+                      className="text-black hover:text-[#ff4d4f] hover:underline font-semibold uppercase  text-[12px]"
                     >
                       {category}
                     </a>
