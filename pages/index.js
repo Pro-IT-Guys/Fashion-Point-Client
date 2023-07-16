@@ -9,6 +9,7 @@ import Products from 'src/components/Home/Products/Products'
 import CategoryNav from 'src/layouts/main/CategoryNav'
 import { useEffect, useState } from 'react'
 import CustomLoadingScreen from 'src/components/CustomLoadingScreen'
+import CategorySection from 'src/components/Home/Category/Category'
 
 // ----------------------------------------------------------------------
 
@@ -42,10 +43,10 @@ export default function LandingPage() {
       ) : (
         <MainLayout>
           <RootStyle title="AYMi" id="move_top">
-            {/* <ContentStyle> */}
+            <div className="bg-[#f7f7ff9c]">
               <Banner />
-              <Products />
-            {/* </ContentStyle> */}
+              <CategorySection />
+            </div>
           </RootStyle>
         </MainLayout>
       )}

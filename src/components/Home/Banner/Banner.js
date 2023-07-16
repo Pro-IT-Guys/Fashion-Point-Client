@@ -44,9 +44,9 @@ const Banner = () => {
       <div className="pt-32">
         {/* <CategoryNav/> */}
         <Container maxWidth="lg">
-          <div className={`${isVisible && 'flex'} items-center md:gap-5 gap-2`}>
+          <div className={`${isVisible && 'lg:flex'} items-center md:gap-5 gap-2`}>
             <div
-              className={`${isVisible && 'md:w-[73%] w-[73%]'} w-full h-full`}
+              className={`${isVisible && 'lg:w-[73%] '} w-full h-full`}
             >
               <div>
                 <Swiper
@@ -60,29 +60,29 @@ const Banner = () => {
                   navigation
                 >
                   <SwiperSlide>
-                    <div className=" ">
+                    <div className=" md:h-[420px] h-[320px] overflow-hidden">
                       <img
                         alt="banner"
                         src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                        className="w-full max-h-[420px] object-cover md:rounded-lg rounded"
+                        className="w-full h-full object-cover md:rounded-lg rounded"
                       />
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div className=" ">
+                    <div className=" md:h-[420px] h-[320px] overflow-hidden">
                       <img
                         alt="banner"
                         src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
-                        className="w-full max-h-[420px] object-cover md:rounded-lg rounded"
+                        className="w-full h-full object-cover md:rounded-lg rounded"
                       />
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div className=" ">
+                    <div className=" md:h-[420px] h-[320px] overflow-hidden">
                       <img
                         alt="banner"
                         src="https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
-                        className="w-full max-h-[420px] object-cover md:rounded-lg rounded"
+                        className="w-full h-full object-cover md:rounded-lg rounded"
                       />
                     </div>
                   </SwiperSlide>
@@ -90,7 +90,7 @@ const Banner = () => {
               </div>
             </div>
             {isVisible && (
-              <div className="md:w-[27%] w-[27%] overflow-hidden">
+              <div className="lg:w-[27%] lg:block hidden overflow-hidden">
                 <div className=" ">
                   <img
                     alt="offer"

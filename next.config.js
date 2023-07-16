@@ -6,6 +6,6 @@ module.exports = withTM()
 
 module.exports = {
   images: {
-    domains: ["localhost"],
+    domains: ["localhost", 'i.ibb.co'],
   },
 };

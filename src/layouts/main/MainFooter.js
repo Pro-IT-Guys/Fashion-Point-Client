@@ -67,7 +67,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 export default function MainFooter() {
   return (
-    <div className="bg-[#1b1b1b] text-white">
+    <div className="bg-[#7D014D] text-white">
       <RootStyle>
         <Divider />
         <Container maxWidth="lg" sx={{ pt: 7 }}>

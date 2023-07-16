@@ -20,7 +20,7 @@ import {
 import useOffSetTop from '../../hooks/useOffSetTop'
 import { MHidden } from '../../components/@material-extend'
 
-import logo from '../../assets/logo/aymi-logo.png'
+import logo from '../../assets/logo/fashion.png'
 import Image from 'next/image'
 import LoginFormModal from 'src/components/AuthModal/LoginModal'
 import { useContext, useState } from 'react'
@@ -154,7 +154,7 @@ export default function MainNavbar() {
                   alt="Picture of the logo"
                   width={150}
                   height={50}
-                  className="cursor-pointer object-cover w-full"
+                  className="cursor-pointer h-full w-full object-cover"
                 />
               </NextLink>
             </div>
