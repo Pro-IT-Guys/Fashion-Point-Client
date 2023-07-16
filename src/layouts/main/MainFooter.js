@@ -70,7 +70,7 @@ export default function MainFooter() {
     <div className="bg-[#7D014D] text-white">
       <RootStyle>
         <Divider />
-        <Container maxWidth="lg" sx={{ pt: 7 }}>
+        <Container maxWidth="xl" sx={{ pt: 7 }}>
           <Grid
             container
             justifyContent={{ md: 'space-between' }}

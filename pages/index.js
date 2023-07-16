@@ -10,6 +10,7 @@ import CategoryNav from 'src/layouts/main/CategoryNav'
 import { useEffect, useState } from 'react'
 import CustomLoadingScreen from 'src/components/CustomLoadingScreen'
 import CategorySection from 'src/components/Home/Category/Category'
+import MensFashion from 'src/components/Home/MensFashion/MensFashion'
 
 // ----------------------------------------------------------------------
 
@@ -46,6 +47,7 @@ export default function LandingPage() {
             <div className="bg-[#f7f7ff9c]">
               <Banner />
               <CategorySection />
+              <MensFashion/>
             </div>
           </RootStyle>
         </MainLayout>

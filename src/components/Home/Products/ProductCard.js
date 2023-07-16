@@ -9,7 +9,7 @@ import img1 from '../../../assets/product/Borka-2-Part-07-fc-01.jpg'
 import { useRouter } from 'next/router'
 import { ContextData } from 'context/dataProviderContext'
 import { convertCurrency } from 'helpers/currencyHandler'
-import { AiFillStar } from 'react-icons/ai';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 const ProductImgStyle = styled('img')({
   top: 0,
@@ -87,35 +87,48 @@ export default function ProductCard({ product }) {
     //     </div>
     //   </div>
     // </div>
-    <div className='bg-white border  rounded'>
-      <div
-        // onClick={() => router.push('/product-details/1')}
-        className='w-full h-60 p-2 cursor-pointer overflow-hidden'>
-        <Image
-          src={frontImage}
-          width={300}
-          height={400}
-          alt='banner'
-          className='w-full max-h-full object-cover rounded-t'
-        />
+    <div className='bg-white shadow  rounded'
+    >
+      <div onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave} className='w-full sm:h-[220px] h-64 px-1 pt-1 cursor-pointer overflow-hidden relative'>
+        <div
+          className={` absolute inset-0 transition-opacity duration-300 ${hovering ? 'opacity-0' : 'opacity-100'}`}>
+          <Image
+            src={frontImage}
+            width={400}
+            height={600}
+            alt='banner'
+            className='w-full h-full object-cover rounded-t'
+          />
+        </div>
+        <div
+          className={` absolute inset-0 transition-opacity duration-300 ${hovering ? 'opacity-100' : 'opacity-0'}`}>
+          <Image
+            src={backImage}
+            width={400}
+            height={600}
+            alt='banner'
+            className='w-full h-full object-cover rounded-t'
+          />
+        </div>
       </div>
-      <div className='mt-3 pb-2'>
+
+      <div className='py-3'>
         {/* <span className='text-sm px-3 py-1 bg-accent text-white  font-semibold' >Wholesale</span> */}
 
-        <div className='mt-2 flex items-center gap-2 px-3'>
+        <div className='flex items-center gap-2 px-3'>
           <h1 className='text-primary font-bold'>$120.000</h1>
           <strike className='text-neutral text-xs'><h1>$150.000</h1></strike>
         </div>
 
 
         <h1
-          // onClick={() => router.push('/product-details/1')}
-          className='px-3 text-sm cursor-pointer hover:text-primary duration-200 '>Calvin Klein Women's Scuba Sleeveless Princess...</h1>
+          onClick={() => router.push(`/products/${path}`)}
+          className='px-3 text-xs cursor-pointer hover:text-primary duration-200 '>Calvin Klein Women's Scuba Sleeveless Princess...</h1>
 
-        {/* <div className='bg-secondary flex justify-between px-2 py-1 rounded mx-3 mt-2 mb-5'>
-          <h1>Club Point:</h1>
-          <h1 className='font-bold'>750</h1>
-        </div> */}
+        <div className='bg-secondary cursor-pointer hover:bg-[#fdcec4] duration-300 flex justify-center text-sm gap-2 font-bold px-2 py-1 rounded mx-3 mt-3'>
+          <h1>Add To Cart</h1> <AddShoppingCartIcon fontSize='small' />
+        </div>
       </div>
     </div>
   )

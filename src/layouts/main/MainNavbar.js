@@ -139,7 +139,7 @@ export default function MainNavbar() {
           }}
         >
           <Container
-            maxWidth="lg"
+            maxWidth="xl"
             sx={{
               display: 'flex',
               alignItems: 'center',

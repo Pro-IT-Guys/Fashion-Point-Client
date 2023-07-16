@@ -43,7 +43,7 @@ const Banner = () => {
     <div className="bg-[#f7f7ff9c] pt-5 pb-10">
       <div className="pt-32">
         {/* <CategoryNav/> */}
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <div className={`${isVisible && 'lg:flex'} items-center md:gap-5 gap-2`}>
             <div
               className={`${isVisible && 'lg:w-[73%] '} w-full h-full`}
@@ -60,7 +60,7 @@ const Banner = () => {
                   navigation
                 >
                   <SwiperSlide>
-                    <div className=" md:h-[420px] h-[320px] overflow-hidden">
+                    <div className=" xl:h-[450px] md:h-[420px] h-[320px] overflow-hidden">
                       <img
                         alt="banner"
                         src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
@@ -69,7 +69,7 @@ const Banner = () => {
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div className=" md:h-[420px] h-[320px] overflow-hidden">
+                    <div className=" xl:h-[450px] md:h-[420px] h-[320px] overflow-hidden">
                       <img
                         alt="banner"
                         src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
@@ -78,7 +78,7 @@ const Banner = () => {
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div className=" md:h-[420px] h-[320px] overflow-hidden">
+                    <div className=" xl:h-[450px] md:h-[420px] h-[320px] overflow-hidden">
                       <img
                         alt="banner"
                         src="https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
@@ -91,7 +91,7 @@ const Banner = () => {
             </div>
             {isVisible && (
               <div className="lg:w-[27%] lg:block hidden overflow-hidden">
-                <div className=" ">
+                <div className=" xl:h-[450px] md:h-[420px] h-[320px] overflow-hidden">
                   <img
                     alt="offer"
                     src={image}
