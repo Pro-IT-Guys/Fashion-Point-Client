@@ -40,53 +40,7 @@ export default function ProductCard({ product }) {
   }
 
   return (
-    // <div className="shadow hover:shadow-md rounded overflow-hidden h-full">
-    //   <div className="bg-white h-full">
-    //     <div
-    //       className="h-80 w-full relative overflow-hidden"
-    //       onMouseEnter={handleMouseEnter}
-    //       onMouseLeave={handleMouseLeave}
-    //     >
-    //       <div
-    //         className={`absolute inset-0 transition-opacity duration-300 ${
-    //           hovering ? 'opacity-0' : 'opacity-100'
-    //         }`}
-    //       >
-    //         <Image
-    //           src={frontImage}
-    //           alt="Front Image"
-    //           layout="fill"
-    //           objectFit="cover"
-    //         />
-    //       </div>
-    //       <div
-    //         className={`absolute inset-0 transition-opacity duration-300 ${
-    //           hovering ? 'opacity-100' : 'opacity-0'
-    //         }`}
-    //       >
-    //         <Image
-    //           src={backImage}
-    //           alt="Back Image"
-    //           layout="fill"
-    //           objectFit="cover"
-    //         />
-    //       </div>
-    //     </div>
-    //     <div className="px-2 bg-white py-2">
-    //       <div className="h-14">
-    //         <h1
-    //           onClick={() => router.push(`/products/${path}`)}
-    //           className="font-semibold mt-2 h-full text-xs cursor-pointer hover:text-[#4d50ff]"
-    //         >
-    //           {name.slice(0, 80) + (name.length > 80 ? '...' : '')}
-    //         </h1>
-    //       </div>
-    //       <p className="text-error mt-2 mb-0">
-    //         {convertCurrency(fromCurrency, toCurrency, sellingPrice)}
-    //       </p>
-    //     </div>
-    //   </div>
-    // </div>
+
     <div className='bg-white shadow  rounded'
     >
       <div onMouseEnter={handleMouseEnter}
@@ -126,7 +80,7 @@ export default function ProductCard({ product }) {
           onClick={() => router.push(`/products/${path}`)}
           className='px-3 text-xs cursor-pointer hover:text-primary duration-200 '>Calvin Klein Women's Scuba Sleeveless Princess...</h1>
 
-        <div className='bg-secondary cursor-pointer hover:bg-[#fdcec4] duration-300 flex justify-center text-sm gap-2 font-bold px-2 py-1 rounded mx-3 mt-3'>
+        <div className='bg-secondary cursor-pointer hover:bg-[#fdcec4] duration-300 flex items-center justify-center text-sm gap-2 font-semibold px-2 py-1 rounded mx-3 mt-3'>
           <h1>Add To Cart</h1> <AddShoppingCartIcon fontSize='small' />
         </div>
       </div>
