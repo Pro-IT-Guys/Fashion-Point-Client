@@ -22,7 +22,7 @@ export default function TShirtCollection() {
 
     return (
         <Container maxWidth='lg'>
-                    <h1 className='text-2xl font-semibold mb-2 mt-5'>T-Shirt Fashion</h1>
+                    <h1 className='text-2xl font-semibold mb-2 mt-5'>T-Shirt Collection</h1>
             <Swiper
                 autoplay={true}
                 modules={[Autoplay]}

@@ -9,7 +9,6 @@ export const CATEGORY_OPTION = [
       'Lehenga',
       'Borka',
       'Hijab',
-      '3-Piece',
     ],
   },
 ]
@@ -23,7 +22,6 @@ export const CATEGORY_OPTION_ARRAY = [
   'Lehenga',
   'Borka',
   'Hijab',
-  '3-Piece',
 ]
 
 export const BRAND_OPTION = [

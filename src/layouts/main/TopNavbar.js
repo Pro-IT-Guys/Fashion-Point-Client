@@ -45,7 +45,7 @@ export default function TopNavbar() {
                 </span>
                 +971507778764
               </div>
-              <div className=" z-50">
+              {/* <div className=" z-50">
                 <FormControl variant="standard">
                   <Select
                     value={toCurrency}
@@ -73,7 +73,7 @@ export default function TopNavbar() {
                     </MenuItem>
                   </Select>
                 </FormControl>
-              </div>
+              </div> */}
             </div>
           </div>
         </Container>

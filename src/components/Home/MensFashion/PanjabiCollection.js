@@ -22,7 +22,7 @@ export default function PanjabiCollection() {
 
     return (
         <Container maxWidth='lg'>
-            <h1 className='text-2xl font-semibold mb-2'>Panjabi Fashion</h1>
+            <h1 className='text-2xl font-semibold mb-2'>Panjabi Collection</h1>
 
             <Swiper
                 autoplay={true}

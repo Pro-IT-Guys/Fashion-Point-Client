@@ -1,48 +1,16 @@
 import { Container } from '@mui/material'
-import { BASE_URL } from 'apis/url'
 import React, { useEffect, useState } from 'react'
-import ProductCard from '../Products/ProductCard'
 import Inspiration from '../Inspiration/Inspiration'
 import ShirtCollection from './ShirtCollection'
 import PanjabiCollection from './PanjabiCollection'
 import TShirtCollection from './TShirtCollection'
+import MensAdvertise from './MensAdvertise'
 
 export default function MensFashion() {
-    const [shirts, setShirts] = useState([])
-    const [panjabis, setPanjabis] = useState([])
-    const [tShirts, setTShirts] = useState([])
-
-    useEffect(() => {
-        fetch(`${BASE_URL}/Product?category=Shirt`)
-            .then(res => res.json())
-            .then(data => {
-                setShirts(data.data)
-            })
-            .catch(err => console.log(err))
-    }, [])
-    useEffect(() => {
-        fetch(`${BASE_URL}/Product?category=Panjabi`)
-            .then(res => res.json())
-            .then(data => {
-                setPanjabis(data.data)
-            })
-            .catch(err => console.log(err))
-    }, [])
-    useEffect(() => {
-        fetch(`${BASE_URL}/Product?category=T-Shirt`)
-            .then(res => res.json())
-            .then(data => {
-                setTShirts(data.data)
-            })
-            .catch(err => console.log(err))
-    }, [])
-
-
-
     return (
-        <div className='py-16'>
+        <div className='py-10'>
             <Container maxWidth='lg'>
-                <h1 className='text-2xl font-semibold mb-2'>Men's Fashion</h1>
+                <h1 className='text-2xl font-semibold mb-2'>Shirt Collection</h1>
             </Container>
 
             <ShirtCollection />
@@ -53,11 +21,9 @@ export default function MensFashion() {
                     }
                 </div>
             </Container> */}
-            <Inspiration />
-            <PanjabiCollection/>
-            <TShirtCollection/>
-
-            
+            <MensAdvertise />
+            <PanjabiCollection />
+            <TShirtCollection />
         </div>
     )
 }

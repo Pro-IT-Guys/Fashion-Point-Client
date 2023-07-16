@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 import CustomLoadingScreen from 'src/components/CustomLoadingScreen'
 import CategorySection from 'src/components/Home/Category/Category'
 import MensFashion from 'src/components/Home/MensFashion/MensFashion'
+import WomanCollection from 'src/components/Home/WomanCollection/WomanCollection'
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +48,8 @@ export default function LandingPage() {
             <div className="bg-[#f7f7ff9c] ">
               <Banner />
               <CategorySection />
-              <MensFashion/>
+              <MensFashion />
+              <WomanCollection />
             </div>
           </RootStyle>
         </MainLayout>
