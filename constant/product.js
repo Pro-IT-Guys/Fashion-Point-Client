@@ -2,32 +2,28 @@ export const CATEGORY_OPTION = [
   {
     classify: [
       'Shirt',
-      'Jins Pant',
       'Panjabi',
       'T-Shirt',
-      'Coat',
+      // 'Coat',
       'Shari',
       'Lehenga',
       'Borka',
       'Hijab',
       '3-Piece',
-      'Baby'
     ],
   },
 ]
 
 export const CATEGORY_OPTION_ARRAY = [
   'Shirt',
-  'Jins Pant',
   'Panjabi',
   'T-Shirt',
-  'Coat',
+  // 'Coat',
   'Shari',
   'Lehenga',
   'Borka',
   'Hijab',
   '3-Piece',
-  'Baby'
 ]
 
 export const BRAND_OPTION = [

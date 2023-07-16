@@ -43,7 +43,7 @@ export default function CategoryNav() {
   return (
     <>
       <div className="bg-[#fbfbfd] py-2 text-black border-y-[1px] border-gray-200 md:block hidden">
-        <Container maxWidth="xl" className="text-black">
+        <Container maxWidth="lg" className="text-black">
           <div className="flex justify-start items-center">
             <div className="flex justify-start items-center gap-10">
               <div className="flex gap-1 items-center">

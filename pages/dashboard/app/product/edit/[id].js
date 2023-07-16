@@ -8,11 +8,11 @@ export default function EditProduct() {
   const router = useRouter()
   const params = router.query.id
   return (
-    <DashboardLayout> 
-        <Container maxWidth="xl">
-            <h1 className='font-semibold text-xl '>Update Product</h1>
-            <EditProductForm productId={params}/>
-        </Container>
+    <DashboardLayout>
+      <Container maxWidth="lg">
+        <h1 className='font-semibold text-xl '>Update Product</h1>
+        <EditProductForm productId={params} />
+      </Container>
     </DashboardLayout>
   )
 }

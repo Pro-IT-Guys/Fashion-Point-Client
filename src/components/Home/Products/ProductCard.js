@@ -78,7 +78,9 @@ export default function ProductCard({ product }) {
 
         <h1
           onClick={() => router.push(`/products/${path}`)}
-          className='px-3 text-xs cursor-pointer hover:text-primary duration-200 '>Calvin Klein Women's Scuba Sleeveless Princess...</h1>
+          className='px-3 h-14 text-xs cursor-pointer hover:text-primary duration-200 '>
+            {name && name.length > 80 ? name.slice(0, 80) + '...' : name}
+          </h1>
 
         <div className='bg-secondary cursor-pointer hover:bg-[#fdcec4] duration-300 flex items-center justify-center text-sm gap-2 font-semibold px-2 py-1 rounded mx-3 mt-3'>
           <h1>Add To Cart</h1> <AddShoppingCartIcon fontSize='small' />

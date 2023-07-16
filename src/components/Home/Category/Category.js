@@ -15,7 +15,7 @@ import { Container } from '@mui/material'
 
 export default function CategorySection() {
     return (
-        <Container maxWidth='xl'>
+        <Container maxWidth='lg'>
             <h1 className='text-2xl font-semibold mb-2'>Category</h1>
             <div className='grid lg:grid-cols-9 md:grid-cols-6 sm:grid-cols-4 grid-cols-3 gap-3'>
                 <div className='bg-white shadow rounded overflow-hidden cursor-pointer hover:shadow-md duration-200'>

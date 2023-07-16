@@ -151,7 +151,7 @@ export default function AllOrders() {
   return (
     <DashboardLayout>
       <Page title="AYMi | Order List">
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <h1 className="font-bold text-2xl">Order List</h1>
           <div className="flex gap-2 text-sm mt-3 text-[#636262]">
             <p>Home - </p>
@@ -174,8 +174,8 @@ export default function AllOrders() {
                     // orderBy={orderBy}
                     headLabel={TABLE_HEAD}
                     rowCount={userList.length}
-                    // numSelected={selected.length}
-                    // onSelectAllClick={handleSelectAllClick}
+                  // numSelected={selected.length}
+                  // onSelectAllClick={handleSelectAllClick}
                   />
                   <TableBody>
                     {userList?.map(row => {
@@ -244,17 +244,13 @@ export default function AllOrders() {
                           <TableCell align="left">
                             {' '}
                             <span
-                              className={`font-semibold ${
-                                deliveryStatus === 'Pending' && 'text-secondary'
-                              } ${
-                                deliveryStatus === 'Delivered' && 'text-success'
-                              } ${
-                                deliveryStatus === 'Cancelled' &&
+                              className={`font-semibold ${deliveryStatus === 'Pending' && 'text-secondary'
+                                } ${deliveryStatus === 'Delivered' && 'text-success'
+                                } ${deliveryStatus === 'Cancelled' &&
                                 'text-[#b9b9b9]'
-                              } ${
-                                deliveryStatus === 'Processing' &&
+                                } ${deliveryStatus === 'Processing' &&
                                 'text-warning'
-                              }  `}
+                                }  `}
                             >
                               {' '}
                               {deliveryStatus}

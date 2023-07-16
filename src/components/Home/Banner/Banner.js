@@ -20,7 +20,7 @@ const Banner = () => {
     // paddingBottom: theme.spacing(5),
   }))
 
-  const {currentlyLoggedIn} = useContext(ContextData)
+  const { currentlyLoggedIn } = useContext(ContextData)
   const [offer, setOffer] = useState([])
   const { image, title, startFrom, endAt, isVisible } = offer || {}
 
@@ -43,7 +43,7 @@ const Banner = () => {
     <div className="bg-[#f7f7ff9c] pt-5 pb-10">
       <div className="pt-32">
         {/* <CategoryNav/> */}
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <div className={`${isVisible && 'lg:flex'} items-center md:gap-5 gap-2`}>
             <div
               className={`${isVisible && 'lg:w-[73%] '} w-full h-full`}

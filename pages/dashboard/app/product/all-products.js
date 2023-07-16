@@ -119,7 +119,7 @@ export default function ProductList() {
   return (
     <DashboardLayout>
       <Page title="AYMi | All Products">
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <h1 className="font-bold text-2xl">Product List</h1>
           <div className="flex gap-2 text-sm mt-3 text-[#636262]">
             <p>Home - </p>
@@ -138,13 +138,13 @@ export default function ProductList() {
               <TableContainer>
                 <Table>
                   <UserListHead
-           
+
                     // order={order}
                     // orderBy={orderBy}
                     headLabel={TABLE_HEAD}
                     rowCount={productList.length}
-                    // numSelected={selected.length}
-                    // onSelectAllClick={handleSelectAllClick}
+                  // numSelected={selected.length}
+                  // onSelectAllClick={handleSelectAllClick}
                   />
                   <TableBody>
                     {/* {productList.map(row => {

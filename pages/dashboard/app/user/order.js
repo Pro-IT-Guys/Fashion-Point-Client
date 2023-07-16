@@ -104,7 +104,7 @@ export default function UserOrders() {
     fetch(`${BASE_URL}/order/user/${_id}`)
       .then(res => res.json())
       .then(data => setOrderList(data?.data))
-  }, [_id, ])
+  }, [_id,])
 
   console.log(orderList)
   const handleDeleteUser = userId => {
@@ -124,7 +124,7 @@ export default function UserOrders() {
   return (
     <DashboardLayout>
       <Page title="AYMi | Order List">
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <h1 className="font-bold text-2xl">Order List</h1>
           <div className="flex gap-2 text-sm mt-3 text-[#636262]">
             <p>Home - </p>
@@ -147,7 +147,7 @@ export default function UserOrders() {
                     rowCount={orderList?.length}
                   />
                   <TableBody>
-                    {orderList?.map((row,index) => {
+                    {orderList?.map((row, index) => {
                       const {
                         _id,
                         role,
@@ -161,7 +161,7 @@ export default function UserOrders() {
                       } = row
                       return (
                         <TableRow hover key={_id} tabIndex={-1} role="checkbox">
-                             <TableCell align="left">
+                          <TableCell align="left">
                             {++index}
                           </TableCell>
                           <TableCell component="th" scope="row" padding="none">
@@ -196,17 +196,13 @@ export default function UserOrders() {
                           <TableCell align="left">
                             {' '}
                             <span
-                              className={`font-semibold ${
-                                deliveryStatus === 'Pending' && 'text-secondary'
-                              } ${
-                                deliveryStatus === 'Delivered' && 'text-success'
-                              } ${
-                                deliveryStatus === 'Cancelled' &&
+                              className={`font-semibold ${deliveryStatus === 'Pending' && 'text-secondary'
+                                } ${deliveryStatus === 'Delivered' && 'text-success'
+                                } ${deliveryStatus === 'Cancelled' &&
                                 'text-[#b9b9b9]'
-                              } ${
-                                deliveryStatus === 'Processing' &&
+                                } ${deliveryStatus === 'Processing' &&
                                 'text-warning'
-                              }  `}
+                                }  `}
                             >
                               {' '}
                               {deliveryStatus}

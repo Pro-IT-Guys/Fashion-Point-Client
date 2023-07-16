@@ -14,7 +14,7 @@ export default function TopNavbar() {
   return (
     <div>
       <div className="bg-[#7D014D] py-1">
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <div className="flex justify-between items-center">
             <div>
               <h1 className="sm:text-xs text-xs  flex items-center gap-2">

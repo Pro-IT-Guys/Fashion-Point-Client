@@ -79,7 +79,7 @@ export default function OrderDetails() {
 
   return (
     <DashboardLayout>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <h1 className="font-bold text-2xl">Order Details</h1>
         <div className="flex gap-2 text-sm mt-3 text-[#636262]">
           <p>Home - </p>
@@ -111,19 +111,15 @@ export default function OrderDetails() {
                 Shipping Info
               </h1>
               <span
-                className={`${
-                  deliveryStatus === 'Processing' &&
+                className={`${deliveryStatus === 'Processing' &&
                   'bg-warning text-white p-2 rounded text-xs'
-                } ${
-                  deliveryStatus === 'Pending' &&
+                  } ${deliveryStatus === 'Pending' &&
                   'bg-error text-white p-2 rounded text-xs'
-                } ${
-                  deliveryStatus === 'Delivered' &&
+                  } ${deliveryStatus === 'Delivered' &&
                   'bg-success text-white p-2 rounded text-xs'
-                } ${
-                  deliveryStatus === 'Cancelled' &&
+                  } ${deliveryStatus === 'Cancelled' &&
                   'bg-[#b9b9b9] text-white p-2 rounded text-xs'
-                }`}
+                  }`}
               >
                 {deliveryStatus}
               </span>
@@ -227,8 +223,8 @@ export default function OrderDetails() {
                   // orderBy={orderBy}
                   headLabel={TABLE_HEAD}
                   rowCount={orderItems?.length}
-                  // numSelected={selected.length}
-                  // onSelectAllClick={handleSelectAllClick}
+                // numSelected={selected.length}
+                // onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
                   {orderItems?.map((row, index) => {
@@ -242,8 +238,8 @@ export default function OrderDetails() {
                         key={index}
                         tabIndex={-1}
                         role="checkbox"
-                        // selected={isItemSelected}
-                        // aria-checked={isItemSelected}
+                      // selected={isItemSelected}
+                      // aria-checked={isItemSelected}
                       >
                         <TableCell component="th" scope="row" padding="none">
                           <Stack
