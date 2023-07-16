@@ -40,7 +40,7 @@ const Banner = () => {
   // )
 
   return (
-    <div className="bg-[#f7f7ff9c] pt-5 pb-10">
+    <div className="pt-5 pb-10">
       <div className="pt-32">
         {/* <CategoryNav/> */}
         <Container maxWidth="lg">

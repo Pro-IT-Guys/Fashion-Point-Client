@@ -3,6 +3,9 @@ import { BASE_URL } from 'apis/url'
 import React, { useEffect, useState } from 'react'
 import ProductCard from '../Products/ProductCard'
 import Inspiration from '../Inspiration/Inspiration'
+import ShirtCollection from './ShirtCollection'
+import PanjabiCollection from './PanjabiCollection'
+import TShirtCollection from './TShirtCollection'
 
 export default function MensFashion() {
     const [shirts, setShirts] = useState([])
@@ -42,31 +45,19 @@ export default function MensFashion() {
                 <h1 className='text-2xl font-semibold mb-2'>Men's Fashion</h1>
             </Container>
 
-            <Container maxWidth='lg'>
+            <ShirtCollection />
+            {/* <Container maxWidth='lg'>
                 <div className='grid xl:grid-cols-6 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4 pb-10'>
                     {
                         shirts?.slice(0, 12)?.map(product => <ProductCard key={product.id} product={product} />)
                     }
                 </div>
-            </Container>
+            </Container> */}
             <Inspiration />
-            <Container maxWidth='lg'>
-                <h1 className='text-2xl font-semibold mb-3 mt-5'>Panjabi Collection</h1>
-                <div className='grid xl:grid-cols-6 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4 pb-10'>
-                    {
-                        panjabis?.slice(0, 12)?.map(product => <ProductCard key={product.id} product={product} />)
-                    }
-                </div>
-            </Container>
-           
-            <Container maxWidth='lg'>
-                <h1 className='text-2xl font-semibold mb-3 mt-10'>T-Shirt Collection</h1>
-                <div className='grid xl:grid-cols-6 lg:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4 pb-10'>
-                    {
-                        tShirts?.slice(0, 6)?.map(product => <ProductCard key={product.id} product={product} />)
-                    }
-                </div>
-            </Container>
+            <PanjabiCollection/>
+            <TShirtCollection/>
+
+            
         </div>
     )
 }

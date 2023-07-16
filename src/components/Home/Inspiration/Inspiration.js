@@ -15,7 +15,7 @@ import Image from 'next/image'
 
 export default function Inspiration() {
     return (
-        <div className='bg-info py-10'>
+        <div className='bg-info py-10 my-5'>
             <Container maxWidth='lg'>
                 <div className='sm:flex items-center gap-10'>
                     <div className='sm:w-[40%]'>

@@ -46,7 +46,7 @@ export default function ProductCard({ product }) {
       <div onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave} className='w-full sm:h-[220px] h-64 px-1 pt-1 cursor-pointer overflow-hidden relative'>
         <div
-          className={` absolute inset-0 transition-opacity duration-300 ${hovering ? 'opacity-0' : 'opacity-100'}`}>
+          className={` absolute p-1 inset-0 transition-opacity duration-300 ${hovering ? 'opacity-0' : 'opacity-100'}`}>
           <Image
             src={frontImage}
             width={400}
@@ -56,7 +56,7 @@ export default function ProductCard({ product }) {
           />
         </div>
         <div
-          className={` absolute inset-0 transition-opacity duration-300 ${hovering ? 'opacity-100' : 'opacity-0'}`}>
+          className={` absolute p-1 inset-0 transition-opacity duration-300 ${hovering ? 'opacity-100' : 'opacity-0'}`}>
           <Image
             src={backImage}
             width={400}
