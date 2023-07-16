@@ -27,7 +27,7 @@ ProductCard.propTypes = {
 
 export default function ProductCard({ product }) {
   const { fromCurrency, toCurrency } = useContext(ContextData)
-  const { name, sellingPrice, frontImage, backImage, path } = product || {}
+  const { name, buyingPrice, sellingPrice, frontImage, backImage, path } = product || {}
   const router = useRouter()
   const [hovering, setHovering] = useState(false)
 
@@ -71,8 +71,8 @@ export default function ProductCard({ product }) {
         {/* <span className='text-sm px-3 py-1 bg-accent text-white  font-semibold' >Wholesale</span> */}
 
         <div className='flex items-center gap-2 px-3'>
-          <h1 className='text-primary font-bold'>$120.000</h1>
-          <strike className='text-neutral text-xs'><h1>$150.000</h1></strike>
+          <h1 className='text-primary font-bold'>৳ {sellingPrice}</h1>
+          <strike className='text-neutral text-xs'><h1>৳ {sellingPrice}</h1></strike>
         </div>
 
 

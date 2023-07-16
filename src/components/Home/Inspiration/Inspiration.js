@@ -15,7 +15,7 @@ import Image from 'next/image'
 
 export default function Inspiration() {
     return (
-        <div className='bg-info py-10'>
+        <div className='bg-accent text-white py-10'>
             <Container maxWidth='xl'>
                 <div className='sm:flex items-center gap-10'>
                     <div className='sm:w-[40%]'>
@@ -23,7 +23,7 @@ export default function Inspiration() {
                         <h1 className=' font-semibold text-white'>Inspiration</h1>
                     </div> */}
                         <h1 className='text-4xl font-extrabold mt-4 uppercase'>#Fashion Point</h1>
-                        <p className='text-sm text-neutral text-justify mt-3'>Discover a world of style at your fingertips. Shop the latest trends in fashion online with our curated collection. Elevate your wardrobe with effortless elegance and express your unique personality. Explore, inspire, and embrace your fashion journey with us. Welcome to a seamless shopping experience.</p>
+                        <p className='text-sm text-white text-justify mt-3'>Discover a world of style at your fingertips. Shop the latest trends in fashion online with our curated collection. Elevate your wardrobe with effortless elegance and express your unique personality. Explore, inspire, and embrace your fashion journey with us. Welcome to a seamless shopping experience.</p>
 
                         <div>
                             <button className='bg-primary text-white px-4 py-2 mt-5 rounded'>Shop Now</button>
