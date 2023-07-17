@@ -48,7 +48,7 @@ export default class MyDocument extends Document {
           />
           <meta
             name='keywords'
-            content='shirt, panjabi, shari, borka, fashion, clothing, mens, womens, online, shop, store, ecommerce, bd, bangladesh, dhaka, fashion point'
+            content='shirt, panjabi, shari, borka, fashion, clothing, mens, womens, shop, store, ecommerce, bd, bangladesh, dhaka, fashion point'
           />
           <meta name='author' content='Fashion Point' />
         </Head>
