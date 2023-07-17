@@ -77,7 +77,7 @@ export default function MainFooter() {
             sx={{ textAlign: { md: 'left' } }}
             className="md:pb-20 pb-10 "
           >
-            <Grid item xs={12} sx={{ mb: 3 }}>
+            <Grid item sm={12} sx={{ mb: 1 }}>
               {/* <ScrollLink to="move_top" spy smooth>
                 <Logo sx={{ mx: { xs: 'auto', md: 'inherit' } }} />
               </ScrollLink> */}
@@ -92,11 +92,9 @@ export default function MainFooter() {
                 />
               </NextLink>
             </Grid>
-            <Grid item xs={8} md={3}>
-              <Typography variant="body2" sx={{ pr: { md: 5 } }}>
-                The starting point for your next project with Minimal UI Kit,
-                built on the newest version of Material-UI ©, ready to be
-                customized to your style.
+            <Grid item sm={8} md={3}>
+              <Typography variant="body2" sx={{ pr: { md: 5 } }} className='text-justify'>
+              Welcome to our fashion-forward e-commerce platform, offering a wide selection of mens and womens clothing, including shirts, panjabis, sharis, and borkas. Explore our curated collection to find your perfect style statement.
               </Typography>
 
               <Stack
