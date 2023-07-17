@@ -4,7 +4,7 @@ import { alpha, styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 //
 import Logo from './Logo';
-import logoImg from '../assets/logo/aymi-logo.png'
+import logoImg from '../assets/logo/fashion.png'
 import Image from 'next/image'
 
 // ----------------------------------------------------------------------
@@ -23,8 +23,6 @@ const RootStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function CustomLoadingScreen({ ...other }) {
-
-
 
     return (
       <RootStyle {...other}>

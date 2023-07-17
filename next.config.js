@@ -6,6 +6,6 @@ module.exports = withTM()
 
 module.exports = {
   images: {
-    domains: ["localhost", 'i.ibb.co'],
+    domains: ["localhost", 'i.ibb.co','fashion-point-server.vercel.app'],
   },
 };

@@ -4,7 +4,7 @@ import twitterFill from '@iconify/icons-eva/twitter-fill'
 import facebookFill from '@iconify/icons-eva/facebook-fill'
 import linkedinFill from '@iconify/icons-eva/linkedin-fill'
 import { Link as ScrollLink } from 'react-scroll'
-import logo from '../../assets/logo/aymi-logo.png'
+import logo from '../../assets/logo/dark222.jpg'
 // next
 import NextLink from 'next/link'
 // material
@@ -87,7 +87,7 @@ export default function MainFooter() {
                   src={logo}
                   alt="Picture of the logo"
                   width={150}
-                  height={50}
+                  height={70}
                   className="cursor-pointer object-cover w-full rounded-md"
                 />
               </NextLink>
@@ -156,8 +156,8 @@ export default function MainFooter() {
                 Copyright © 2023. All Rights Reserved By ~
               </h1>
               <Link href="/">
-                <span className="uppercase text-xs text-warning font-semibold">
-                  AYMI
+                <span className="uppercase text-xs text-yellow-500 font-semibold">
+                  Fashion Point
                 </span>
               </Link>
             </div>
@@ -167,7 +167,7 @@ export default function MainFooter() {
                 href="https://www.facebook.com/ImRanKhan81m/"
                 target="blank"
               >
-                <span className="uppercase text-xs text-warning font-semibold">
+                <span className="uppercase text-xs text-yellow-500 font-semibold">
                   Pro-IT-Guys
                 </span>
               </Link>
