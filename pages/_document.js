@@ -44,7 +44,7 @@ export default class MyDocument extends Document {
           />
           <meta
             name='description'
-            content='The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style'
+            content='Welcome to our fashion-forward e-commerce platform, offering a wide selection of mens and womens clothing, including shirts, panjabis, sharis, and borkas. Explore our curated collection to find your perfect style statement. Shop with ease and enjoy exceptional customer service.'
           />
           <meta
             name='keywords'
