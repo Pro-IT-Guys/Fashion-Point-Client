@@ -14,7 +14,7 @@ export default function CreateProduct() {
 
   return (
     <DashboardLayout>
-      <Page title="AYMi | Add Product">
+      <Page title="Fashion-Point | Add Product">
         <Container maxWidth="lg">
           <h1 className="font-bold text-2xl">Create Product</h1>
           <div className="flex gap-2 text-sm mt-3 text-[#636262]">

@@ -63,7 +63,7 @@ const Banner = () => {
                     <div className=" xl:h-[450px] md:h-[420px] h-[320px] overflow-hidden">
                       <img
                         alt="banner"
-                        src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                        src="https://i.ibb.co/k8JDcGJ/3.jpg"
                         className="w-full h-full object-cover md:rounded-lg rounded"
                       />
                     </div>
@@ -72,7 +72,7 @@ const Banner = () => {
                     <div className=" xl:h-[450px] md:h-[420px] h-[320px] overflow-hidden">
                       <img
                         alt="banner"
-                        src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                        src="https://i.ibb.co/5T9sG9s/2.jpg"
                         className="w-full h-full object-cover md:rounded-lg rounded"
                       />
                     </div>
@@ -81,7 +81,7 @@ const Banner = () => {
                     <div className=" xl:h-[450px] md:h-[420px] h-[320px] overflow-hidden">
                       <img
                         alt="banner"
-                        src="https://images.unsplash.com/photo-1532453288672-3a27e9be9efd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
+                        src="https://i.ibb.co/PghtnLh/1.jpg"
                         className="w-full h-full object-cover md:rounded-lg rounded"
                       />
                     </div>
@@ -94,7 +94,8 @@ const Banner = () => {
                 <div className=" xl:h-[450px] md:h-[420px] h-[320px] overflow-hidden">
                   <img
                     alt="offer"
-                    src={image}
+                    src={'https://i.ibb.co/Yc0CySy/Screenshot-2023-07-17-165750.jpg'}
+                    // src={'https://i.ibb.co/QX3KBx0/Screenshot-2023-07-17-165417.jpg'}
                     className="h-full w-full object-cover rounded"
                   />
                 </div>

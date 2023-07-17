@@ -125,7 +125,7 @@ export default function UserList() {
 
   return (
     <DashboardLayout>
-      <Page title="AYMi | User List">
+      <Page title="Fashion-Point | User List">
         <Container maxWidth="lg">
           <h1 className="font-bold text-2xl">User List</h1>
           <div className="flex gap-2 text-sm mt-3 text-[#636262]">
@@ -149,8 +149,8 @@ export default function UserList() {
                     // orderBy={orderBy}
                     headLabel={TABLE_HEAD}
                     rowCount={userList.length}
-                    // numSelected={selected.length}
-                    // onSelectAllClick={handleSelectAllClick}
+                  // numSelected={selected.length}
+                  // onSelectAllClick={handleSelectAllClick}
                   />
                   <TableBody>
                     {userList.map(row => {

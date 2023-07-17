@@ -41,7 +41,7 @@ export default function Cupon() {
 
   return (
     <DashboardLayout>
-      <Page title="AYMi | Cupon">
+      <Page title="Fashion-Point | Cupon">
         <Container maxWidth="lg">
           <Card>
             <CardHeader

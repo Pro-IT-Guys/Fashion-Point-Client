@@ -44,7 +44,7 @@ export default function LandingPage() {
         <CustomLoadingScreen />
       ) : (
         <MainLayout>
-          <RootStyle title="AYMi" id="move_top">
+          <RootStyle title="Fashion-Point" id="move_top">
             <div className="bg-[#f7f7ff9c] ">
               <Banner />
               <CategorySection />

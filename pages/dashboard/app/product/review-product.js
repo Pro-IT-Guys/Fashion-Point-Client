@@ -13,7 +13,7 @@ export default function AllProducts() {
 
   return (
     <DashboardLayout>
-      <Page title="AYMi | Review">
+      <Page title="Fashion-Point | Review">
         <Container maxWidth={themeStretch ? false : 'xl'}>
           <Typography variant="h3" component="h1" paragraph>
             Review Product Page

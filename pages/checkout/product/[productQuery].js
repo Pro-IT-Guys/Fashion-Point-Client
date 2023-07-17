@@ -286,7 +286,7 @@ export default function Checkout() {
 
   return (
     <>
-      <Page title="AYMi | Checkout">
+      <Page title="Fashion-Point | Checkout">
         <MainLayout>
           <RootStyle>
             <Container>

@@ -225,7 +225,7 @@ export default function ProductDetails() {
     <>
       <MainLayout>
         <Page
-          title={`AYMi | ${name}`}
+          title={`Fashion-Point | ${name}`}
           metaDescription={metaDescription}
           metaImage={frontImage}
         >
@@ -252,19 +252,19 @@ export default function ProductDetails() {
                       {quantity > 0 ? 'In-Stock' : 'Stock-Out'}
                     </Label>
 
-                    <h1 className="text-xl font-semibold mt-3">{name}</h1>
+                    <h1 className=" font-semibold my-3">{name}</h1>
                     <Typography variant="body2" sx={{ color: 'text.primary' }}>
                       {productDetails?.metaDescription?.length > 50
-                        ? productDetails?.metaDescription?.slice(0, 50)
+                        ? productDetails?.metaDescription?.slice(0, 120)
                         : productDetails?.metaDescription}
-                      {productDetails?.metaDescription?.length > 50 && '...'}
+                      {productDetails?.metaDescription?.length > 120 && '...'}
                     </Typography>
 
                     <Stack
                       spacing={0.5}
                       direction="row"
                       alignItems="center"
-                      sx={{ mb: 2, mt: 1 }}
+                      sx={{ mb: 2, mt: 2 }}
                     >
                       <Rating value={`${rating}.5`} precision={0.1} readOnly />
                       <Typography
@@ -274,10 +274,10 @@ export default function ProductDetails() {
                         {rating} Ratings
                       </Typography>
                     </Stack>
-                    <p className="text-sm">Fabric: {productDetails?.fabric}</p>
+                    <p className="text-sm">Category: {productDetails?.category}</p>
 
                     <div className="flex items-center mt-3">
-                      <p className="text-xl font-semibold  text-secondary">
+                      <p className="text-xl font-semibold  text-primary">
                         {convertCurrency(
                           fromCurrency,
                           toCurrency,

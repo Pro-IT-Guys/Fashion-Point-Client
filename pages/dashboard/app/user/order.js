@@ -123,7 +123,7 @@ export default function UserOrders() {
 
   return (
     <DashboardLayout>
-      <Page title="AYMi | Order List">
+      <Page title="Fashion-Point | Order List">
         <Container maxWidth="lg">
           <h1 className="font-bold text-2xl">Order List</h1>
           <div className="flex gap-2 text-sm mt-3 text-[#636262]">

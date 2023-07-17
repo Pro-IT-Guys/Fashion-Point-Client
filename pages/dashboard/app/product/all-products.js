@@ -118,7 +118,7 @@ export default function ProductList() {
 
   return (
     <DashboardLayout>
-      <Page title="AYMi | All Products">
+      <Page title="Fashion-Point | All Products">
         <Container maxWidth="xl">
           <h1 className="font-bold text-2xl">Product List</h1>
           <div className="flex gap-2 text-sm mt-3 text-[#636262]">

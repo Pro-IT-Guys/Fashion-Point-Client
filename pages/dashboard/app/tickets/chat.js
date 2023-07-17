@@ -6,7 +6,7 @@ import DashboardLayout from 'src/layouts/dashboard'
 const Chat = () => {
   return (
     <DashboardLayout>
-      <Page title="AYMi | Support">
+      <Page title="Fashion-Point | Support">
         <h1 className="font-bold text-2xl">Support</h1>
         <div className="flex gap-2 text-sm mt-3 text-[#636262]">
           <p>Dashboard - </p>

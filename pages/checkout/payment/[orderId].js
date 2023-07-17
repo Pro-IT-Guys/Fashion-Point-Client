@@ -191,7 +191,7 @@ const CheckoutPayment = () => {
 
   return (
     <>
-      <Page title="AYMi | Billing">
+      <Page title="Fashion-Point | Billing">
         <MainLayout>
           <RootStyle>
             <Container>

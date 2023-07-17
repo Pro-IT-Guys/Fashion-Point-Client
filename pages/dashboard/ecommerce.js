@@ -80,7 +80,7 @@ const PageOne = () => {
 
   return (
     <DashboardLayout>
-      <Page title="AYMi | Analytics">
+      <Page title="Fashion-Point | Analytics">
         <Container maxWidth={themeStretch ? false : 'xl'}>
           <Grid container spacing={3} mt={1}>
             <Grid item xs={12}>

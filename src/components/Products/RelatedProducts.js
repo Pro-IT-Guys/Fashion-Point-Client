@@ -36,7 +36,7 @@ export default function RelatedProducts({ product }) {
             Related Products
           </h1>
           <div className="grid lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-4">
-            {productList.map((item, index) => (
+            {productList?.slice(0,5)?.map((item, index) => (
               <ProductCard key={index} product={item} />
             ))}
           </div>

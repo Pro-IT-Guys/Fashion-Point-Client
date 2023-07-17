@@ -70,7 +70,7 @@ export default function ProductReview({ product }) {
         <div className="sm:flex items-center gap-20 ">
           <div className="space-y-1 mb-5 sm:mb-0">
             <h1 className="text-4xl font-bold">
-              {reviewList?.rating}
+              {/* {reviewList?.rating} */} 4.5
               <span className="text-[25px] text-[#8b8b8b]">/5</span>
             </h1>
             {/* <Rating name="size-large" readOnly value={5} size="large" /> */}
@@ -84,7 +84,8 @@ export default function ProductReview({ product }) {
               }
             />
             <p className="text-[#585858] text-sm">
-              {reviewList?.review?.length} Ratings
+              {/* {reviewList?.review?.length} */}
+              261 Ratings
             </p>
           </div>
 
@@ -93,136 +94,137 @@ export default function ProductReview({ product }) {
               <Rating readOnly value={5} size="small" />
               <div className="w-[180px] flex items-center">
                 <div
-                  className=" bg-warning p-[5px]"
-                  style={{
-                    width: `${reviewCount(
-                      reviewList?.review?.length,
-                      reviewList?.fiveStar
-                    )}%`,
-                  }}
+                  className=" bg-warning p-[5px] w-[150px]"
+                  // style={{
+                  //   width: `${reviewCount(
+                  //     reviewList?.review?.length,
+                  //     reviewList?.fiveStar
+                  //   )}%`,
+                  // }}
+                  
                 ></div>
                 <div
-                  className=" bg-[#ddd]  p-[5px]"
-                  style={{
-                    width: `${
-                      100 -
-                      reviewCount(
-                        reviewList?.review?.length,
-                        reviewList?.fiveStar
-                      )
-                    }%`,
-                  }}
+                  className=" bg-[#ddd] w-[30px]  p-[5px]"
+                  // style={{
+                  //   width: `${
+                  //     100 -
+                  //     reviewCount(
+                  //       reviewList?.review?.length,
+                  //       reviewList?.fiveStar
+                  //     )
+                  //   }%`,
+                  // }}
                 ></div>
               </div>
-              <p className="text-sm text-[#535353]">{reviewList?.fiveStar}</p>
+              <p className="text-sm text-[#535353]">115</p>
             </div>
             <div className="flex  items-center gap-3">
               <Rating readOnly value={4} size="small" />
               <div className="w-[180px] flex items-center">
                 <div
-                  className=" bg-warning p-[5px]"
-                  style={{
-                    width: `${reviewCount(
-                      reviewList?.review?.length,
-                      reviewList?.fourStar
-                    )}%`,
-                  }}
+                  className=" bg-warning p-[5px] w-[120px]"
+                  // style={{
+                  //   width: `${reviewCount(
+                  //     reviewList?.review?.length,
+                  //     reviewList?.fourStar
+                  //   )}%`,
+                  // }}
                 ></div>
                 <div
-                  className=" bg-[#ddd]  p-[5px]"
-                  style={{
-                    width: `${
-                      100 -
-                      reviewCount(
-                        reviewList?.review?.length,
-                        reviewList?.fourStar
-                      )
-                    }%`,
-                  }}
+                  className=" bg-[#ddd]  p-[5px] w-[60px]"
+                  // style={{
+                  //   width: `${
+                  //     100 -
+                  //     reviewCount(
+                  //       reviewList?.review?.length,
+                  //       reviewList?.fourStar
+                  //     )
+                  //   }%`,
+                  // }}
                 ></div>
               </div>
-              <p className="text-sm text-[#535353]">{reviewList?.fourStar}</p>
+              <p className="text-sm text-[#535353]">94</p>
             </div>
             <div className=" flex  items-center gap-3">
               <Rating readOnly value={3} size="small" />
               <div className="w-[180px] flex items-center">
                 <div
-                  className=" bg-warning p-[5px]"
-                  style={{
-                    width: `${reviewCount(
-                      reviewList?.review?.length,
-                      reviewList?.threeStar
-                    )}%`,
-                  }}
+                  className=" bg-warning p-[5px] w-[60px]"
+                  // style={{
+                  //   width: `${reviewCount(
+                  //     reviewList?.review?.length,
+                  //     reviewList?.threeStar
+                  //   )}%`,
+                  // }}
                 ></div>
                 <div
-                  className=" bg-[#ddd]  p-[5px]"
-                  style={{
-                    width: `${
-                      100 -
-                      reviewCount(
-                        reviewList?.review?.length,
-                        reviewList?.threeStar
-                      )
-                    }%`,
-                  }}
+                  className=" bg-[#ddd]  p-[5px] w-[120px]"
+                  // style={{
+                  //   width: `${
+                  //     100 -
+                  //     reviewCount(
+                  //       reviewList?.review?.length,
+                  //       reviewList?.threeStar
+                  //     )
+                  //   }%`,
+                  // }}
                 ></div>
               </div>
-              <p className="text-sm text-[#535353]">{reviewList?.threeStar}</p>
+              <p className="text-sm text-[#535353]">29</p>
             </div>
             <div className="flex  items-center gap-3">
               <Rating readOnly value={2} size="small" />
               <div className="w-[180px] flex items-center">
                 <div
-                  className=" bg-warning p-[5px]"
-                  style={{
-                    width: `${reviewCount(
-                      reviewList?.review?.length,
-                      reviewList?.twoStar
-                    )}%`,
-                  }}
+                  className=" bg-warning p-[5px] w-[20px]"
+                  // style={{
+                  //   width: `${reviewCount(
+                  //     reviewList?.review?.length,
+                  //     reviewList?.twoStar
+                  //   )}%`,
+                  // }}
                 ></div>
                 <div
-                  className=" bg-[#ddd]  p-[5px]"
-                  style={{
-                    width: `${
-                      100 -
-                      reviewCount(
-                        reviewList?.review?.length,
-                        reviewList?.twoStar
-                      )
-                    }%`,
-                  }}
+                  className=" bg-[#ddd]  p-[5px]  w-[160px]"
+                  // style={{
+                  //   width: `${
+                  //     100 -
+                  //     reviewCount(
+                  //       reviewList?.review?.length,
+                  //       reviewList?.twoStar
+                  //     )
+                  //   }%`,
+                  // }}
                 ></div>
               </div>
-              <p className="text-sm text-[#535353]">{reviewList?.twoStar}</p>
+              <p className="text-sm text-[#535353]">17</p>
             </div>
             <div className="flex  items-center gap-3">
               <Rating readOnly value={1} size="small" />
               <div className="w-[180px] flex items-center">
                 <div
-                  className=" bg-warning p-[5px]"
-                  style={{
-                    width: `${reviewCount(
-                      reviewList?.review?.length,
-                      reviewList?.oneStar
-                    )}%`,
-                  }}
+                  className=" bg-warning p-[5px]  w-[10px]"
+                  // style={{
+                  //   width: `${reviewCount(
+                  //     reviewList?.review?.length,
+                  //     reviewList?.oneStar
+                  //   )}%`,
+                  // }}
                 ></div>
                 <div
-                  className=" bg-[#ddd]  p-[5px]"
-                  style={{
-                    width: `${
-                      100 -
-                      reviewCount(
-                        reviewList?.review?.length,
-                        reviewList?.oneStar
-                      )
-                    }%`,
-                  }}
+                  className=" bg-[#ddd]  p-[5px]  w-[160px]"
+                  // style={{
+                  //   width: `${
+                  //     100 -
+                  //     reviewCount(
+                  //       reviewList?.review?.length,
+                  //       reviewList?.oneStar
+                  //     )
+                  //   }%`,
+                  // }}
                 ></div>
               </div>
-              <p className="text-sm text-[#535353]">{reviewList?.oneStar}</p>
+              <p className="text-sm text-[#535353]">6</p>
             </div>
           </div>
         </div>
@@ -245,7 +247,7 @@ export default function ProductReview({ product }) {
                 size="medium"
               />
             </div>
-            <Typography variant="h6">{rating || 0}</Typography>
+            <Typography variant="h6" className='mb-1'>{rating || 0}</Typography>
           </Box>
           <form onSubmit={handleSubmit(onSubmit)}>
             <textarea

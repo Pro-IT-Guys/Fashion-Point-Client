@@ -1,29 +1,9 @@
-import {
-  Autocomplete,
-  Box,
-  Checkbox,
-  Chip,
-  Container,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  Grid,
-  Radio,
-  RadioGroup,
-  Rating,
-  Slider,
-  Stack,
-  TextField,
-  Typography,
-  styled,
-} from '@mui/material'
+import { Box, Container, Grid, Slider, } from '@mui/material'
 import React, { useContext, useEffect, useState } from 'react'
-import ColorManyPicker from '../common/ColorManyPicker'
 import ShopProductSort from '../shop/ShopProductSort'
 import ProductCard from './ProductCard'
-import PopularProducts from './PopularProducts'
 import DeleteSweepOutlinedIcon from '@mui/icons-material/DeleteSweepOutlined'
-import CloseIcon from '@mui/icons-material/Close'
+
 
 import {
   CATEGORY_OPTION_ARRAY,
@@ -34,14 +14,6 @@ import { multiFilterProduct } from 'apis/product.api'
 import { ContextData } from 'context/dataProviderContext'
 import ProductLoader from './ProductLoader'
 import { useRouter } from 'next/router'
-import {
-  convertCurrency,
-  convertCurrencyForCalculation,
-} from 'helpers/currencyHandler'
-
-function valuetext(value) {
-  return `${value}°C`
-}
 
 const Products = () => {
   const {
@@ -58,17 +30,14 @@ const Products = () => {
     fromCurrency,
     toCurrency,
   } = useContext(ContextData)
-  const [openFilter, setOpenFilter] = useState(false)
   const [products, setProducts] = useState([])
 
   const [loading, setLoading] = useState(false)
 
   const router = useRouter()
-  const params = router.query.id
 
   const handlePriceRange = (event, newValue) => {
     setValue(newValue)
-    // console.log(newValue, 'newValue')
   }
 
   useEffect(() => {
@@ -101,22 +70,6 @@ const Products = () => {
     callback(value)
   }
 
-  const handleOpenFilter = () => {
-    setOpenFilter(true)
-  }
-
-  const handleCloseFilter = () => {
-    setOpenFilter(false)
-  }
-
-  const handleResetFilter = () => {
-    handleSubmit()
-    resetForm()
-  }
-
-  // const handleChange = selectedColor => {
-  //   setColor(selectedColor)
-  // }
 
   const handleChecked = selectedColor => {
     if (Array.isArray(color)) {
@@ -147,8 +100,6 @@ const Products = () => {
       setColorValue(prev => [...prev, id])
     }
   }
-
-
 
 
 
@@ -420,6 +371,9 @@ const Products = () => {
                  
                 )} */}
               </div>
+
+
+
             </div>
           </div>
         </Grid>

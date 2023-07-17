@@ -195,7 +195,7 @@ export default function MainNavbar() {
                       currentlyLoggedIn?.name &&
                       router.push('/dashboard/app/my-profile')
                     }
-                    className="cursor-pointer  md:text-sm text-[10px] uppercase hover:text-secondary duration-200 font-bold "
+                    className="cursor-pointer  md:text-sm text-[10px] uppercase hover:text-primary duration-200 font-bold "
                   >
                     Accounts
                   </h1>

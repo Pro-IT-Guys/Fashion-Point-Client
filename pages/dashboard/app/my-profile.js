@@ -139,7 +139,7 @@ export default function MyProfile() {
 
   return (
     <DashboardLayout>
-      <Page title="AYMi | My Profile">
+      <Page title="Fashion-Point | My Profile">
         <Container maxWidth="lg">
           <h1 className="font-bold text-2xl">My Profile</h1>
           <div className="flex gap-2 text-sm mt-3 text-[#636262]">
