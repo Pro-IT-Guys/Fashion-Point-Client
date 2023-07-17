@@ -48,9 +48,9 @@ export default class MyDocument extends Document {
           />
           <meta
             name='keywords'
-            content='react,material,kit,application,dashboard,admin,template'
+            content='shirt, panjabi, shari, borka, fashion, clothing, mens, womens, online, shop, store, ecommerce, bd, bangladesh, dhaka, fashion point'
           />
-          <meta name='author' content='Minimal UI Kit' />
+          <meta name='author' content='Fashion Point' />
         </Head>
         <body>
           <Main />
