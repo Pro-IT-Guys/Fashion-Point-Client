@@ -61,9 +61,9 @@ export default function Searchbar() {
     <ClickAwayListener onClickAway={handleClose}>
       <div>
         {!isOpen && (
-          <div className="flex text-black items-center">
+          <div onClick={handleOpen} className="flex text-black items-center">
             <h1 className="font-semibold">Search</h1>
-            <MIconButton onClick={handleOpen}>
+            <MIconButton >
               <Icon icon={searchFill} width={20} height={20} />
             </MIconButton>
           </div>

@@ -480,6 +480,7 @@ export default function Checkout() {
                     size="large"
                     type="submit"
                     variant="contained"
+                    className=' sm:mb-0 mb-5'
                   >
                     Check Out
                   </Button>
