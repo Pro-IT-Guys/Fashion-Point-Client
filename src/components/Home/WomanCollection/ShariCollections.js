@@ -11,7 +11,7 @@ export default function ShariCollection() {
     const [shari, setShari] = useState([])
 
     useEffect(() => {
-        fetch(`${BASE_URL}/Product?category=T-Shirt`)
+        fetch(`${BASE_URL}/Product?category=Shari`)
             .then(res => res.json())
             .then(data => {
                 setShari(data.data)

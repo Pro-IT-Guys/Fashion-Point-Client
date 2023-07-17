@@ -143,7 +143,7 @@ export const TYPE_OPTION = [
   'Family Pack',
 
 ]
-export const TAG_OPTION = ['Borka', 'Fashion', 'Stylish Borka']
+export const TAG_OPTION = ['Borka','Shari','Shirt','Lehenga','Hijab','Smart', 'Fashion']
 export const COLOR_OPTION = [
   'Red',
   'Green',

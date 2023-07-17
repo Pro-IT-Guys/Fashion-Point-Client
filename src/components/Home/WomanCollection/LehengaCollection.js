@@ -11,7 +11,7 @@ export default function LehengaCollection() {
     const [lehenga, setLehenga] = useState([])
 
     useEffect(() => {
-        fetch(`${BASE_URL}/Product?category=T-Shirt`)
+        fetch(`${BASE_URL}/Product?category=Lehenga`)
             .then(res => res.json())
             .then(data => {
                 setLehenga(data.data)

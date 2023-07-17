@@ -60,13 +60,13 @@ export default function ProductTableRowItem({ row, setUpdate }) {
     >
       <TableCell align="left" component="th" scope="row" padding="none">
         <Stack direction="row" alignItems="center" spacing={2}>
-          <div className="w-14 h-14 overflow-hidden my-2">
+          <div className="w-14 h-20 overflow-hidden my-2">
             <Image
               alt={frontImage}
               src={frontImage}
-              height={60}
+              height={80}
               width={60}
-              className="h-full w-full object-cover rounded-full "
+              className="h-full w-full object-cover rounded "
             />
           </div>
           <h1 variant="subtitle2" className="text-xs font-semibold">

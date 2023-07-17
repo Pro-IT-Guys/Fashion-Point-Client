@@ -167,6 +167,8 @@ export default function AddProductForm() {
           Swal.fire({
             icon: 'success',
             title: 'Product Created Successfully',
+            showConfirmButton: false,
+            timer: 500,
           })
         }
       })
@@ -480,7 +482,6 @@ export default function AddProductForm() {
                 <h1 className="ml-1 text-sm mb-1 mt-5">All Images</h1>
                 <UploadMultiFile
                   showPreview
-                  maxSize={3145728}
                   accept="image/*"
                   files={values}
                   onDrop={handleDrop}
@@ -488,13 +489,13 @@ export default function AddProductForm() {
                   onRemoveAll={handleRemoveAll}
                 />
 
-                {/* {imagesArray?.map((image, index) => (
+                {imagesUrl?.map((image, index) => (
                   <div key={index} className="flex items-center">
                     <span className="ml-2 mt-5 text-sm text-gray-500">
-                      {++index}. {image?.name}
+                      {++index}. {image}
                     </span>
                   </div>
-                ))} */}
+                ))}
               </div>
 
               <div className="relative mt-2">
