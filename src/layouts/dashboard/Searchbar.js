@@ -14,6 +14,7 @@ import {
 // components
 import { MIconButton } from '../../components/@material-extend'
 import { ContextData } from 'context/dataProviderContext'
+import { useRouter } from 'next/router'
 
 // ----------------------------------------------------------------------
 
@@ -44,8 +45,9 @@ const SearchbarStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Searchbar() {
-  const { setSearchTerm } = useContext(ContextData)
+  const { setSearchTerm, searchTerm } = useContext(ContextData)
   const [isOpen, setOpen] = useState(false)
+  const router = useRouter()
 
   const handleOpen = () => {
     setOpen(prev => !prev)
@@ -86,7 +88,12 @@ export default function Searchbar() {
               }
               sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
             />
-            <Button variant="contained" onClick={handleClose}>
+            <Button
+              onClick={() => {
+                router.push(`/category/${searchTerm}`)
+                handleClose()
+              }}
+              variant="contained" >
               Search
             </Button>
           </SearchbarStyle>

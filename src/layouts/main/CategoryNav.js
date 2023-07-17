@@ -25,7 +25,7 @@ import { ContextData } from 'context/dataProviderContext'
 
 export default function CategoryNav() {
   const [openFilter, setOpenFilter] = useState(false)
-  const { setCategory } = useContext(ContextData)
+  const { setCategory , category} = useContext(ContextData)
 
   const handleOpenFilter = () => {
     setOpenFilter(true)
@@ -51,13 +51,13 @@ export default function CategoryNav() {
                 <h1 className="uppercase font-semibold text-sm">Category</h1>
               </div>
               <div className="flex gap-4 justify-center">
-                {CATEGORY_OPTION_ARRAY?.map((category, index) => (
-                  <NextLink key={index} href={`/category/${category}`}>
+                {CATEGORY_OPTION_ARRAY?.map((item, index) => (
+                  <NextLink key={index} href={`/category/${item}`}>
                     <a
-                      // onClick={() => setCategory(category)}
+                      onClick={() => setCategory(item)}
                       className="text-black hover:text-[#ff4d4f] hover:underline font-semibold uppercase  text-[12px]"
                     >
-                      {category}
+                      {item}
                     </a>
                   </NextLink>
                 ))}

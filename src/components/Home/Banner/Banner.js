@@ -60,29 +60,29 @@ const Banner = () => {
                   navigation
                 >
                   <SwiperSlide>
-                    <div className=" xl:h-[450px] md:h-[420px] h-[320px] overflow-hidden">
+                    <div className=" xl:h-[450px] md:h-[420px] sm:h-[320px] overflow-hidden">
                       <img
                         alt="banner"
                         src="https://i.ibb.co/k8JDcGJ/3.jpg"
-                        className="w-full h-full object-cover md:rounded-lg rounded"
+                        className="w-full h-full sm:object-cover md:rounded-lg rounded"
                       />
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div className=" xl:h-[450px] md:h-[420px] h-[320px] overflow-hidden">
+                    <div className=" xl:h-[450px] md:h-[420px] sm:h-[320px] overflow-hidden">
                       <img
                         alt="banner"
                         src="https://i.ibb.co/5T9sG9s/2.jpg"
-                        className="w-full h-full object-cover md:rounded-lg rounded"
+                        className="w-full h-full sm:object-cover md:rounded-lg rounded"
                       />
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div className=" xl:h-[450px] md:h-[420px] h-[320px] overflow-hidden">
+                    <div className=" xl:h-[450px] md:h-[420px] sm:h-[320px] overflow-hidden">
                       <img
                         alt="banner"
                         src="https://i.ibb.co/PghtnLh/1.jpg"
-                        className="w-full h-full object-cover md:rounded-lg rounded"
+                        className="w-full h-full sm:object-cover md:rounded-lg rounded"
                       />
                     </div>
                   </SwiperSlide>
