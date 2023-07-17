@@ -31,19 +31,21 @@ export default function TopNavbar() {
               </h1>
             </div>
             <div className="flex items-center gap-4">
-              <h1 className="sm:text-xs text-xs flex items-center gap-1 font-normal">
-                {' '}
-                <span>
-                  <MdEmail />
-                </span>
-                support@aymifashion.com
-              </h1>
+              <div className='sm:block hidden'>
+                <h1 className="sm:text-xs text-xs flex items-center gap-1 font-normal ">
+                  {' '}
+                  <span>
+                    <MdEmail />
+                  </span>
+                  support@aymifashion.com
+                </h1>
+              </div>
               <div className="sm:text-xs text-xs flex items-center gap-1 font-normal">
                 {' '}
                 <span>
                   <BsTelephoneOutboundFill />
                 </span>
-                +971507778764
+                01868032281
               </div>
               {/* <div className=" z-50">
                 <FormControl variant="standard">
