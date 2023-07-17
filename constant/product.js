@@ -138,9 +138,6 @@ export const STYLE_OPTION_ARRAY = [
 export const TYPE_OPTION = [
   'Men',
   'Women',
-  'Kids',
-  'Teen',
-  'Family Pack',
 
 ]
 export const TAG_OPTION = ['Borka','Shari','Shirt','Lehenga','Hijab','Smart', 'Fashion']
@@ -157,7 +154,6 @@ export const COLOR_OPTION = [
   'Grey',
   'Golden',
   'Silver',
-  'Multi-Color',
 ]
 
 export const SIZE_OPTION = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL']

@@ -164,7 +164,7 @@ export default function ProductFilterDrawer({
               </div>
             </div>
 
-            <div className="bg-white shadow rounded">
+            {/* <div className="bg-white shadow rounded">
               <div className="  py-2 px-3 border-b">
                 <h1 className="font-semibold "> Filter by Categories</h1>
               </div>
@@ -211,7 +211,7 @@ export default function ProductFilterDrawer({
                   </div>
                 </FormControl>
               </div>
-            </div>
+            </div> */}
 
             <div className="bg-white shadow rounded">
               <div className="  py-2 px-3 border-b">

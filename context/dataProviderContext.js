@@ -25,7 +25,7 @@ export const ContextProvider = ({ children }) => {
   const [type, setType] = useState([])
   const [style, setStyle] = useState([])
   const [fabric, setFabric] = useState([])
-  const [value, setValue] = useState([0, 1000])
+  const [value, setValue] = useState([0, 10000])
   const [cartUpdate, setCartUpdate] = useState('')
 
   // Initialize socket..Make useEffect if only the currentlyLoggedIn exist
@@ -79,7 +79,7 @@ export const ContextProvider = ({ children }) => {
     setType([])
     setStyle([])
     setFabric([])
-    setValue([0, 1000])
+    setValue([0, 10000])
   }
 
   const contextValues = {
