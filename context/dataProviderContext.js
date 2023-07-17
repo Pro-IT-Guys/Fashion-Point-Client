@@ -31,7 +31,7 @@ export const ContextProvider = ({ children }) => {
 
   // Initialize socket..Make useEffect if only the currentlyLoggedIn exist
   useEffect(() => {
-    socket.current = io('http://localhost:8000/')
+    socket.current = io('https://fashion-point-server.vercel.app/')
     socket.current.emit('join', generateUniqueId(10))
 
     socket.current.on('activeUsers', users => {

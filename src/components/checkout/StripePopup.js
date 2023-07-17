@@ -16,7 +16,7 @@ const StripePopup = ({ setOpenPopup }) => {
   const handleStripePayment = async paymentMethodId => {
     console.log(paymentMethodId, 'paymentMethodId')
     const response = await fetch(
-      'http://localhost:8000/api/v1/payment/stripe',
+      'https://fashion-point-server.vercel.app/api/v1/payment/stripe',
       {
         method: 'POST',
         headers: {
