@@ -474,16 +474,18 @@ export default function Checkout() {
                       </Stack>
                     </CardContent>
                   </Card>
-                  <Button
-                    onClick={() => setAddressPopup(true)}
-                    fullWidth
-                    size="large"
-                    type="submit"
-                    variant="contained"
-                    className=' sm:mb-0 mb-5'
-                  >
-                    Check Out
-                  </Button>
+                  <div className=' sm:mb-0 mb-5'>
+                    <Button
+                      onClick={() => setAddressPopup(true)}
+                      fullWidth
+                      size="large"
+                      type="submit"
+                      variant="contained"
+                      
+                    >
+                      Check Out
+                    </Button>
+                  </div>
                 </Grid>
               </Grid>
             </Container>
