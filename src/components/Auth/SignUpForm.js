@@ -130,7 +130,7 @@ export default function SignUpForm({onClose}) {
               <div className=" rounded-lg w-full">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className="space-y-5">
-                    <div className="flex gap-5 w-full">
+                    <div className="sm:flex gap-5 w-full">
                       <div className="flex flex-col items-start w-[50%]">
                         <label htmlFor="firstName" className="">
                           First Name

@@ -52,7 +52,7 @@ export default function MyApp(props) {
                     <NoSsr>{/* <Settings /> */}</NoSsr>
                     <GlobalStyles />
                     <ProgressBar />
-                    <LoadingScreen />
+                    {/* <LoadingScreen /> */}
                     <Component {...pageProps} />
                   </RtlLayout>
                 </ThemePrimaryColor>
