@@ -52,13 +52,15 @@ const Products = () => {
     setType,
     value,
     setValue,
+    colorValue,
+    setColorValue,
     handleClearFilter,
     fromCurrency,
     toCurrency,
   } = useContext(ContextData)
   const [openFilter, setOpenFilter] = useState(false)
   const [products, setProducts] = useState([])
-  const [colorValue, setColorValue] = useState([])
+
   const [loading, setLoading] = useState(false)
 
   const router = useRouter()
@@ -70,7 +72,6 @@ const Products = () => {
   }
 
   useEffect(() => {
-    setLoading(true)
     const maxPrice = value[1]
     const minPrice = value[0]
     const queryParams = {
@@ -82,11 +83,15 @@ const Products = () => {
     }
 
     const retriveProduct = async () => {
+      setLoading(true)
       const response = await multiFilterProduct(queryParams)
       if (response?.statusCode === 200) {
         setProducts(response?.data)
         setLoading(false)
+      } else {
+        setLoading(false)
       }
+
     }
     retriveProduct()
   }, [searchTerm, category, value, type,])
@@ -142,6 +147,8 @@ const Products = () => {
       setColorValue(prev => [...prev, id])
     }
   }
+
+
 
 
 
@@ -334,26 +341,6 @@ const Products = () => {
                   </div>
                 </div>
 
-                {/* <div className="bg-white shadow rounded">
-                  <div className="  py-2 px-3 border-b">
-                    <h1 className="font-semibold "> Filter by Color</h1>
-                  </div>
-                  <div className=" py-3 pl-4 pr-3  grid grid-cols-5 gap-3">
-                    {COLOR_OPTION?.map(item =>
-                      <div
-                        key={item}
-                        onClick={() => handleSelectType(item)}
-                        className={`flex gap-2 items-center cursor-pointer bg-${item?.toLowerCase()}-500`}>
-                        <div className="flex items-center">
-                          <div className="h-5 w-5 rounded-full"> </div>
-                        </div>
-                        <h1 className='text-sm font-semibold'>{item}</h1>
-                      </div>
-                    )}
-
-                  </div>
-                </div> */}
-
                 {(category?.length ||
                   type?.length ||
                   value[0] !== 0 ||
@@ -410,20 +397,28 @@ const Products = () => {
                 {loading ? (
                   <ProductLoader />
                 ) : (
-                  <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5">
-                    {products?.map(product => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                  </div>
+                  <>
+                    {
+                      products?.length > 0 ? (
+                        <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5">
+                          {products?.map(product => (
+                            <ProductCard key={product.id} product={product} />
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="flex justify-center items-center h-[50vh]">
+                          <h1 className="text-xl font-semibold text-error">
+                            No Products Found!
+                          </h1>
+                        </div>
+                      )
+                    }
+                  </>
                 )}
-
+                {/* 
                 {!products?.length && (
-                  <div className="flex justify-center items-center h-[50vh]">
-                    <h1 className="text-xl font-semibold text-error">
-                      No Products Found!
-                    </h1>
-                  </div>
-                )}
+                 
+                )} */}
               </div>
             </div>
           </div>

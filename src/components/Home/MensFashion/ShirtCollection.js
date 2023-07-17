@@ -6,19 +6,27 @@ import "swiper/css/autoplay";
 import { Autoplay } from "swiper";
 import { Container } from '@mui/material';
 import ProductCard from '../Products/ProductCard';
+import { set } from 'lodash';
+import ProductLoader from '../Products/ProductLoader';
 
 export default function ShirtCollection() {
     const [shirts, setShirts] = useState([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         fetch(`${BASE_URL}/Product?category=Shirt`)
             .then(res => res.json())
             .then(data => {
                 setShirts(data.data)
+                setLoading(false)
             })
-            .catch(err => console.log(err))
+            .catch(err => setLoading(false))
     }, [])
 
+    if (loading) {
+        <ProductLoader />
+    }
 
     return (
         <Container maxWidth='lg'>

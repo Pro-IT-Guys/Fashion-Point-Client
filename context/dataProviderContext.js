@@ -27,6 +27,7 @@ export const ContextProvider = ({ children }) => {
   const [fabric, setFabric] = useState([])
   const [value, setValue] = useState([0, 10000])
   const [cartUpdate, setCartUpdate] = useState('')
+  const [colorValue, setColorValue] = useState([])
 
   // Initialize socket..Make useEffect if only the currentlyLoggedIn exist
   useEffect(() => {
@@ -115,6 +116,8 @@ export const ContextProvider = ({ children }) => {
     cartUpdate,
     setCartUpdate,
     onlineUsers,
+    colorValue,
+    setColorValue,
   }
 
   return (
