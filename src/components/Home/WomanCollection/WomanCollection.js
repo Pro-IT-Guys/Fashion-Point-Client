@@ -9,7 +9,7 @@ export default function WomanCollection() {
 
 
     return (
-        <div className=''>
+        <div className='pb-16'>
             <Container maxWidth='lg'>
                 <Advertise />
                 <ShariCollection />

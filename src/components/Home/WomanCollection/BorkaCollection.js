@@ -11,7 +11,7 @@ export default function BorkaCollection() {
     const [borka, setBorka] = useState([])
 
     useEffect(() => {
-        fetch(`${BASE_URL}/Product?category=T-Shirt`)
+        fetch(`${BASE_URL}/Product?category=Borka`)
             .then(res => res.json())
             .then(data => {
                 setBorka(data.data)
