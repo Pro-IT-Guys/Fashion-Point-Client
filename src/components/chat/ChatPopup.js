@@ -109,9 +109,8 @@ export default function ChatPopup({
       anchorEl={anchorRef}
       sx={{
         width: {
-          xs: 480,
-          sm: 560,
           md: 500,
+          xs: 400
         },
         transformOrigin: {
           vertical: 'bottom',
@@ -149,13 +148,17 @@ export default function ChatPopup({
         ))}
       </Box>
 
-      <Box sx={{ paddingBottom: 1.5, display: 'flex', px: 2.5 }}>
-        <InputEmoji value={inputMeassage} onChange={handleInputMessage} />
-        <ButtonAnimate mediumClick={true}>
-          <Button onClick={handleSendMessage}>
-            <CustomIcons.SendIcon />
-          </Button>
-        </ButtonAnimate>
+      <Box sx={{ paddingBottom: 1.5, display: 'flex', alignItems:'center', pl: 2.5, pr:1.5 }}>
+      <div className='w-[90%]'>
+      <InputEmoji value={inputMeassage} onChange={handleInputMessage} />
+      </div>
+       <div className='w-[10%] p-0 overflow-hidden'>
+       {/* <ButtonAnimate mediumClick={true} className='p-0'> */}
+          <div onClick={handleSendMessage} className='p-0'>
+            <CustomIcons.SendIcon  className='p-0 m-0 text-[#7D014D]'/>
+          </div>
+        {/* </ButtonAnimate> */}
+       </div>
       </Box>
     </MenuPopover>
   )
