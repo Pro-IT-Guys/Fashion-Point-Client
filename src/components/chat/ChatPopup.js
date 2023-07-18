@@ -109,8 +109,8 @@ export default function ChatPopup({
       anchorEl={anchorRef}
       sx={{
         width: {
-          xs: 280,
-          sm: 320,
+          xs: 480,
+          sm: 560,
           md: 500,
         },
         transformOrigin: {
@@ -135,7 +135,7 @@ export default function ChatPopup({
       <Box
         ref={boxRef}
         sx={{
-          maxHeight: '250px',
+          maxHeight: '350px',
           overflowY: 'auto',
         }}
       >
@@ -149,7 +149,7 @@ export default function ChatPopup({
         ))}
       </Box>
 
-      <Box sx={{ paddingBottom: 1.5, display: 'flex', px: 2.8 }}>
+      <Box sx={{ paddingBottom: 1.5, display: 'flex', px: 2.5 }}>
         <InputEmoji value={inputMeassage} onChange={handleInputMessage} />
         <ButtonAnimate mediumClick={true}>
           <Button onClick={handleSendMessage}>
