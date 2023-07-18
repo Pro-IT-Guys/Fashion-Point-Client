@@ -97,7 +97,7 @@ export default function MessageItem({ message, chat, user }) {
 
           <ContentStyle
             sx={{
-              ...(isMe && { color: 'grey.800', bgcolor: 'primary.lighter' }),
+              ...(isMe && { color: 'grey.800', bgcolor: 'secondary.lighter' }),
               ...(isImage && { p: 0 }),
             }}
           >
