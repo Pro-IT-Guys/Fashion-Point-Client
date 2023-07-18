@@ -404,7 +404,7 @@ export default function ProductDetails() {
                     </div>
                     <Divider sx={{ borderStyle: 'dashed' }} />
 
-                    <Stack spacing={2} direction={'row'} sx={{ m: 5 }}>
+                    <div className='grid grid-cols-3 gap-3 mt-5'>
                       <Button
                         fullWidth
                         // disabled={isMaxQuantity}
@@ -413,7 +413,7 @@ export default function ProductDetails() {
                         color="warning"
                         variant="contained"
                         onClick={handleAddToCart}
-                        sx={{ whiteSpace: 'nowrap' }}
+                        className='w-full text-sm'
                       >
                         Add to Cart
                       </Button>
@@ -427,16 +427,7 @@ export default function ProductDetails() {
                         size="medium"
                         type="submit"
                         variant="contained"
-                        sx={{
-                          marginTop: {
-                            xs: 1,
-                            sm: 0,
-                          },
-                          marginBottom: {
-                            xs: 1,
-                            sm: 0,
-                          },
-                        }}
+                        className='w-full text-sm'
                       >
                         Buy Now
                       </Button>
@@ -450,11 +441,12 @@ export default function ProductDetails() {
                             size="medium"
                             type="submit"
                             variant="contained"
+                            className='w-full text-sm'
                           >
                             Message
                           </Button>
                         )}
-                    </Stack>
+                    </div>
                   </Grid>
                 </Grid>
               </Card>
